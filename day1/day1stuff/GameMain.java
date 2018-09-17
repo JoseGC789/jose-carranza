@@ -20,8 +20,8 @@ public class GameMain {
                     //inicializar juego
                     //inicializar clases
                     palitos = new ContadorPalitos();
-                    jugador1 = new Player("Jugador 1",palitos);
-                    jugador2 = new Player("Jugador 2",palitos);
+                    jugador1 = new Player("Player 1",palitos);
+                    jugador2 = new Player("Player 2",palitos);
 
                     jugador = jugador1;
                     i = 1;
@@ -30,8 +30,8 @@ public class GameMain {
                 case PLAYING:
                     //cuerpo del juego
                     boolean hasPalitos;
-                    System.out.printf("Cantidad de palitos: %d.\n", palitos.getCantidad());
-                    System.out.printf("%s su turno \n", jugador.getName());
+                    System.out.printf("\nNumber of sticks: %d.\n", palitos.getCantidad());
+                    System.out.printf("%s it's your turn \n", jugador.getName());
                     hasPalitos = jugador.takePalito();
 
                     //aca cambio entre jugadores
@@ -44,8 +44,9 @@ public class GameMain {
                             jugador = jugador1;
                         }
                     }else{
-                        System.out.printf("%s perdio.\n\n",jugador.getName());
+                        System.out.printf("%s lost.\n\n",jugador.getName());
                         estado = Estado.CONCLUDED;
+                        System.out.printf("Play again? (y/n) ");
                     }
                     break;
 
@@ -57,26 +58,21 @@ public class GameMain {
                     while (!(valido)) {
                         valido = true;
                         Scanner input = new Scanner(System.in);
-                        System.out.printf("Jugar devuelta? (s/n) ");
                         devuelta = input.next().charAt(0);
                         devuelta = Character.toLowerCase(devuelta);
-                        System.out.printf("\n");
                         switch (devuelta){
-                            case 's':
+                            case 'y':
                                 estado = Estado.START;
                                 break;
                             case 'n':
                                 estado = Estado.END;
                                 break;
-                            default:
-                                System.out.printf("Ingrese un caracter valido. \n");
-                                valido = false;
                         }
                     }
             }
         }
         //exito!
-        System.out.printf("Fin de juego.");
+        System.out.printf("\nGame ended.");
     }
 
     public static void main(String[] args) {

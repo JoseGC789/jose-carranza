@@ -1,6 +1,5 @@
 package day1stuff;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
@@ -17,36 +16,30 @@ public class Player {
     }
 
     public Boolean takePalito (){
-        boolean valido = false;
-        int numero = 0;
-        while (!(valido)) {
-            try {
-                Scanner input = new Scanner(System.in);
-                System.out.printf("Ingrese la cantidad de palitos a tomar, entre 1 y 2, %s: ", this.name);
-                numero = input.nextInt();
-                if ((numero < 1) || (numero > 2)){
-                    throw new InputMismatchException();
-                }
-                valido = true;
-                System.out.printf("\n");
-
-            }   catch (InputMismatchException e) {
-                System.out.printf("Ingrese un numero valido porfavor. \n");
-                valido = false;
-            }   catch (Exception e) {
-                System.out.printf("Input invalido. \n");
-                valido = false;
-            }
-        }
+        int numero ;
+        System.out.printf("Enter the number of sticks to take. Number must be either 1 or 2, %s: ", this.name);
+        numero = enterInput(1,2);
 
         switch (numero){
             case 1:
-                boolean b1 = palitos.removeOne();
-                return b1;
+                return palitos.removeOne();
             case 2:
-                boolean b2 = palitos.removeTwo();
-                return b2;
+                return palitos.removeTwo();
         }
         return true;
+    }
+
+    private int enterInput(int min,int max){
+        //funcion para conseguir entero del usuario
+        //min = rango inferior / max rango superior
+        Scanner input = new Scanner(System.in);
+        int number;
+        do {
+            while (!input.hasNextInt()) {
+                input.next();
+            }
+            number = input.nextInt();
+        } while ((number < min) || (number > max));
+        return number;
     }
 }

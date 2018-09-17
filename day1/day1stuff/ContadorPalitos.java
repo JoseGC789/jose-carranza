@@ -5,16 +5,12 @@ public class ContadorPalitos {
 
     public boolean removeOne(){
         cantidad--;
-        if (cantidad < 1){
-            return false;
-        }else{
-            return true;
-        }
+        return !(cantidad < 1);
     }
 
     public boolean removeTwo(){
         cantidad --;
-        return removeOne();
+        return this.removeOne();
     }
 
     public Integer getCantidad() {
