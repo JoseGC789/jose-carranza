@@ -2,76 +2,76 @@ package day1stuff;
 
 import java.util.Scanner;
 
-// Juego de tomar 21 palitos.
+// 21 sticks game.
 
 public class GameMain {
-    private Estado estado;
-    private Player jugador1;
-    private Player jugador2;
-    private ContadorPalitos palitos;
+    private State state;
+    private Player player1;
+    private Player player2;
+    private SticksCounter sticks;
 
     public GameMain(){
-        estado = Estado.START;
-        Player jugador = null;
+        state = State.START;
+        Player player = null;
         int i = 0;
-        while (estado != Estado.END){
-            switch (estado){
+        while (state != State.END){
+            switch (state){
                 case START:
-                    //inicializar juego
-                    //inicializar clases
-                    palitos = new ContadorPalitos();
-                    jugador1 = new Player("Player 1",palitos);
-                    jugador2 = new Player("Player 2",palitos);
+                    //initialize game
+                    //initialize classes
+                    sticks = new SticksCounter();
+                    player1 = new Player("Player 1", sticks);
+                    player2 = new Player("Player 2", sticks);
 
-                    jugador = jugador1;
+                    player = player1;
                     i = 1;
-                    estado = Estado.PLAYING;
+                    state = State.PLAYING;
 
                 case PLAYING:
-                    //cuerpo del juego
-                    boolean hasPalitos;
-                    System.out.printf("\nNumber of sticks: %d.\n", palitos.getCantidad());
-                    System.out.printf("%s it's your turn \n", jugador.getName());
-                    hasPalitos = jugador.takePalito();
+                    //game's body
+                    boolean hasSticks;
+                    System.out.printf("\nNumber of sticks: %d.\n", sticks.getAmount());
+                    System.out.printf("%s it's your turn \n", player.getName());
+                    hasSticks = player.takeSticks();
 
-                    //aca cambio entre jugadores
-                    if (hasPalitos){
+                    //switch between player's references
+                    if (hasSticks){
                         if (i == 1){
                             i = 2;
-                            jugador = jugador2;
+                            player = player2;
                         }else{
                             i = 1;
-                            jugador = jugador1;
+                            player = player1;
                         }
                     }else{
-                        System.out.printf("%s lost.\n\n",jugador.getName());
-                        estado = Estado.CONCLUDED;
+                        System.out.printf("%s lost.\n\n",player.getName());
+                        state = State.CONCLUDED;
                         System.out.printf("Play again? (y/n) ");
                     }
                     break;
 
                 case CONCLUDED:
-                    //juego tiene resolucion. sugiero un nuevo juego.
-                    char devuelta;
-                    boolean valido = false;
-                    //chequeo que el input
-                    while (!(valido)) {
-                        valido = true;
+                    //Game has conclusion. suggest a new game
+                    char again;
+                    boolean valid = false;
+                    //check input
+                    while (!(valid)) {
+                        valid = true;
                         Scanner input = new Scanner(System.in);
-                        devuelta = input.next().charAt(0);
-                        devuelta = Character.toLowerCase(devuelta);
-                        switch (devuelta){
+                        again = input.next().charAt(0);
+                        again = Character.toLowerCase(again);
+                        switch (again){
                             case 'y':
-                                estado = Estado.START;
+                                state = State.START;
                                 break;
                             case 'n':
-                                estado = Estado.END;
+                                state = State.END;
                                 break;
                         }
                     }
             }
         }
-        //exito!
+        //success!
         System.out.printf("\nGame ended.");
     }
 

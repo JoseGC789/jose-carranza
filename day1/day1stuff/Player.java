@@ -4,34 +4,34 @@ import java.util.Scanner;
 
 public class Player {
     private String name;
-    private ContadorPalitos palitos;
+    private SticksCounter sticks;
 
-    public Player (String name, ContadorPalitos palitos){
+    public Player (String name, SticksCounter sticks){
         this.name = name;
-        this.palitos = palitos;
+        this.sticks = sticks;
     }
 
     public String getName() {
         return name;
     }
 
-    public Boolean takePalito (){
-        int numero ;
+    public Boolean takeSticks(){
+        int amount ;
         System.out.printf("Enter the number of sticks to take. Number must be either 1 or 2, %s: ", this.name);
-        numero = enterInput(1,2);
+        amount = enterInput(1,2);
 
-        switch (numero){
+        switch (amount){
             case 1:
-                return palitos.removeOne();
+                return sticks.removeOne();
             case 2:
-                return palitos.removeTwo();
+                return sticks.removeTwo();
         }
         return true;
     }
 
     private int enterInput(int min,int max){
-        //funcion para conseguir entero del usuario
-        //min = rango inferior / max rango superior
+        //get a number from user function
+        //min = inferior range/ max superior range
         Scanner input = new Scanner(System.in);
         int number;
         do {
