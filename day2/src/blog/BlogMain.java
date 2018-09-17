@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class BlogMain {
     private List<Entry> entries = new ArrayList<>();
 
-    public BlogMain() {
+    private BlogMain() {
         boolean valid = true;
         //loop
         while (valid) {
@@ -15,14 +15,14 @@ public class BlogMain {
         }
     }
 
-    public boolean selectAction(){
+    private boolean selectAction(){
         //menu opciones. aca el usuario selecciona entre las opciones que hay en MenuOpciones
         System.out.printf(
-                "Menu opciones: \n " +
-                        "1: Crear nueva entrada. \n " +
-                        "2: Borrar entrada existente. \n " +
-                        "3: Mostrar entradas recientes. \n " +
-                        "4: SALIR. \n");
+                "Menu options: \n " +
+                        "1: Post new entry. \n " +
+                        "2: Delete existing entry. \n " +
+                        "3: Show most recent entries. \n " +
+                        "4: Exit program. \n");
         MenuOpciones opciones = MenuOpciones.values()[(enterInput(1,4)-1)];
         switch (opciones){
             case POST:
@@ -40,9 +40,9 @@ public class BlogMain {
         return true;
     }
 
-    public void showRecent10 (){
+    private void showRecent10 (){
         //Muestra las ultimos 10 entradas (Entry) en entries
-        System.out.printf("Ultimas 10 entradas: \n");
+        System.out.printf("Most recent 10 entries: \n");
         int entriesSize = entries.size() - 1;
         int recent10 = entriesSize - 9;
         if (recent10 < 0){recent10 = 0;}
@@ -52,40 +52,40 @@ public class BlogMain {
         }
     }
 
-    public void postEntry(){
+    private void postEntry(){
         //Genero nuevo entrada (Entry) para entries
         EntryBuilder builder = new EntryBuilder();
-        System.out.printf("Titulo de entrada: \n");
+        System.out.printf("Entry title: \n");
         builder.setTitle(enterInput());
-        System.out.printf("Cuerpo de entrada: \n");
+        System.out.printf("Entry body: \n");
         builder.setText(enterInput());
         boolean loopFlag = true;
         while (loopFlag) {
             System.out.printf(
-                    "Crear entrada opciones: \n " +
-                            "1: Cambiar titulo: \"%s\" \n " +
-                            "2: Cambiar texto: \"%s\" \n " +
-                            "3: Agregar tag: \"%s\" \n " +
-                            "4: Remover tag. \n " +
-                            "5: Crear entrada. \n " +
-                            "6: Cancelar entrada. \n",
+                    "Post new entry options: \n " +
+                            "1: Change title: \"%s\" \n " +
+                            "2: Change body: \"%s\" \n " +
+                            "3: Add tag: \"%s\" \n " +
+                            "4: Remove tag. \n " +
+                            "5: Post entry. \n " +
+                            "6: Cancel entry. \n",
                     builder.getTitle(),builder.getText(),builder.getTags());
             CrearOpciones opciones = CrearOpciones.values()[(enterInput(1, 6) - 1)];
             switch (opciones) {
                 case TITULO:
-                    System.out.printf("Titulo de entrada: \n");
+                    System.out.printf("Entry title: \n");
                     builder.setTitle(enterInput());
                     break;
                 case TEXTO:
-                    System.out.printf("Cuerpo de entrada: \n");
+                    System.out.printf("Entry body: \n");
                     builder.setText(enterInput());
                     break;
                 case ADDTAGS:
-                    System.out.printf("Ingresar tag: \n");
+                    System.out.printf("Add tag: \n");
                     builder.addTags(enterInput());
                     break;
                 case REMOVETAGS:
-                    System.out.printf("Remover tag: \n");
+                    System.out.printf("Remove tag: \n");
                     builder.removeTags(enterInput());
                     break;
                 case CREAR:
@@ -96,9 +96,9 @@ public class BlogMain {
         }
     }
 
-    public void deleteEntry(){
+    private void deleteEntry(){
         //borrar entry
-        System.out.printf("Ingrese ID de entrada a remover: \n");
+        System.out.printf("Enter entry's id: \n");
         int id = enterInput(1,200);
         Entry aux = null;
         for (Entry entry: entries){
@@ -111,11 +111,11 @@ public class BlogMain {
         //en aux estara la entra si es encontrada
         //importante que este afuera del for loop o sino me genera la excepcion java.util.ConcurrentModificationException
         if (aux != null){
-            entries.remove(entries.indexOf(aux));
+            entries.remove(aux);
         }
     }
 
-    public static int enterInput(int min,int max){
+    private int enterInput(int min,int max){
         //funcion para conseguir entero del usuario
         //min = rango inferior / max rango superior
         Scanner input = new Scanner(System.in);
@@ -129,11 +129,10 @@ public class BlogMain {
         return number;
     }
 
-    public static String enterInput(){
+    private String enterInput(){
         //funcion para conseguir texto del usuario
         Scanner input = new Scanner(System.in);
-        String str = input.nextLine();
-        return str;
+        return input.nextLine();
     }
 
     public static void main (String[] args){

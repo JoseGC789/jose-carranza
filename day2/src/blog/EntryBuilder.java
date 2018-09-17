@@ -8,7 +8,6 @@ public class EntryBuilder {
     private static int id = 0;
     private String title;
     private String text;
-    private Date date;
     private Set<String> tags = new HashSet<>();
 
     public String getTitle() {
@@ -19,7 +18,7 @@ public class EntryBuilder {
         title = title.trim();
         //limpio blancos
         if(title == null || title.isEmpty()) {
-            title = "Sin titulo";
+            title = "Untitled";
         }
         this.title = title;
     }
@@ -32,7 +31,7 @@ public class EntryBuilder {
         text = text.trim();
         //limpio blancos
         if(text == null || text.isEmpty()) {
-            text = "Sin texto";
+            text = "No text";
         }
         this.text = text;
     }
@@ -56,9 +55,7 @@ public class EntryBuilder {
     public Entry buildEntry (){
         //genero entry
         id++;
-        this.date = new Date();
-        Entry entry = new Entry(id,title,text,date,tags);
-        return entry;
+        return new Entry(id,title,text,new Date(),tags);
     }
 
 }

@@ -18,30 +18,14 @@ public class Entry {
         this.tags = tags;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public Set<String> getTags() {
-        return tags;
-    }
-
     public int getId() {
         return id;
     }
 
     @Override
     public String toString() {
-        return "Entrada: " + id + " {\n" +
-                "\tTitulo='" + title + "\'\n" +
+        return "Entry: " + id + " {\n" +
+                "\tTitle='" + title + "\'\n" +
                 "\tText='" + text + "\'\n" +
                 "\tdate='" + date + "\'\n" +
                 "\ttags='" + tags + "\'\n" +
