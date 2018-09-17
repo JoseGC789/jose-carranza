@@ -16,7 +16,7 @@ public class EntryBuilder {
 
     public void setTitle(String title) {
         title = title.trim();
-        //limpio blancos
+        //clean whitespaces
         if(title == null || title.isEmpty()) {
             title = "Untitled";
         }
@@ -29,7 +29,7 @@ public class EntryBuilder {
 
     public void setText(String text) {
         text = text.trim();
-        //limpio blancos
+        //remove whitespaces
         if(text == null || text.isEmpty()) {
             text = "No text";
         }
@@ -42,7 +42,7 @@ public class EntryBuilder {
 
     public void addTags(String tag) {
         tag = tag.trim();
-        //limpio blancos
+        //clean whitespaces
         if(!(tag == null || tag.isEmpty())) {
             this.tags.add(tag);
         }
@@ -53,7 +53,7 @@ public class EntryBuilder {
     }
 
     public Entry buildEntry (){
-        //genero entry
+        //build entry
         id++;
         return new Entry(id,title,text,new Date(),tags);
     }

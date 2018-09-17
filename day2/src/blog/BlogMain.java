@@ -16,15 +16,15 @@ public class BlogMain {
     }
 
     private boolean selectAction(){
-        //menu opciones. aca el usuario selecciona entre las opciones que hay en MenuOpciones
+        //Select action options. user inputs options to control the program's flow
         System.out.printf(
                 "Menu options: \n " +
                         "1: Post new entry. \n " +
                         "2: Delete existing entry. \n " +
                         "3: Show most recent entries. \n " +
                         "4: Exit program. \n");
-        MenuOpciones opciones = MenuOpciones.values()[(enterInput(1,4)-1)];
-        switch (opciones){
+        SelectActionOptions options = SelectActionOptions.values()[(enterInput(1,4)-1)];
+        switch (options){
             case POST:
                 postEntry();
                 break;
@@ -34,14 +34,14 @@ public class BlogMain {
             case SHOW10:
                 showRecent10();
                 break;
-            case SALIR:
+            case EXIT:
                 return false;
         }
         return true;
     }
 
     private void showRecent10 (){
-        //Muestra las ultimos 10 entradas (Entry) en entries
+        //show most recent 10 entries to the user
         System.out.printf("Most recent 10 entries: \n");
         int entriesSize = entries.size() - 1;
         int recent10 = entriesSize - 9;
@@ -53,7 +53,7 @@ public class BlogMain {
     }
 
     private void postEntry(){
-        //Genero nuevo entrada (Entry) para entries
+        //post new entry to the proper array list (entries)
         EntryBuilder builder = new EntryBuilder();
         System.out.printf("Entry title: \n");
         builder.setTitle(enterInput());
@@ -70,13 +70,13 @@ public class BlogMain {
                             "5: Post entry. \n " +
                             "6: Cancel entry. \n",
                     builder.getTitle(),builder.getText(),builder.getTags());
-            CrearOpciones opciones = CrearOpciones.values()[(enterInput(1, 6) - 1)];
-            switch (opciones) {
-                case TITULO:
+            PostEntryOptions options = PostEntryOptions.values()[(enterInput(1, 6) - 1)];
+            switch (options) {
+                case TITLE:
                     System.out.printf("Entry title: \n");
                     builder.setTitle(enterInput());
                     break;
-                case TEXTO:
+                case TEXT:
                     System.out.printf("Entry body: \n");
                     builder.setText(enterInput());
                     break;
@@ -88,36 +88,37 @@ public class BlogMain {
                     System.out.printf("Remove tag: \n");
                     builder.removeTags(enterInput());
                     break;
-                case CREAR:
+                case CREATE:
                     this.entries.add(builder.buildEntry());
-                case CANCELAR:
+                case CANCEL:
                     loopFlag = false;
             }
         }
     }
 
     private void deleteEntry(){
-        //borrar entry
+        //delete entry
         System.out.printf("Enter entry's id: \n");
         int id = enterInput(1,200);
         Entry aux = null;
         for (Entry entry: entries){
-            //buscador id
+            //ID select
             if (entry.getId()==id){
                 aux = entry;
             }
         }
-        //esta parte del codigo borra la entrada si la encuentra.
-        //en aux estara la entra si es encontrada
-        //importante que este afuera del for loop o sino me genera la excepcion java.util.ConcurrentModificationException
+        //Deleting entry if found
+        //aux may have the entry otherwise it will just be null
+        //IMPORTANT: an entry cannot be deleted in the for loop else java.util.ConcurrentModificationException is thrown
         if (aux != null){
             entries.remove(aux);
         }
     }
 
     private int enterInput(int min,int max){
-        //funcion para conseguir entero del usuario
-        //min = rango inferior / max rango superior
+        //get a correct number from user function.
+        //may get upgraded to private package or public in the future
+        //min = inferior limit / max = superior limit
         Scanner input = new Scanner(System.in);
         int number;
         do {
@@ -130,7 +131,8 @@ public class BlogMain {
     }
 
     private String enterInput(){
-        //funcion para conseguir texto del usuario
+        //get text from user function
+        //may get upgraded to private package or public in the future
         Scanner input = new Scanner(System.in);
         return input.nextLine();
     }

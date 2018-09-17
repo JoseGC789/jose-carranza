@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 public class Entry {
-    private final int id; //clave
+    private final int id; //KEY
     private final String title;
     private final String text;
     private final Date date;
