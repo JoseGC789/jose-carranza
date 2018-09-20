@@ -82,6 +82,8 @@ public class GameMain {
             }else{
                 if (again == 'n'){
                     state = State.END;
+                }else{
+                    valid = false;
                 }
             }
         }
