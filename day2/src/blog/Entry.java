@@ -1,6 +1,7 @@
 package blog;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 public class Entry {
@@ -20,31 +21,39 @@ public class Entry {
 
     @Override
     public String toString() {
-        return "Entry: " + id + " {\n" +
-                "\tTitle='" + title + "\'\n" +
-                "\tText='" + text + "\'\n" +
-                "\tdate='" + date + "\'\n" +
-                "\ttags='" + tags + "\'\n" +
+        return "Entry: " + this.id + " {\n" +
+                "\tTitle='" + this.title + "\'\n" +
+                "\tText='" + this.text + "\'\n" +
+                "\tdate='" + this.date + "\'\n" +
+                "\ttags='" + this.tags + "\'\n" +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entry entry = (Entry) o;
+        return id == entry.id;
+    }
+
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     public Set<String> getTags() {
-        return tags;
+        return this.tags;
     }
 }

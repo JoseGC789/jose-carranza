@@ -10,6 +10,10 @@ public class EntryBuilder {
     private String text;
     private Set<String> tags = new HashSet<>();
 
+    public static int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -37,7 +41,7 @@ public class EntryBuilder {
     }
 
     public Set<String> getTags() {
-        return tags;
+        return this.tags;
     }
 
     public void addTags(String tag) {
@@ -55,7 +59,7 @@ public class EntryBuilder {
     public Entry buildEntry (){
         //build entry
         id++;
-        return new Entry(id,title,text,new Date(),tags);
+        return new Entry(id,this.title,this.text,new Date(),this.tags);
     }
 
 }

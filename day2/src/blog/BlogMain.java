@@ -7,12 +7,13 @@ import java.util.Scanner;
 public class BlogMain {
     private List<Entry> entries = new ArrayList<>();
 
-    private BlogMain() {
+    private void begin() {
         boolean valid = true;
         //loop
         while (valid) {
             valid = selectAction();
         }
+        System.out.printf("\n Fin");
     }
 
     private boolean selectAction(){
@@ -103,15 +104,15 @@ public class BlogMain {
 
     private void deleteEntry(){
         //delete entry
+        if (entries.size()==0){
+            System.out.printf("There aren't any entries. \n");
+            return;
+        }
         System.out.printf("Enter entry's id: \n");
-        int id = enterInput(1,200);
-        Entry aux = null;
-        for (Entry entry: entries){
-            //ID select
-            if (entry.getId()==id){
-                entries.remove(entry);
-                break;
-            }
+        int id = enterInput(1,EntryBuilder.getId());
+        Entry entry = new Entry(id,null,null,null,null);
+        if (entries.contains(entry)){
+            entries.remove(entry);
         }
     }
 
@@ -138,6 +139,6 @@ public class BlogMain {
     }
 
     public static void main (String[] args){
-        new BlogMain();
+        new BlogMain().begin();
     }
 }
