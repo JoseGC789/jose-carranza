@@ -19,14 +19,7 @@ public class Player {
         int amount ;
         System.out.printf("Enter the number of sticks to take. Number must be either 1 or 2, %s: ", this.name);
         amount = enterInput(1,2);
-
-        switch (amount){
-            case 1:
-                return sticks.removeOne();
-            case 2:
-                return sticks.removeTwo();
-        }
-        return true;
+        return sticks.removeSticks(amount);
     }
 
     private int enterInput(int min,int max){

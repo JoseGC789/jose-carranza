@@ -16,17 +16,6 @@ public class GameMain {
         int i = 0;
         while (state != State.END){
             switch (state){
-                case START:
-                    //initialize game
-                    //initialize classes
-                    sticks = new SticksCounter();
-                    player1 = new Player("Player 1", sticks);
-                    player2 = new Player("Player 2", sticks);
-
-                    player = player1;
-                    i = 1;
-                    state = State.PLAYING;
-
                 case PLAYING:
                     //game's body
                     boolean hasSticks;
@@ -55,7 +44,7 @@ public class GameMain {
                     char again;
                     boolean valid = false;
                     //check input
-                    while (!(valid)) {
+                    while (!valid) {
                         valid = true;
                         Scanner input = new Scanner(System.in);
                         again = input.next().charAt(0);
@@ -69,6 +58,19 @@ public class GameMain {
                                 break;
                         }
                     }
+                    break;
+
+                case START:
+                    //initialize game
+                    //initialize classes
+                    sticks = new SticksCounter();
+                    player1 = new Player("Player 1", sticks);
+                    player2 = new Player("Player 2", sticks);
+
+                    player = player1;
+                    i = 1;
+                    state = State.PLAYING;
+                    break;
             }
         }
         //success!
