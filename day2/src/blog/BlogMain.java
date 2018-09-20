@@ -31,8 +31,9 @@ public class BlogMain {
             case DELETE:
                 deleteEntry();
                 break;
-            case SHOW10:
-                showRecent10();
+            case SHOW:
+                int showNumber = 10;
+                showRecent(showNumber);
                 break;
             case EXIT:
                 return false;
@@ -40,14 +41,18 @@ public class BlogMain {
         return true;
     }
 
-    private void showRecent10 (){
-        //show most recent 10 entries to the user
-        System.out.printf("Most recent 10 entries: \n");
-        int entriesSize = entries.size() - 1;
-        int recent10 = entriesSize - 9;
-        if (recent10 < 0){recent10 = 0;}
+    private void showRecent(int showNumber){
+        //show most recent entries to the user
+        int entriesSize = entries.size();
+        if (entriesSize == 0){
+            System.out.printf("There aren't any entries. \n\n");
+            return;
+        }
+        System.out.printf("Most recent %d entries: \n", showNumber);
+        int recent = entriesSize - showNumber;
+        if (recent < 0){recent = 0;}
 
-        for (int i = entriesSize; i >= recent10 ; i--){
+        for (int i = entriesSize-1; i >= recent ; i--){
             System.out.printf("%s\n",entries.get(i));
         }
     }
@@ -104,14 +109,9 @@ public class BlogMain {
         for (Entry entry: entries){
             //ID select
             if (entry.getId()==id){
-                aux = entry;
+                entries.remove(entry);
+                break;
             }
-        }
-        //Deleting entry if found
-        //aux may have the entry otherwise it will just be null
-        //IMPORTANT: an entry cannot be deleted in the for loop else java.util.ConcurrentModificationException is thrown
-        if (aux != null){
-            entries.remove(aux);
         }
     }
 
