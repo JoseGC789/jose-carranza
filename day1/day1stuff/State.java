@@ -1,4 +1,5 @@
 package day1stuff;
 
-public enum State {START, PLAYING, CONCLUDED, END
+public enum State {
+    START, PLAYING, CONCLUDED, END
 }

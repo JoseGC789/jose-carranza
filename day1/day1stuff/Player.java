@@ -1,5 +1,6 @@
 package day1stuff;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Player {
@@ -22,7 +23,15 @@ public class Player {
         return sticks.removeSticks(amount);
     }
 
-    private int enterInput(int min,int max){
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    private int enterInput(int min, int max){
         //get a number from user function
         //min = inferior range/ max superior range
         Scanner input = new Scanner(System.in);
