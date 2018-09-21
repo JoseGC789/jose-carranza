@@ -1,15 +1,18 @@
 package blog;
 
 import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
 
-public class Entry {
-    private final int id; //KEY
-    private final String title;
-    private final String text;
-    private final Date date;
-    private final Set<String> tags;
+public final class Entry {
+    private int id; //KEY
+    private String title;
+    private String text;
+    private Date date;
+    private Set<String> tags;
+    private static EntryBuilder builder = new EntryBuilder();
+
+    public Entry() {
+    }
 
     public Entry(int id, String title, String text, Date date, Set<String> tags) {
         this.id = id;
@@ -55,5 +58,9 @@ public class Entry {
 
     public Set<String> getTags() {
         return this.tags;
+    }
+
+    public static EntryBuilder getBuilder() {
+        return builder;
     }
 }

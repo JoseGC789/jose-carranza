@@ -60,11 +60,9 @@ public class BlogMain {
 
     private void postEntry(){
         //post new entry to the proper array list (entries)
-        EntryBuilder builder = new EntryBuilder();
-        System.out.printf("Entry title: \n");
-        builder.setTitle(enterInput());
-        System.out.printf("Entry body: \n");
-        builder.setText(enterInput());
+
+        Entry.getBuilder().setTitle();
+        Entry.getBuilder().setText();
         boolean loopFlag = true;
         while (loopFlag) {
             System.out.printf(
@@ -75,27 +73,23 @@ public class BlogMain {
                             "4: Remove tag. \n " +
                             "5: Post entry. \n " +
                             "6: Cancel entry. \n",
-                    builder.getTitle(),builder.getText(),builder.getTags());
+                    Entry.getBuilder().getTitle(),Entry.getBuilder().getText(),Entry.getBuilder().getTags());
             PostEntryOptions options = PostEntryOptions.values()[(enterInput(1, PostEntryOptions.values().length) - 1)];
             switch (options) {
                 case TITLE:
-                    System.out.printf("Entry title: \n");
-                    builder.setTitle(enterInput());
+                    Entry.getBuilder().setTitle();
                     break;
                 case TEXT:
-                    System.out.printf("Entry body: \n");
-                    builder.setText(enterInput());
+                    Entry.getBuilder().setText();
                     break;
                 case ADDTAGS:
-                    System.out.printf("Add tag: \n");
-                    builder.addTags(enterInput());
+                    Entry.getBuilder().addTags();
                     break;
                 case REMOVETAGS:
-                    System.out.printf("Remove tag: \n");
-                    builder.removeTags(enterInput());
+                    Entry.getBuilder().removeTags();
                     break;
                 case CREATE:
-                    this.entries.add(builder.buildEntry());
+                    this.entries.add(Entry.getBuilder().buildEntry());
                 case CANCEL:
                     loopFlag = false;
             }
@@ -116,7 +110,7 @@ public class BlogMain {
         }
     }
 
-    private int enterInput(int min,int max){
+    public static int enterInput(int min,int max){
         //get a correct number from user function.
         //may get upgraded to private package or public in the future
         //min = inferior limit / max = superior limit
@@ -131,7 +125,7 @@ public class BlogMain {
         return number;
     }
 
-    private String enterInput(){
+    public static String enterInput(){
         //get text from user function
         //may get upgraded to private package or public in the future
         Scanner input = new Scanner(System.in);

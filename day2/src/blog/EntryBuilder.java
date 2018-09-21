@@ -18,7 +18,9 @@ public class EntryBuilder {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle() {
+        System.out.printf("Entry title: \n");
+        String title = BlogMain.enterInput();
         title = title.trim();
         //clean whitespaces
         if(title == null || title.isEmpty()) {
@@ -31,7 +33,9 @@ public class EntryBuilder {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText() {
+        System.out.printf("Entry body: \n");
+        String text = BlogMain.enterInput();
         text = text.trim();
         //remove whitespaces
         if(text == null || text.isEmpty()) {
@@ -44,7 +48,9 @@ public class EntryBuilder {
         return this.tags;
     }
 
-    public void addTags(String tag) {
+    public void addTags() {
+        System.out.printf("Add tag: \n");
+        String tag = BlogMain.enterInput();
         tag = tag.trim();
         //clean whitespaces
         if(!(tag == null || tag.isEmpty())) {
@@ -52,7 +58,9 @@ public class EntryBuilder {
         }
     }
 
-    public void removeTags(String tag) {
+    public void removeTags() {
+        String tag = BlogMain.enterInput();
+        System.out.printf("Remove tag: \n");
         this.tags.remove(tag);
     }
 
