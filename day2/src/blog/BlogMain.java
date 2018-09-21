@@ -25,6 +25,7 @@ public class BlogMain {
                         "3: Show most recent entries. \n " +
                         "4: Exit program. \n");
         SelectActionOptions options = SelectActionOptions.values()[(enterInput(1,4)-1)];
+        SelectActionOptions options3 = SelectActionOptions.values()[(enterInput(1,4)-1)];
         switch (options){
             case POST:
                 postEntry();
