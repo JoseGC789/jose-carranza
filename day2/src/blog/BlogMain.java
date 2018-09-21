@@ -24,7 +24,7 @@ public class BlogMain {
                         "2: Delete existing entry. \n " +
                         "3: Show most recent entries. \n " +
                         "4: Exit program. \n");
-        SelectActionOptions options = SelectActionOptions.values()[(enterInput(1,4)-1)];
+        SelectActionOptions options = SelectActionOptions.values()[(enterInput(1, SelectActionOptions.values().length) - 1)];
         switch (options){
             case POST:
                 postEntry();
@@ -76,7 +76,7 @@ public class BlogMain {
                             "5: Post entry. \n " +
                             "6: Cancel entry. \n",
                     builder.getTitle(),builder.getText(),builder.getTags());
-            PostEntryOptions options = PostEntryOptions.values()[(enterInput(1, 6) - 1)];
+            PostEntryOptions options = PostEntryOptions.values()[(enterInput(1, PostEntryOptions.values().length) - 1)];
             switch (options) {
                 case TITLE:
                     System.out.printf("Entry title: \n");
