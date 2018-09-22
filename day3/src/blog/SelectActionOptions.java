@@ -1,5 +1,5 @@
 package blog;
 
 public enum SelectActionOptions {
-    POST,DELETE,SHOW,CHANGE,EXIT
+    POST,DELETE, RECENT,SEARCH,CHANGE,EXIT
 }

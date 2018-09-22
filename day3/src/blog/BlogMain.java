@@ -1,6 +1,8 @@
 package blog;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,8 +47,9 @@ public class BlogMain {
                         "1: Post new entry. \n " +
                         "2: Delete existing entry. \n " +
                         "3: Show most recent entries. \n " +
-                        "4: Change user. \n " +
-                        "5: Exit program. \n");
+                        "4: Search by filter \n " +
+                        "5: Change user. \n " +
+                        "6: Exit program. \n");
         SelectActionOptions options = SelectActionOptions.values()[(enterInput(1, SelectActionOptions.values().length) - 1)];
         switch (options) {
             case POST:
@@ -55,9 +58,12 @@ public class BlogMain {
             case DELETE:
                 deleteEntry();
                 break;
-            case SHOW:
+            case RECENT:
                 int showNumber = 10;
                 showRecent(showNumber);
+                break;
+            case SEARCH:
+                search();
                 break;
             case CHANGE:
                 login();
@@ -69,20 +75,44 @@ public class BlogMain {
     }
 
     private void showRecent(int showNumber) {
-        //show most recent entries to the user
-        int entriesSize = entries.size();
-        if (entriesSize == 0) {
-            System.out.printf("There aren't any entries. \n\n");
-            return;
-        }
-        System.out.printf("Most recent %d entries: \n", showNumber);
-        int recent = entriesSize - showNumber;
-        if (recent < 0) {
-            recent = 0;
-        }
+        //show most recent entries with a searcher
+        Searcher<Integer> searcher = new Searcher<>();
+        searcher.setFilter(new FilterRecent(this.entries));
+        searcher.search(showNumber);
+    }
 
-        for (int i = entriesSize - 1; i >= recent; i--) {
-            System.out.printf("%s\n", entries.get(i));
+    private void search() {
+        //search entries using specified filter
+        Searcher<String> stringSearcher = new Searcher<>();
+        Searcher<User> userSearcher = new Searcher<>();
+        Searcher<Rangeable> dateSearcher = new Searcher<>();
+        System.out.printf(
+                "Filter by options: \n " +
+                        "1: TAG. \n " +
+                        "2: TEXT. \n " +
+                        "3: USER. \n " +
+                        "4: DATES. \n ");
+        Filters options = Filters.values()[(enterInput(1, Filters.values().length) - 1)];
+        switch (options) {
+            case TAG:
+                stringSearcher.setFilter(new FilterTag(this.entries));
+                System.out.printf("Enter tag: ");
+                stringSearcher.search(enterInput());
+                break;
+            case TEXT:
+                stringSearcher.setFilter(new FilterText(this.entries));
+                System.out.printf("Enter text: ");
+                stringSearcher.search(enterInput());
+                break;
+            case USER:
+                userSearcher.setFilter(new FilterPostingUser(this.entries));
+                System.out.printf("Enter text: ");
+                userSearcher.search(new User(enterInput(), null));
+                break;
+            case DATES:
+                dateSearcher.setFilter(new FilterBetweenDates(this.entries));
+                dateSearcher.search(new DateRange());
+                break;
         }
     }
 
@@ -119,6 +149,7 @@ public class BlogMain {
                 case CREATE:
                     this.entries.add(Entry.getBuilder().buildEntry());
                 case CANCEL:
+                    Entry.getBuilder().clear();
                     loopFlag = false;
             }
         }
@@ -151,7 +182,7 @@ public class BlogMain {
                 input.next();
             }
             number = input.nextInt();
-            if (number > max){
+            if (number > max || number < min){
                 System.out.printf("Value doesn't exist\n");
             }
         } while ((number < min) || (number > max));
@@ -165,7 +196,12 @@ public class BlogMain {
         return input.nextLine();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {/*
+        List<Entry> entries = new ArrayList<>();
+        entries.add(new Entry(5,"asd", "asd", new Date(),null,null));
+        Searcher<Rangeable> dateSearcher = new Searcher<>();
+        dateSearcher.setFilter(new FilterBetweenDates(entries));
+        dateSearcher.search(new DateRange());*/
         new BlogMain().begin();
     }
 }

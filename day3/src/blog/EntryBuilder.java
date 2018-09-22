@@ -79,4 +79,8 @@ public final class EntryBuilder {
         return new Entry(id,this.title,this.text,new Date(),this.owner,this.tags);
     }
 
+    public void clear(){
+        tags = new HashSet<>();
+    }
+
 }
