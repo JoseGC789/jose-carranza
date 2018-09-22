@@ -91,6 +91,7 @@ public class BlogMain {
                 case CREATE:
                     this.entries.add(Entry.getBuilder().buildEntry());
                 case CANCEL:
+                    Entry.getBuilder().clear();
                     loopFlag = false;
             }
         }

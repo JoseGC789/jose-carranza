@@ -70,4 +70,8 @@ public class EntryBuilder {
         return new Entry(id,this.title,this.text,new Date(),this.tags);
     }
 
+    public void clear(){
+        tags = new HashSet<>();
+    }
+
 }
