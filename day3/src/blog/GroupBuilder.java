@@ -26,12 +26,12 @@ public final class GroupBuilder {
         }
     }
 
-    public static List<Group> getGroupRepository() {
+    public final List<Group> getGroupRepository() {
         return groupRepository;
     }
 
     public Group buildGroup (){
-
+        groupRepository.add(new Group(this.groupName));
         return new Group(this.groupName);
     }
 }

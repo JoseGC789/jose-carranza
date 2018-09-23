@@ -9,6 +9,7 @@ public class FilterRecent implements Filterable {
         this.entries = entries;
     }
 
+
     @Override
     public <T> void search(T argument) {
         //filtering recent X amount of searchables

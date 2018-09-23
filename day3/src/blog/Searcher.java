@@ -1,10 +1,10 @@
 package blog;
 
 
-public class Searcher <T> {
+public class Searcher {
     private Filterable filter;
 
-    public void search(T argument){
+    public<T> void search( T argument){
         //searcher class
         filter.search(argument);
     }

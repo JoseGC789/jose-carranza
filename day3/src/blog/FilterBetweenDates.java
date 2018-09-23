@@ -2,8 +2,8 @@ package blog;
 
 import java.util.List;
 
-public class FilterBetweenDates implements Filterable {
-    List<? extends Entry> entries;
+public  class  FilterBetweenDates implements Filterable {
+    List<Entry> entries;
 
     public FilterBetweenDates(List<Entry> entries) {
         this.entries = entries;
@@ -11,15 +11,19 @@ public class FilterBetweenDates implements Filterable {
 
     @Override
     public <T> void search(T argument) {
-        //Filtering by anonymous class Rangeable of Entry
-        //requires anonymous class Rangeable type to work
+        //Filtering by anonymous class DateRange of Entry
+        boolean found = false;
         System.out.printf("Searching by %s: \n", argument);
-        Rangeable range = (Rangeable) argument;
+        DateRange range = (DateRange) argument;
         for (Entry entry: entries){
             if (range.isAfterInferior(entry.getDate()) && range.isBeforeUpper(entry.getDate())){
                 System.out.printf("%s",entry);
+                found = true;
             }
         }
-
+        if (!found){
+            System.out.printf("No entries match the criteria.\n");
+        }
     }
+
 }

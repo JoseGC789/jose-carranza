@@ -76,7 +76,7 @@ public final class EntryBuilder {
     public Entry buildEntry (){
         //build entry
         id++;
-        return new Entry(id,this.title,this.text,new Date(),this.owner,this.tags);
+        return new Entry(id, this.title, this.text, new Date(), this.owner, this.tags);
     }
 
     public void clear(){

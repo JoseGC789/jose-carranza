@@ -2,19 +2,21 @@ package blog;
 
 import java.util.Date;
 
-public class DateRange implements Rangeable {
-    //swap this later to calendar
+public class DateRange{
     Date upper;
     Date inferior;
 
+    @SuppressWarnings("deprecation")
     public DateRange() {
-        //fix this after the swap
+        //lazy implementation of custom dates
+        //change to calendar at a later date
+        @SuppressWarnings( "deprecation" )
         int year;
         int month;
         int day;
         System.out.printf("Enter upper range data\n");
         System.out.printf("Year: ");
-        year = BlogMain.enterInput(1990,2100);
+        year = BlogMain.enterInput(1990,2100)-1900;
         System.out.printf("Month: ");
         month = BlogMain.enterInput(1,12);
         System.out.printf("Day: ");
@@ -22,7 +24,7 @@ public class DateRange implements Rangeable {
         this.upper = new Date(year,month,day);
         System.out.printf("Enter bottom range data\n");
         System.out.printf("Year: ");
-        year = BlogMain.enterInput(1990,2100);
+        year = BlogMain.enterInput(1990,2100)-1900;
         System.out.printf("Month: ");
         month = BlogMain.enterInput(1,12);
         System.out.printf("Day: ");
@@ -30,14 +32,12 @@ public class DateRange implements Rangeable {
         this.inferior = new Date(year,month,day);
     }
 
-    @Override
-    public boolean isBeforeUpper(Date date) {
-        return upper.after(date);
+    public boolean isBeforeUpper(Date argument) {
+        return this.upper.before(argument);
     }
 
-    @Override
-    public boolean isAfterInferior(Date date) {
-        return inferior.after(date);
+    public boolean isAfterInferior(Date argument) {
+        return this.inferior.after(argument);
     }
 
     @Override
@@ -47,4 +47,5 @@ public class DateRange implements Rangeable {
                 ", inferior=" + inferior +
                 '}';
     }
+
 }

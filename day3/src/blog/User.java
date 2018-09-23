@@ -7,13 +7,13 @@ import java.util.Set;
 public final class User implements Subscribable, Authenticable{
     private String name;
     private String password;
-    private Set<Subscribable> subscriptions;
+    private Set<Subscribable> subscriptors;
     private static UserBuilder builder = new UserBuilder();
 
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.subscriptions = new HashSet<>();
+        this.subscriptors = new HashSet<>();
     }
 
     @Override
@@ -26,13 +26,13 @@ public final class User implements Subscribable, Authenticable{
         if (target.equals(this)){
             System.out.printf("You can't subscribe to yourself dummy!\n");
         }else{
-            this.subscriptions.add(target);
+            this.subscriptors.add(target);
         }
     }
 
     @Override
     public void unsubscribe(Subscribable target) {
-        this.subscriptions.remove(target);
+        this.subscriptors.remove(target);
     }
 
     @Override
@@ -47,6 +47,7 @@ public final class User implements Subscribable, Authenticable{
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
+                ", subscriptors=" + subscriptors +
                 '}';
     }
 
@@ -54,8 +55,8 @@ public final class User implements Subscribable, Authenticable{
         return name;
     }
 
-    public Set<Subscribable> getSubscriptions() {
-        return subscriptions;
+    public Set<Subscribable> getSubscriptors() {
+        return subscriptors;
     }
 
     public static UserBuilder getBuilder() {

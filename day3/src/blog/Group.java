@@ -5,8 +5,8 @@ import java.util.Objects;
 import java.util.Set;
 
 public final class Group implements Subscribable {
-    private Set<Subscribable> subscriptions = new HashSet<>();
     private String name;
+    private Set<Subscribable> subscriptors = new HashSet<>();
     private static GroupBuilder builder = new GroupBuilder();
     public Group(String name) {
         this.name = name;
@@ -23,23 +23,23 @@ public final class Group implements Subscribable {
     @Override
     public String toString() {
         return "Group{" +
-                "subscriptions=" + subscriptions +
-                ", name='" + name + '\'' +
-                "}\n";
+                "name='" + name + '\'' +
+                ", subscriptors=" + subscriptors +
+                '}';
     }
 
     @Override
     public void subscribe(Subscribable target) {
-        this.subscriptions.add(target);
+        this.subscriptors.add(target);
     }
 
     @Override
     public void unsubscribe(Subscribable target) {
-        this.subscriptions.remove(target);
+        this.subscriptors.remove(target);
     }
 
-    public Set<Subscribable> getSubscriptions() {
-        return subscriptions;
+    public Set<Subscribable> getSubscriptors() {
+        return subscriptors;
     }
 
     public String getName() {

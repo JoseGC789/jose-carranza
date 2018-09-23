@@ -1,5 +1,5 @@
 package blog;
 
 public enum Filters {
-    TAG, TEXT, USER, DATES
+    RECENT, TAG, TEXT, USER, DATES
 }

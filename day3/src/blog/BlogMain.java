@@ -2,7 +2,6 @@ package blog;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,10 +45,11 @@ public class BlogMain {
                 "Menu options: \n " +
                         "1: Post new entry. \n " +
                         "2: Delete existing entry. \n " +
-                        "3: Show most recent entries. \n " +
-                        "4: Search by filter \n " +
-                        "5: Change user. \n " +
-                        "6: Exit program. \n");
+                        "3: Search by filter \n " +
+                        "4: Create group. \n " +
+                        "5: Subscribe to something. \n " +
+                        "6: Change user. \n " +
+                        "7: Exit program. \n");
         SelectActionOptions options = SelectActionOptions.values()[(enterInput(1, SelectActionOptions.values().length) - 1)];
         switch (options) {
             case POST:
@@ -58,12 +58,14 @@ public class BlogMain {
             case DELETE:
                 deleteEntry();
                 break;
-            case RECENT:
-                int showNumber = 10;
-                showRecent(showNumber);
-                break;
             case SEARCH:
                 search();
+                break;
+            case GROUP:
+                createGroup();
+                break;
+            case SUBSCRIBE:
+                subscribe();
                 break;
             case CHANGE:
                 login();
@@ -74,46 +76,80 @@ public class BlogMain {
         return true;
     }
 
-    private void showRecent(int showNumber) {
-        //show most recent entries with a searcher
-        Searcher<Integer> searcher = new Searcher<>();
-        searcher.setFilter(new FilterRecent(this.entries));
-        searcher.search(showNumber);
+    private void subscribe(){
+        System.out.printf(
+                "Subscribe to:\n" +
+                        "1: User.\n" +
+                        "2: Group.");
+        int option = enterInput(1,2);
+        System.out.printf("Enter name: ");
+        if (option == 1){
+            User aux = new User(enterInput(),null);
+            int index = User.getBuilder().getUserRepository().indexOf(aux);
+            if (index == -1){
+                System.out.printf("User doesn't exist: ");
+                return;
+            }
+            Subscribable user = User.getBuilder().getUserRepository().get(index);
+            if (user != null){
+                user.subscribe(this.user);
+            }
+        }else{
+            Group aux = new Group(enterInput());
+            int index = Group.getBuilder().getGroupRepository().indexOf(aux);
+            if (index == -1){
+                System.out.printf("Group doesn't exist: ");
+                return;
+            }
+            Subscribable group = Group.getBuilder().getGroupRepository().get(index);
+            group.subscribe(this.user);
+        }
+    }
+
+    private void createGroup() {
+        Group.getBuilder().setGroupName();
+        Group.getBuilder().buildGroup();
     }
 
     private void search() {
         //search entries using specified filter
-        Searcher<String> stringSearcher = new Searcher<>();
-        Searcher<User> userSearcher = new Searcher<>();
-        Searcher<Rangeable> dateSearcher = new Searcher<>();
+        int showNumber = 10;
+        Searcher searcher = new Searcher();
         System.out.printf(
                 "Filter by options: \n " +
-                        "1: TAG. \n " +
-                        "2: TEXT. \n " +
-                        "3: USER. \n " +
-                        "4: DATES. \n ");
+                        "1: Show most recent entries. \n " +
+                        "2: Search by tag. \n " +
+                        "3: Search by text. \n " +
+                        "4: Search by user. \n " +
+                        "5: Search by date range. \n ");
         Filters options = Filters.values()[(enterInput(1, Filters.values().length) - 1)];
         switch (options) {
+            case RECENT:
+                //show most recent entries with a searcher
+                searcher.setFilter(new FilterRecent(this.entries));
+                searcher.search(showNumber);
+                break;
             case TAG:
-                stringSearcher.setFilter(new FilterTag(this.entries));
+                searcher.setFilter(new FilterTag(this.entries));
                 System.out.printf("Enter tag: ");
-                stringSearcher.search(enterInput());
+                searcher.search(enterInput());
                 break;
             case TEXT:
-                stringSearcher.setFilter(new FilterText(this.entries));
+                searcher.setFilter(new FilterText(this.entries));
                 System.out.printf("Enter text: ");
-                stringSearcher.search(enterInput());
+                searcher.search(enterInput());
                 break;
             case USER:
-                userSearcher.setFilter(new FilterPostingUser(this.entries));
+                searcher.setFilter(new FilterPostingUser(this.entries));
                 System.out.printf("Enter text: ");
-                userSearcher.search(new User(enterInput(), null));
+                searcher.search(new User(enterInput(), null));
                 break;
             case DATES:
-                dateSearcher.setFilter(new FilterBetweenDates(this.entries));
-                dateSearcher.search(new DateRange());
+                searcher.setFilter(new FilterBetweenDates(this.entries));
+                searcher.search(new DateRange());
                 break;
         }
+
     }
 
     private void postEntry(){
@@ -196,12 +232,7 @@ public class BlogMain {
         return input.nextLine();
     }
 
-    public static void main(String[] args) {/*
-        List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(5,"asd", "asd", new Date(),null,null));
-        Searcher<Rangeable> dateSearcher = new Searcher<>();
-        dateSearcher.setFilter(new FilterBetweenDates(entries));
-        dateSearcher.search(new DateRange());*/
+    public static void main(String[] args) {
         new BlogMain().begin();
     }
 }

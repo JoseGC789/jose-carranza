@@ -1,6 +1,6 @@
 package blog;
 
 
-public interface Filterable {
+public interface  Filterable {
     <T> void search (T argument);
 }
