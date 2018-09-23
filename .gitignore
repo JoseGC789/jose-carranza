@@ -6,4 +6,5 @@
 *.log
 *.idea
 *.dia
+*.dia~
 /out

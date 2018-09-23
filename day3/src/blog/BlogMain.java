@@ -1,9 +1,8 @@
 package blog;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import blog.search.*;
+import java.util.*;
 
 public class BlogMain {
     private User user;
@@ -15,7 +14,7 @@ public class BlogMain {
 
     private void login() {
         //get credentials from user
-        UserAuthenticator authenticator = new UserAuthenticator();
+        Authenticator authenticator = new Authenticator();
         authenticator.setUserName();
         authenticator.setUserPassword();
         this.user = authenticator.authenticate();
@@ -113,7 +112,6 @@ public class BlogMain {
 
     private void search() {
         //search entries using specified filter
-        int showNumber = 10;
         Searcher searcher = new Searcher();
         System.out.printf(
                 "Filter by options: \n " +
@@ -126,6 +124,12 @@ public class BlogMain {
         switch (options) {
             case RECENT:
                 //show most recent entries with a searcher
+                if (entries.isEmpty()){
+                    System.out.printf("No entries\n");
+                    return;
+                }
+                System.out.printf("Recent how many? ");
+                int showNumber = enterInput(1, this.entries.size());
                 searcher.setFilter(new FilterRecent(this.entries));
                 searcher.search(showNumber);
                 break;
@@ -183,10 +187,31 @@ public class BlogMain {
                     Entry.getBuilder().removeTags();
                     break;
                 case CREATE:
-                    this.entries.add(Entry.getBuilder().buildEntry());
+                    Entry entry = Entry.getBuilder().buildEntry();
+                    this.entries.add(entry);
+                    System.out.printf("Email post? (Y/N) \n");
+                    if (enterInput().toLowerCase().equals("y")){
+                        mail(entry);
+                    }
                 case CANCEL:
                     Entry.getBuilder().clear();
                     loopFlag = false;
+            }
+        }
+    }
+
+    private void mail(Entry entry){
+        if (User.getBuilder().getUserRepository().size() == 1) {
+            System.out.printf("You are the only user\n");
+            //only 1 user
+        } else {
+            System.out.printf("Enter recipient's username: ");
+            while (true) {
+                User user = new User(enterInput(), null);
+                if (User.getBuilder().getUserRepository().contains(user)){
+                    user.fileMail(entry);
+                    return;
+                }
             }
         }
     }
@@ -234,5 +259,7 @@ public class BlogMain {
 
     public static void main(String[] args) {
         new BlogMain().begin();
+
+
     }
 }

@@ -1,6 +1,6 @@
 package blog;
 
-import java.util.Calendar;
+import blog.search.Searchable;
 import java.util.Date;
 import java.util.Set;
 

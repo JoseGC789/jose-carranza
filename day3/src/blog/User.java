@@ -1,5 +1,7 @@
 package blog;
 
+import java.io.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -14,6 +16,19 @@ public final class User implements Subscribable, Authenticable{
         this.name = name;
         this.password = password;
         this.subscriptors = new HashSet<>();
+    }
+
+    public void fileMail(Entry entry) {
+        try {
+            FileWriter file = new FileWriter(this.getName() + " posts mail.txt", true);
+            BufferedWriter buffer = new BufferedWriter(file);
+            PrintWriter out = new PrintWriter(buffer);
+            out.println(entry.toString());
+            out.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override

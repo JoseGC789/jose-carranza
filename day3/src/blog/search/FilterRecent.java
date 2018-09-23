@@ -1,4 +1,4 @@
-package blog;
+package blog.search;
 
 import java.util.List;
 

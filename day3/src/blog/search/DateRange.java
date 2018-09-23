@@ -1,4 +1,6 @@
-package blog;
+package blog.search;
+
+import blog.BlogMain;
 
 import java.util.Date;
 

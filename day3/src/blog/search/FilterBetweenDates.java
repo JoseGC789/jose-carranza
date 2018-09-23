@@ -1,24 +1,24 @@
-package blog;
+package blog.search;
+
+import blog.Entry;
 
 import java.util.List;
 
-public class FilterTag implements Filterable {
+public  class  FilterBetweenDates implements Filterable {
     List<Entry> entries;
 
-    public FilterTag(List<Entry> entries) {
+    public FilterBetweenDates(List<Entry> entries) {
         this.entries = entries;
     }
 
     @Override
     public <T> void search(T argument) {
-        //Filtering by tag of Entry
-        //requires String type to work
-
+        //Filtering by anonymous class DateRange of Entry
         boolean found = false;
         System.out.printf("Searching by %s: \n", argument);
-
+        DateRange range = (DateRange) argument;
         for (Entry entry: entries){
-            if (entry.getTags().contains(argument)){
+            if (range.isAfterInferior(entry.getDate()) && range.isBeforeUpper(entry.getDate())){
                 System.out.printf("%s",entry);
                 found = true;
             }

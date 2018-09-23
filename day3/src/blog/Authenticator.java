@@ -1,6 +1,6 @@
 package blog;
 
-public final class UserAuthenticator {
+public final class Authenticator {
     private static String userName;
     private static String userPassword;
 
