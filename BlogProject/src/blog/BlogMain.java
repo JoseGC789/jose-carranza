@@ -58,7 +58,8 @@ public class BlogMain {
                 deleteEntry();
                 break;
             case SEARCH:
-                search();
+                Searcher searcher = new Searcher(this.entries);
+                searcher.search();
                 break;
             case GROUP:
                 createGroup();
@@ -108,52 +109,6 @@ public class BlogMain {
     private void createGroup() {
         Group.getBuilder().setGroupName();
         Group.getBuilder().buildGroup();
-    }
-
-    private void search() {
-        //search entries using specified filter
-        if (entries.isEmpty()){
-            System.out.printf("The are no entries\n");
-            return;
-        }
-        Searcher searcher = new Searcher();
-        System.out.printf(
-                "Filter by options: \n " +
-                        "1: Show most recent entries. \n " +
-                        "2: Search by tag. \n " +
-                        "3: Search by text. \n " +
-                        "4: Search by user. \n " +
-                        "5: Search by date range. \n ");
-        Filters options = Filters.values()[(enterInput(1, Filters.values().length) - 1)];
-        switch (options) {
-            case RECENT:
-                //show most recent entries with a searcher
-                System.out.printf("Recent how many? ");
-                int showNumber = enterInput(1, this.entries.size());
-                searcher.setFilter(new FilterRecent(this.entries));
-                searcher.search(showNumber);
-                break;
-            case TAG:
-                searcher.setFilter(new FilterTag(this.entries));
-                System.out.printf("Enter tag: ");
-                searcher.search(enterInput());
-                break;
-            case TEXT:
-                searcher.setFilter(new FilterText(this.entries));
-                System.out.printf("Enter text: ");
-                searcher.search(enterInput());
-                break;
-            case USER:
-                searcher.setFilter(new FilterPostingUser(this.entries));
-                System.out.printf("Enter text: ");
-                searcher.search(new User(enterInput(), null));
-                break;
-            case DATES:
-                searcher.setFilter(new FilterBetweenDates(this.entries));
-                searcher.search(new DateRange());
-                break;
-        }
-
     }
 
     private void postEntry(){
@@ -259,7 +214,5 @@ public class BlogMain {
 
     public static void main(String[] args) {
         new BlogMain().begin();
-
-
     }
 }
