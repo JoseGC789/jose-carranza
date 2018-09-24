@@ -112,6 +112,10 @@ public class BlogMain {
 
     private void search() {
         //search entries using specified filter
+        if (entries.isEmpty()){
+            System.out.printf("The are no entries\n");
+            return;
+        }
         Searcher searcher = new Searcher();
         System.out.printf(
                 "Filter by options: \n " +
@@ -124,10 +128,6 @@ public class BlogMain {
         switch (options) {
             case RECENT:
                 //show most recent entries with a searcher
-                if (entries.isEmpty()){
-                    System.out.printf("No entries\n");
-                    return;
-                }
                 System.out.printf("Recent how many? ");
                 int showNumber = enterInput(1, this.entries.size());
                 searcher.setFilter(new FilterRecent(this.entries));
