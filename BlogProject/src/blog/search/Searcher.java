@@ -31,7 +31,7 @@ public class Searcher{
             case RECENT:
                 //show most recent searchable with a searcher
                 System.out.printf("Recent how many? ");
-                int showNumber = BlogMain.enterInput(1, this.searchable.size());
+                int showNumber = BlogMain.enterInput(1, this.searchable.size()+1000);
                 setFilter(new FilterRecent(this.searchable));
                 this.filter.search(showNumber);
                 break;
