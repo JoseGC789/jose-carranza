@@ -16,7 +16,6 @@ public class FilterRecent implements Filterable {
         //requires Integer type to work
         Integer entriesSize = entries.size();
         System.out.printf("Most recent %d entries: \n", argument);
-
         Integer recent = entriesSize - (Integer) argument;
         if (recent < 0) {
             recent = 0;
