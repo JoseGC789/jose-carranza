@@ -15,10 +15,6 @@ public class FilterRecent implements Filterable {
         //filtering recent X amount of searchables
         //requires Integer type to work
         Integer entriesSize = entries.size();
-        if (entriesSize == 0) {
-            System.out.printf("There aren't any entries. \n\n");
-            return;
-        }
         System.out.printf("Most recent %d entries: \n", argument);
 
         Integer recent = entriesSize - (Integer) argument;
