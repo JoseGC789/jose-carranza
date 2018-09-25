@@ -4,6 +4,8 @@ public final class Authenticator {
     private static String userName;
     private static String userPassword;
 
+    //this class handles authentication of authenticable implementations
+
     public final void setUserName() {
         System.out.printf("Enter username: ");
         this.userName = BlogMain.enterInput();

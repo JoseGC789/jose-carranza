@@ -5,8 +5,10 @@ import blog.search.*;
 import java.util.*;
 
 public class BlogMain {
-    private User user;
+    private User user; //logged user that can perform actions
     private List<Entry> entries = new ArrayList<>();
+
+    //entry point of the blog and common interface for all its components
 
     private BlogMain(){
         login();

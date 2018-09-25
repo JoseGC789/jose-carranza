@@ -7,6 +7,9 @@ import java.util.Objects;
 import java.util.Set;
 
 public final class User implements Subscribable, Authenticable{
+    //this is the user itself which will be instantiated.
+    //this class should not be instanced directly but rather through its builder
+    //unless however you need to create a temporary mock user to do a quick operation.
     private String name;
     private String password;
     private Set<Subscribable> subscriptors;
@@ -51,6 +54,11 @@ public final class User implements Subscribable, Authenticable{
     }
 
     @Override
+    public Set<Subscribable> getSubscriptors() {
+        return subscriptors;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -68,10 +76,6 @@ public final class User implements Subscribable, Authenticable{
 
     public String getName() {
         return name;
-    }
-
-    public Set<Subscribable> getSubscriptors() {
-        return subscriptors;
     }
 
     public static UserBuilder getBuilder() {

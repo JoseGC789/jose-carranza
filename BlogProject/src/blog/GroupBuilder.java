@@ -3,6 +3,7 @@ package blog;
 import java.util.ArrayList;
 import java.util.List;
 public final class GroupBuilder {
+    //This class instantiates an Group class after all its components are properly set.
     private static List<Group> groupRepository = new ArrayList<>();
     private String groupName;
 

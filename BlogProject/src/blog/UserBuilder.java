@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class UserBuilder {
+    //This class instantiates an User class after all its components are properly set.
     private static List<User> userRepository = new ArrayList<>();
     private String userName;
     private String userPassword;

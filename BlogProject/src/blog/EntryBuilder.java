@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class EntryBuilder {
+    //This class instantiates an Entry class after all its components are properly set.
     private static int id = 0;
     private String title;
     private String text;

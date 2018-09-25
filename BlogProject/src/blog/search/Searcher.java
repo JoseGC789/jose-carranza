@@ -1,6 +1,5 @@
 package blog.search;
 
-
 import blog.BlogMain;
 import blog.User;
 import java.util.List;

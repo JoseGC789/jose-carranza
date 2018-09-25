@@ -1,7 +1,5 @@
 package blog.search;
 
-import blog.Entry;
-
 import java.util.List;
 
 public class FilterText implements Filterable {

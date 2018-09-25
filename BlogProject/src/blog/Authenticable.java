@@ -1,6 +1,6 @@
 package blog;
 
 public interface Authenticable {
-
-    public boolean authenticate (String password);
+    //interface for instances that require authentication
+    boolean authenticate (String password);
 }

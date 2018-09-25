@@ -3,6 +3,8 @@ package blog;
 import java.util.List;
 
 public class EntryPoster {
+    //this class handles user interactions with the system
+    //Its aim is creating, mailing and deleting entries
     private User user;
     private List<Entry> entries;
 
