@@ -52,14 +52,13 @@ public class BlogMain {
         SelectActionOptions options = SelectActionOptions.values()[(enterInput(1, SelectActionOptions.values().length) - 1)];
         switch (options) {
             case POST:
-                postEntry();
+                new EntryPoster(this.user,this.entries).postEntry();
                 break;
             case DELETE:
-                deleteEntry();
+                new EntryPoster(this.user,this.entries).deleteEntry();
                 break;
             case SEARCH:
-                Searcher searcher = new Searcher(this.entries);
-                searcher.search();
+                new Searcher(this.entries).search();
                 break;
             case GROUP:
                 createGroup();
@@ -109,82 +108,6 @@ public class BlogMain {
     private void createGroup() {
         Group.getBuilder().setGroupName();
         Group.getBuilder().buildGroup();
-    }
-
-    private void postEntry(){
-        //post new entry to the proper array list (entries)
-        Entry.getBuilder().setOwner(this.user);
-        Entry.getBuilder().setTitle();
-        Entry.getBuilder().setText();
-        boolean loopFlag = true;
-        while (loopFlag) {
-            System.out.printf(
-                    "Post new entry options: \n " +
-                            "1: Change title: \"%s\" \n " +
-                            "2: Change body: \"%s\" \n " +
-                            "3: Add tag: \"%s\" \n " +
-                            "4: Remove tag. \n " +
-                            "5: Post entry. \n " +
-                            "6: Cancel entry. \n",
-                    Entry.getBuilder().getTitle(),Entry.getBuilder().getText(),Entry.getBuilder().getTags());
-            PostEntryOptions options = PostEntryOptions.values()[(enterInput(1, PostEntryOptions.values().length) - 1)];
-            switch (options) {
-                case TITLE:
-                    Entry.getBuilder().setTitle();
-                    break;
-                case TEXT:
-                    Entry.getBuilder().setText();
-                    break;
-                case ADDTAGS:
-                    Entry.getBuilder().addTags();
-                    break;
-                case REMOVETAGS:
-                    Entry.getBuilder().removeTags();
-                    break;
-                case CREATE:
-                    Entry entry = Entry.getBuilder().buildEntry();
-                    this.entries.add(entry);
-                    System.out.printf("Email post? (Y/N) \n");
-                    if (enterInput().toLowerCase().equals("y")){
-                        mail(entry);
-                    }
-                case CANCEL:
-                    Entry.getBuilder().clear();
-                    loopFlag = false;
-            }
-        }
-    }
-
-    private void mail(Entry entry){
-        if (User.getBuilder().getUserRepository().size() == 1) {
-            System.out.printf("You are the only user\n");
-            //only 1 user
-        } else {
-            System.out.printf("Enter recipient's username: ");
-            while (true) {
-                User user = new User(enterInput(), null);
-                if (User.getBuilder().getUserRepository().contains(user)){
-                    user.fileMail(entry);
-                    return;
-                }
-            }
-        }
-    }
-
-    private void deleteEntry() {
-        //delete entry
-        if (entries.size() == 0) {
-            System.out.printf("There aren't any entries. \n");
-            return;
-        }
-        System.out.printf("Enter entry's id: \n");
-        int id = enterInput(1, EntryBuilder.getId());
-        Entry entry = new Entry(id, null, null, null, null, null);
-        if (entries.contains(entry)) {
-            entries.remove(entry);
-        }else{
-            System.out.printf("Value doesn't exist,\n");
-        }
     }
 
     public static int enterInput(int min, int max) {
