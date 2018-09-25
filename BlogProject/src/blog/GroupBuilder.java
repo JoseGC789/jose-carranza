@@ -27,7 +27,7 @@ public final class GroupBuilder {
         }
     }
 
-    public final List<Group> getGroupRepository() {
+    public List<Group> getGroupRepository() {
         return groupRepository;
     }
 

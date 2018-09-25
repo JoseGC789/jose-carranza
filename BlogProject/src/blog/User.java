@@ -10,7 +10,7 @@ public final class User implements Subscribable, Authenticable{
     //this is the user itself which will be instantiated.
     //this class should not be instanced directly but rather through its builder
     //unless however you need to create a temporary mock user to do a quick operation.
-    private String name;
+    private final String name;
     private String password;
     private Set<Subscribable> subscriptors;
     private static UserBuilder builder = new UserBuilder();
@@ -35,7 +35,7 @@ public final class User implements Subscribable, Authenticable{
     }
 
     @Override
-    public final boolean authenticate(String password){
+    public boolean authenticate(String password){
         return (this.password.equals(password));
     }
 

@@ -8,7 +8,7 @@ public final class Entry implements Searchable {
     //this is the entry itself which will be instantiated.
     //this class should not be instanced directly but rather through its builder
     //unless however you need to create a temporary mock entry to do a quick operation.
-    private int id; //KEY field.
+    private final int id; //KEY field.
     private String title;
     private String text;
     private Date date;

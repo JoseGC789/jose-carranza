@@ -6,17 +6,17 @@ public final class Authenticator {
 
     //this class handles authentication of authenticable implementations
 
-    public final void setUserName() {
+    public void setUserName() {
         System.out.printf("Enter username: ");
         this.userName = BlogMain.enterInput();
     }
 
-    public final void setUserPassword() {
+    public void setUserPassword() {
         System.out.printf("Enter password: ");
         this.userPassword = BlogMain.enterInput();
     }
 
-    public final User authenticate() {
+    public User authenticate() {
         Authenticable user = new User(this.userName, null);
         if (User.getBuilder().getUserRepository().contains(user)) {
             user = User.getBuilder().getUserRepository().get(User.getBuilder().getUserRepository().indexOf(user));
