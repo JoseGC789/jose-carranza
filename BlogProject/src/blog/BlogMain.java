@@ -1,8 +1,9 @@
 package blog;
 
 
-import blog.search.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class BlogMain {
     private User user; //logged user that can perform actions
@@ -54,13 +55,13 @@ public class BlogMain {
         SelectActionOptions options = SelectActionOptions.values()[(enterInput(1, SelectActionOptions.values().length) - 1)];
         switch (options) {
             case POST:
-                new EntryPoster(this.user,this.entries).postEntry();
+                new BlogPoster(this.user,this.entries).postEntry();
                 break;
             case DELETE:
-                new EntryPoster(this.user,this.entries).deleteEntry();
+                new BlogPoster(this.user,this.entries).deleteEntry();
                 break;
             case SEARCH:
-                new Searcher(this.entries).search();
+                new BlogSearcher(this.entries).search();
                 break;
             case GROUP:
                 createGroup();

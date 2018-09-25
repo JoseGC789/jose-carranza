@@ -2,13 +2,13 @@ package blog;
 
 import java.util.List;
 
-public class EntryPoster {
+public class BlogPoster {
     //this class handles user interactions with the system
     //Its aim is creating, mailing and deleting entries
     private User user;
     private List<Entry> entries;
 
-    public EntryPoster(User user, List<Entry> entries) {
+    public BlogPoster(User user, List<Entry> entries) {
         this.user = user;
         this.entries = entries;
     }

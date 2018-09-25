@@ -1,14 +1,13 @@
-package blog.search;
+package blog;
 
-import blog.BlogMain;
-import blog.User;
+import blog.search.*;
 import java.util.List;
 
-public class Searcher{
+public class BlogSearcher {
     private Filterable filter;
     private List<? extends Searchable> searchable;
 
-    public Searcher(List<? extends Searchable> searchable) {
+    public BlogSearcher(List<? extends Searchable> searchable) {
         this.searchable = searchable;
     }
 
