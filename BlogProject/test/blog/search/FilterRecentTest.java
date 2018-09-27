@@ -9,30 +9,40 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class FilterRecentTest {
-    private FilterRecent filter;
-    private List<Searchable> searchables;
+    private List<Searchable> filtered;
+    private List<Searchable> original;
 
     @Before
     public void setUp(){
-        searchables = new ArrayList<>();
-        searchables.add(new Entry(1));
-        searchables.add(new Entry(2));
-        searchables.add(new Entry(3));
-        searchables.add(new Entry(4));
-        searchables.add(new Entry(5));
-        filter = new FilterRecent(searchables);
+        FilterRecent filter;
+        original = new ArrayList<>();
+        original.add(new Entry(1));
+        original.add(new Entry(2));
+        original.add(new Entry(3));
+        original.add(new Entry(4));
+        original.add(new Entry(5));
+        filter = new FilterRecent(original);
+        filtered = filter.filter(2);
     }
 
     @Test
-    public void searchTest() {
-        List<Searchable> expected;
-        expected = filter.search(2);
+    public void filterCheckFilteredContained() {
         //contains
-        assertTrue(expected.contains(new Entry(5)));
-        assertTrue(expected.contains(new Entry(4)));
+        assertTrue(filtered.contains(new Entry(5)));
+        assertTrue(filtered.contains(new Entry(4)));
+    }
+
+    @Test
+    public void filterCheckFilteredNotContained() {
         //doesn't contains
-        assertFalse(expected.contains(new Entry(3)));
-        assertFalse(expected.contains(new Entry(2)));
-        assertFalse(expected.contains(new Entry(1)));
+        assertFalse(filtered.contains(new Entry(3)));
+        assertFalse(filtered.contains(new Entry(2)));
+        assertFalse(filtered.contains(new Entry(1)));
+    }
+
+    @Test
+    public void filterCheckOriginalIsUntouched() {
+        //doesn't contains
+        assertEquals(5,original.size());
     }
 }

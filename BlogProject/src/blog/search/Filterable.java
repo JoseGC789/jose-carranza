@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface  Filterable {
 
-    <T> List<Searchable> search (T argument);
+    <T> List<Searchable> filter(T argument);
 }

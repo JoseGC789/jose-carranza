@@ -12,7 +12,7 @@ public class BlogSearcher {
     }
 
     public void search() {
-        //search searchable using specified filter
+        //filter searchable using specified filter
         if (this.searchable.isEmpty()){
             System.out.printf("The are no searchables\n");
             return;
@@ -31,26 +31,26 @@ public class BlogSearcher {
                 setFilter(new FilterRecent(this.searchable));
                 System.out.printf("Recent how many? ");
                 int showNumber = BlogMain.enterInput(1, this.searchable.size()+1000);
-                this.searchable = this.filter.search(showNumber);
+                this.searchable = this.filter.filter(showNumber);
                 break;
             case TAG:
                 setFilter(new FilterTag(this.searchable));
                 System.out.printf("Enter tag: ");
-                this.searchable = this.filter.search(BlogMain.enterInput());
+                this.searchable = this.filter.filter(BlogMain.enterInput());
                 break;
             case TEXT:
                 setFilter(new FilterText(this.searchable));
                 System.out.printf("Enter text: ");
-                this.searchable = this.filter.search(BlogMain.enterInput());
+                this.searchable = this.filter.filter(BlogMain.enterInput());
                 break;
             case USER:
                 setFilter(new FilterPostingUser(this.searchable));
                 System.out.printf("Enter text: ");
-                this.searchable = this.filter.search(new User(BlogMain.enterInput()));
+                this.searchable = this.filter.filter(new User(BlogMain.enterInput()));
                 break;
             case DATES:
                 setFilter(new FilterBetweenDates(this.searchable));
-                this.searchable = this.filter.search(new DateRange());
+                this.searchable = this.filter.filter(new DateRange());
                 break;
         }
 

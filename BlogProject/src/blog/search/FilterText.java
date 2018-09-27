@@ -11,7 +11,7 @@ public class FilterText implements Filterable {
     }
 
     @Override
-    public <T> List<Searchable> search(T argument) {
+    public <T> List<Searchable> filter(T argument) {
         //Filtering by text of Entry
         //requires String type to work
         List<Searchable> aux = new ArrayList<>();

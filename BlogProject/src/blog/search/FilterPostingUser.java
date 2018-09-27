@@ -11,7 +11,7 @@ public class FilterPostingUser implements Filterable {
     }
 
     @Override
-    public <T> List<Searchable> search(T argument) {
+    public <T> List<Searchable> filter(T argument) {
         //Filtering by User of Entry
 
 

@@ -11,7 +11,7 @@ public  class  FilterBetweenDates implements Filterable {
     }
 
     @Override
-    public <T> List<Searchable> search(T argument) {
+    public <T> List<Searchable> filter(T argument) {
         //Filtering by anonymous class DateRange of Entry
 
         DateRange range = (DateRange) argument;

@@ -12,7 +12,7 @@ public class FilterRecent implements Filterable {
 
 
     @Override
-    public <T> List<Searchable> search(T argument) {
+    public <T> List<Searchable> filter(T argument) {
         //filtering recent X amount of searchables
         //requires Integer type to work
         List<Searchable> aux = new ArrayList<>(searchables);
