@@ -67,9 +67,9 @@ public final class EntryBuilder {
     public Entry buildEntry (){
         //build entry
         id++;
-        Date date = new Date();
-        entryRepository.add(new Entry(id, this.title, this.text, date, this.owner, this.tags));
-        return new Entry(id, this.title, this.text, date, this.owner, this.tags);
+        Entry entry = new Entry(id, this.title, this.text, new Date(), this.owner, this.tags);
+        entryRepository.add(entry);
+        return entry;
     }
 
     public List<Entry> getEntryRepository() {
