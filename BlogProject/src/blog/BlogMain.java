@@ -1,6 +1,5 @@
 package blog;
 
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -60,6 +59,7 @@ public class BlogMain {
                             "6: Change user. \n " +
                             "7: Exit program. \n");
             valid = selectAction(SelectActionOptions.values()[(enterInput(1, SelectActionOptions.values().length) - 1)]);
+
         }
         System.out.printf("\n Fin");
     }
@@ -90,6 +90,7 @@ public class BlogMain {
         }
         return true;
     }
+
 
     private void subscribe(){
         System.out.printf(
@@ -133,6 +134,7 @@ public class BlogMain {
     }
 
     public static int enterInput(int min, int max) {
+
         //get a correct number from user function.
         //may get upgraded to private package or public in the future
         //min = inferior limit / max = superior limit
@@ -143,21 +145,26 @@ public class BlogMain {
                 input.next();
             }
             number = input.nextInt();
+
             if (number > max || number < min){
                 System.out.printf("Value doesn't exist\n");
             }
+
         } while ((number < min) || (number > max));
         return number;
     }
 
     public static String enterInput() {
+
         //get text from user function
         //may get upgraded to private package or public in the future
         Scanner input = new Scanner(System.in);
         return input.nextLine();
     }
 
+
     public static void main(String[] args) {
         new BlogMain(null).begin();
+
     }
 }

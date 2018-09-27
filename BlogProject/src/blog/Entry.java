@@ -1,5 +1,6 @@
 package blog;
 
+
 import blog.search.Searchable;
 import java.util.Date;
 import java.util.Set;
@@ -21,11 +22,14 @@ public final class Entry implements Searchable {
     }
 
     public Entry(int id, String title, String text, Date date, User owner, Set<String> tags) {
+
         this.id = id;
         this.title = title;
         this.text = text;
         this.date = date;
+
         this.owner = owner;
+
         this.tags = tags;
     }
 
@@ -37,6 +41,7 @@ public final class Entry implements Searchable {
                 "\tDate='" + this.date + "\'\n" +
                 "\tOwner='" + this.owner + "\'\n" +
                 "\tTags='" + this.tags + "\'\n" +
+
                 '}';
     }
 
@@ -48,25 +53,34 @@ public final class Entry implements Searchable {
         return id == entry.id;
     }
 
+
     @Override
+
     public int getId() {
         return this.id;
     }
 
+
     @Override
+
     public String getTitle() {
         return this.title;
     }
 
+
     @Override
+
     public String getText() {
         return this.text;
     }
 
+
     @Override
+
     public Date getDate() {
         return this.date;
     }
+
 
     @Override
     public User getOwner() {
@@ -74,6 +88,7 @@ public final class Entry implements Searchable {
     }
 
     @Override
+
     public Set<String> getTags() {
         return this.tags;
     }
