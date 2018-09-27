@@ -12,7 +12,7 @@ public final class UserBuilder {
     public User buildBlogUser(){
         if (this.userName != null && this.userPassword != null){
             User user = new User(this.userName,this.userPassword);
-            this.userRepository.add(user);
+            userRepository.add(user);
             return user;
         }else{
             return null;
@@ -23,36 +23,36 @@ public final class UserBuilder {
         return userName;
     }
 
-    public void setUserName() {
-        System.out.printf("Enter new username:");
-        while (true) {
-            String userName = null;
-            while (userName == null || userName.isEmpty()) {
-                userName = BlogMain.enterInput().trim();
-            }
-            if (!userRepository.contains(new User(userName, null) )|| userRepository == null) {
-                this.userName = userName;
-                return;
-            }else{
-                System.out.printf("Username Already in use!");
-            }
+    public void setUserName(String userName) {
+        userName = userName.trim();
+        if (userRepository.contains(new User(userName, null) )|| userName.isEmpty()) {
+            this.userName = null;
+        }else{
+            this.userName = userName;
         }
+
     }
 
     public String getUserPassword() {
         return userPassword;
     }
 
-    public void setUserPassword() {
-        System.out.printf("Enter new password:");
-        String userPassword = null;
-        while (userPassword == null || userPassword.isEmpty()){
-            userPassword = BlogMain.enterInput().trim();
+    public void setUserPassword(String userPassword) {
+        userPassword = userPassword.trim();
+        if (userPassword.isEmpty()){
+            this.userPassword = null;
+        }else{
+            this.userPassword = userPassword;
         }
-        this.userPassword = userPassword;
     }
 
     public final List<User> getUserRepository() {
         return userRepository;
+    }
+
+
+    public void clear(){
+        userName = null;
+        userPassword = null;
     }
 }

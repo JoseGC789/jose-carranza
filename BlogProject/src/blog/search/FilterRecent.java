@@ -1,28 +1,36 @@
 package blog.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilterRecent implements Filterable {
-    List<? extends Searchable> entries;
+    private List<Searchable> searchables;
 
-    public FilterRecent(List<? extends Searchable> entries) {
-        this.entries = entries;
+    public FilterRecent(List<Searchable> searchables) {
+        this.searchables = searchables;
     }
 
 
     @Override
-    public <T> void search(T argument) {
+    public <T> List<Searchable> search(T argument) {
         //filtering recent X amount of searchables
         //requires Integer type to work
-        Integer entriesSize = entries.size();
-        System.out.printf("Most recent %d entries: \n", argument);
-        Integer recent = entriesSize - (Integer) argument;
+        List<Searchable> aux = new ArrayList<>(searchables);
+        Integer recent = this.searchables.size() - (Integer) argument;
+
         if (recent < 0) {
             recent = 0;
         }
 
-        for (int i = entriesSize - 1; i >= recent; i--) {
-            System.out.printf("%s\n", entries.get(i));
+        for (Searchable search : searchables){
+            if (search.getId() <= recent){
+                aux.remove(search);
+            }
         }
+        return aux;
+/*
+        for (int i = 0; i <= recent; i++) {
+            searchables.remove(i);
+        }*/
     }
 }

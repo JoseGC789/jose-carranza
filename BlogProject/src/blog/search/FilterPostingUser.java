@@ -1,29 +1,27 @@
 package blog.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilterPostingUser implements Filterable {
-    List<? extends Searchable> entries;
+    private List<Searchable> searchables;
 
-    public FilterPostingUser(List<? extends Searchable> entries) {
-        this.entries = entries;
+    public FilterPostingUser(List<Searchable> entries) {
+        this.searchables = entries;
     }
 
     @Override
-    public <T> void search(T argument) {
+    public <T> List<Searchable> search(T argument) {
         //Filtering by User of Entry
 
-        boolean found = false;
-        System.out.printf("Searching by %s: \n", argument);
 
-        for (Searchable entry: entries){
-            if (entry.getOwner().equals(argument)){
-                System.out.printf("%s",entry);
-                found = true;
+        List<Searchable> aux = new ArrayList<>();
+
+        for (Searchable search: searchables){
+            if (search.getOwner().equals(argument)){
+                aux.add(search);
             }
         }
-        if (!found){
-            System.out.printf("No entries match the criteria.\n");
-        }
+        return aux;
     }
 }

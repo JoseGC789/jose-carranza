@@ -5,16 +5,16 @@ import java.util.List;
 
 public class BlogSearcher {
     private Filterable filter;
-    private List<? extends Searchable> searchable;
+    private List<Searchable> searchable;
 
-    public BlogSearcher(List<? extends Searchable> searchable) {
+    public BlogSearcher(List<Searchable> searchable) {
         this.searchable = searchable;
     }
 
     public void search() {
         //search searchable using specified filter
         if (this.searchable.isEmpty()){
-            System.out.printf("The are no searchable\n");
+            System.out.printf("The are no searchables\n");
             return;
         }
         System.out.printf(
@@ -28,30 +28,35 @@ public class BlogSearcher {
         switch (options) {
             case RECENT:
                 //show most recent searchable with a searcher
+                setFilter(new FilterRecent(this.searchable));
                 System.out.printf("Recent how many? ");
                 int showNumber = BlogMain.enterInput(1, this.searchable.size()+1000);
-                setFilter(new FilterRecent(this.searchable));
-                this.filter.search(showNumber);
+                this.searchable = this.filter.search(showNumber);
                 break;
             case TAG:
                 setFilter(new FilterTag(this.searchable));
                 System.out.printf("Enter tag: ");
-                this.filter.search(BlogMain.enterInput());
+                this.searchable = this.filter.search(BlogMain.enterInput());
                 break;
             case TEXT:
                 setFilter(new FilterText(this.searchable));
                 System.out.printf("Enter text: ");
-                this.filter.search(BlogMain.enterInput());
+                this.searchable = this.filter.search(BlogMain.enterInput());
                 break;
             case USER:
                 setFilter(new FilterPostingUser(this.searchable));
                 System.out.printf("Enter text: ");
-                this.filter.search(new User(BlogMain.enterInput(), null));
+                this.searchable = this.filter.search(new User(BlogMain.enterInput()));
                 break;
             case DATES:
                 setFilter(new FilterBetweenDates(this.searchable));
-                this.filter.search(new DateRange());
+                this.searchable = this.filter.search(new DateRange());
                 break;
+        }
+
+        System.out.printf("Entries found: \n");
+        for (Searchable search : searchable){
+            System.out.printf("%s",search);
         }
     }
 

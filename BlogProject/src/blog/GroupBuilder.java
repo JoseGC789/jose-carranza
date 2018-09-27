@@ -11,19 +11,12 @@ public final class GroupBuilder {
         return groupName;
     }
 
-    public void setGroupName() {
-        System.out.printf("Enter group name:");
-        while (true) {
-            String groupName = null;
-            while (groupName == null || groupName.isEmpty()) {
-                groupName = BlogMain.enterInput().trim();
-            }
-            if (!groupRepository.contains(new Group(groupName) )|| groupRepository == null) {
-                this.groupName = groupName;
-                return;
-            }else{
-                System.out.printf("Group name already in use!");
-            }
+    public void setGroupName(String groupName) {
+        groupName = groupName.trim();
+        if (groupRepository.contains(new Group(groupName))|| groupName.isEmpty()) {
+            this.groupName = null;
+        }else{
+            this.groupName = groupName;
         }
     }
 
@@ -34,5 +27,9 @@ public final class GroupBuilder {
     public Group buildGroup (){
         groupRepository.add(new Group(this.groupName));
         return new Group(this.groupName);
+    }
+
+    public void clear(){
+        groupName = null;
     }
 }
