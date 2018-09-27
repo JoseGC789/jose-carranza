@@ -8,15 +8,13 @@ public class SticksCounterTest {
 
     @Test
     public void removeSticksWithAvailability() {
-        boolean expected = true;
         boolean actual = counter.removeSticks(2);
-        assertTrue(expected || actual);
+        assertEquals(true , actual);
     }
 
     @Test
     public void removeSticksWithoutAvailability() {
-        boolean expected = false;
         boolean actual = counter.removeSticks(56);
-        assertFalse(expected || actual);
+        assertEquals(false , actual);
     }
 }
