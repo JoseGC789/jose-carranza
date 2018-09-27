@@ -1,6 +1,8 @@
 package blog.search;
 
+import java.util.List;
+
 public interface  Filterable {
 
-    <T> void search (T argument);
+    <T> List<Searchable> search (T argument);
 }

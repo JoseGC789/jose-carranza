@@ -1,7 +1,6 @@
 package blog;
 
 import java.io.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -14,6 +13,10 @@ public final class User implements Subscribable, Authenticable{
     private String password;
     private Set<Subscribable> subscriptors;
     private static UserBuilder builder = new UserBuilder();
+
+    public User(String name) {
+        this.name = name;
+    }
 
     public User(String name, String password) {
         this.name = name;
@@ -42,7 +45,7 @@ public final class User implements Subscribable, Authenticable{
     @Override
     public void subscribe(Subscribable target) {
         if (target.equals(this)){
-            System.out.printf("You can't subscribe to yourself dummy!\n");
+            System.out.println("You can't subscribe to yourself dummy!");
         }else{
             this.subscriptors.add(target);
         }

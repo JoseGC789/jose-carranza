@@ -11,6 +11,7 @@ public final class Group implements Subscribable {
     private final String name;
     private Set<Subscribable> subscriptors = new HashSet<>();
     private static GroupBuilder builder = new GroupBuilder();
+
     public Group(String name) {
         this.name = name;
     }

@@ -1,23 +1,21 @@
 package blog;
 
-import java.util.List;
-
 public class BlogPoster {
     //this class handles user interactions with the system
     //Its aim is creating, mailing and deleting entries
     private User user;
-    private List<Entry> entries;
 
-    public BlogPoster(User user, List<Entry> entries) {
+    public BlogPoster(User user) {
         this.user = user;
-        this.entries = entries;
     }
 
     public void postEntry(){
         //post new entry to the proper array list (entries)
         Entry.getBuilder().setOwner(this.user);
-        Entry.getBuilder().setTitle();
-        Entry.getBuilder().setText();
+        System.out.printf("Entry title: \n");
+        Entry.getBuilder().setTitle(BlogMain.enterInput().trim());
+        System.out.printf("Entry body: \n");
+        Entry.getBuilder().setText(BlogMain.enterInput().trim());
         boolean loopFlag = true;
         while (loopFlag) {
             System.out.printf(
@@ -32,20 +30,23 @@ public class BlogPoster {
             PostEntryOptions options = PostEntryOptions.values()[(BlogMain.enterInput(1, PostEntryOptions.values().length) - 1)];
             switch (options) {
                 case TITLE:
-                    Entry.getBuilder().setTitle();
+                    System.out.printf("Entry title: \n");
+                    Entry.getBuilder().setTitle(BlogMain.enterInput().trim());
                     break;
                 case TEXT:
-                    Entry.getBuilder().setText();
+                    System.out.printf("Entry body: \n");
+                    Entry.getBuilder().setText(BlogMain.enterInput().trim());
                     break;
                 case ADDTAGS:
-                    Entry.getBuilder().addTags();
+                    System.out.printf("Add tag: \n");
+                    Entry.getBuilder().addTags(BlogMain.enterInput().trim());
                     break;
                 case REMOVETAGS:
-                    Entry.getBuilder().removeTags();
+                    System.out.printf("Remove tag: \n");
+                    Entry.getBuilder().removeTags(BlogMain.enterInput().trim());
                     break;
                 case CREATE:
                     Entry entry = Entry.getBuilder().buildEntry();
-                    this.entries.add(entry);
                     System.out.printf("Email post? (Y/N) \n");
                     if (BlogMain.enterInput().toLowerCase().equals("y")){
                         mail(entry);
@@ -57,17 +58,15 @@ public class BlogPoster {
         }
     }
 
-    public void deleteEntry() {
+    public void deleteEntry(int id) {
         //delete entry
-        if (this.entries.size() == 0) {
+        if (Entry.getBuilder().getEntryRepository().isEmpty()) {
             System.out.printf("There aren't any entries. \n");
             return;
         }
-        System.out.printf("Enter entry's id: \n");
-        int id = BlogMain.enterInput(1, EntryBuilder.getId());
-        Entry entry = new Entry(id, null, null, null, null, null);
-        if (this.entries.contains(entry)) {
-            this.entries.remove(entry);
+        Entry entry = new Entry(id);
+        if (Entry.getBuilder().getEntryRepository().contains(entry)) {
+            Entry.getBuilder().getEntryRepository().remove(entry);
         }else{
             System.out.printf("Value doesn't exist,\n");
         }
@@ -80,7 +79,7 @@ public class BlogPoster {
         } else {
             System.out.printf("Enter recipient's username: ");
             while (true) {
-                User user = new User(BlogMain.enterInput(), null);
+                User user = new User(BlogMain.enterInput());
                 if (User.getBuilder().getUserRepository().contains(user)){
                     user.fileMail(entry);
                     return;

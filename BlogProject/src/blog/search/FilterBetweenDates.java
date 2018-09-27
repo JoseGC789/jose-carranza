@@ -1,29 +1,29 @@
 package blog.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public  class  FilterBetweenDates implements Filterable {
-    List<?extends Searchable> entries;
+    private List<Searchable> searchables;
 
-    public FilterBetweenDates(List<?extends Searchable> entries) {
-        this.entries = entries;
+    public FilterBetweenDates(List<Searchable> searchables) {
+        this.searchables = searchables;
     }
 
     @Override
-    public <T> void search(T argument) {
+    public <T> List<Searchable> search(T argument) {
         //Filtering by anonymous class DateRange of Entry
-        boolean found = false;
-        System.out.printf("Searching by %s: \n", argument);
+
         DateRange range = (DateRange) argument;
-        for (Searchable entry: entries){
-            if (range.isAfterInferior(entry.getDate()) && range.isBeforeUpper(entry.getDate())){
-                System.out.printf("%s",entry);
-                found = true;
+        List<Searchable> aux = new ArrayList<>();
+
+        for (Searchable search: searchables){
+
+            if (range.isAfterInferior(search.getDate()) && range.isBeforeSuperior(search.getDate())){
+                aux.add(search);
             }
         }
-        if (!found){
-            System.out.printf("No entries match the criteria.\n");
-        }
+        return aux;
     }
 
 }

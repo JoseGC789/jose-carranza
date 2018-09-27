@@ -2,66 +2,79 @@ package blog;
 
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class BlogMain {
     private User user; //logged user that can perform actions
-    private List<Entry> entries = new ArrayList<>();
 
     //entry point of the blog and common interface for all its components
 
-    private BlogMain(){
-        login();
+    private BlogMain(User user){
+        this.user = user;
     }
 
     private void login() {
         //get credentials from user
         Authenticator authenticator = new Authenticator();
-        authenticator.setUserName();
-        authenticator.setUserPassword();
-        this.user = authenticator.authenticate();
+        System.out.printf("Enter username: ");
+        authenticator.setUserName(enterInput());
+        System.out.printf("Enter password: ");
+        authenticator.setUserPassword(enterInput());
+        this.user = (User) authenticator.authenticate();
         //check validity
         if (this.user == null){
+            User.getBuilder().clear();
             //create new user
             System.out.printf("User doesn't exist. Creating new one for you!\n");
-            User.getBuilder().setUserName();
-            User.getBuilder().setUserPassword();
-            this.user = User.getBuilder().buildBlogUser();
+            do {
+                System.out.printf("Enter new username:");
+                User.getBuilder().setUserName(BlogMain.enterInput());
+
+                if (User.getBuilder().getUserName() == null){
+                    System.out.printf("Invalid Username or it's Already in use!\n");
+                }else{
+                    System.out.printf("Enter new password:");
+                    do {
+                        User.getBuilder().setUserPassword(BlogMain.enterInput());
+                    } while (User.getBuilder().getUserPassword() == null);
+                    this.user = User.getBuilder().buildBlogUser();
+                }
+            }while (this.user == null);
         }
         System.out.printf("Logged in! \n\n");
     }
 
     private void begin() {
+        login();
         boolean valid = true;
         //loop
         while (valid) {
-            valid = selectAction();
+            //Select action options. user inputs options to control the program's flow
+            System.out.printf(
+                    "Menu options: \n " +
+                            "1: Post new entry. \n " +
+                            "2: Delete existing entry. \n " +
+                            "3: Search by filter \n " +
+                            "4: Create group. \n " +
+                            "5: Subscribe to something. \n " +
+                            "6: Change user. \n " +
+                            "7: Exit program. \n");
+            valid = selectAction(SelectActionOptions.values()[(enterInput(1, SelectActionOptions.values().length) - 1)]);
         }
         System.out.printf("\n Fin");
     }
 
-    private boolean selectAction() {
-        //Select action options. user inputs options to control the program's flow
-        System.out.printf(
-                "Menu options: \n " +
-                        "1: Post new entry. \n " +
-                        "2: Delete existing entry. \n " +
-                        "3: Search by filter \n " +
-                        "4: Create group. \n " +
-                        "5: Subscribe to something. \n " +
-                        "6: Change user. \n " +
-                        "7: Exit program. \n");
-        SelectActionOptions options = SelectActionOptions.values()[(enterInput(1, SelectActionOptions.values().length) - 1)];
-        switch (options) {
+    private boolean selectAction(SelectActionOptions action) {
+        switch (action) {
             case POST:
-                new BlogPoster(this.user,this.entries).postEntry();
+                new BlogPoster(this.user).postEntry();
                 break;
             case DELETE:
-                new BlogPoster(this.user,this.entries).deleteEntry();
+                System.out.printf("Enter entry's id: \n");
+                new BlogPoster(this.user).deleteEntry(BlogMain.enterInput(1, EntryBuilder.getId()));
                 break;
             case SEARCH:
-                new BlogSearcher(this.entries).search();
+                new BlogSearcher(new ArrayList<>(Entry.getBuilder().getEntryRepository())).search();
                 break;
             case GROUP:
                 createGroup();
@@ -86,7 +99,7 @@ public class BlogMain {
         int option = enterInput(1,2);
         System.out.printf("Enter name: ");
         if (option == 1){
-            User aux = new User(enterInput(),null);
+            User aux = new User(enterInput());
             int index = User.getBuilder().getUserRepository().indexOf(aux);
             if (index == -1){
                 System.out.printf("User doesn't exist: ");
@@ -109,8 +122,14 @@ public class BlogMain {
     }
 
     private void createGroup() {
-        Group.getBuilder().setGroupName();
-        Group.getBuilder().buildGroup();
+        System.out.printf("Enter group name:");
+        Group.getBuilder().setGroupName(BlogMain.enterInput());
+        if (Group.getBuilder().getGroupName() == null){
+            System.out.printf("Invalid Group name or it's already in use!");
+        }else{
+            Group.getBuilder().buildGroup();
+        }
+        Group.getBuilder().clear();
     }
 
     public static int enterInput(int min, int max) {
@@ -139,6 +158,6 @@ public class BlogMain {
     }
 
     public static void main(String[] args) {
-        new BlogMain().begin();
+        new BlogMain(null).begin();
     }
 }

@@ -16,6 +16,10 @@ public final class Entry implements Searchable {
     private Set<String> tags;
     private static EntryBuilder builder = new EntryBuilder();
 
+    public Entry(int id) {
+        this.id = id;
+    }
+
     public Entry(int id, String title, String text, Date date, User owner, Set<String> tags) {
         this.id = id;
         this.title = title;

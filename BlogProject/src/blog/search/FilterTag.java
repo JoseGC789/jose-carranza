@@ -1,31 +1,28 @@
 package blog.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilterTag implements Filterable {
-    List<? extends Searchable> entries;
+    private List<Searchable> searchables;
 
-    public FilterTag(List<? extends Searchable> entries) {
-        this.entries = entries;
+    public FilterTag(List<Searchable> searchables) {
+        this.searchables = searchables;
     }
 
     @Override
-    public <T> void search(T argument) {
+    public <T> List<Searchable> search(T argument) {
         //Filtering by tag of Entry
         //requires String type to work
+        List<Searchable> aux = new ArrayList<>();
 
-        boolean found = false;
-        System.out.printf("Searching by %s: \n", argument);
-
-        for (Searchable entry: entries){
-            if (entry.getTags().contains(argument)){
-                System.out.printf("%s",entry);
-                found = true;
+        for (Searchable search: searchables){
+            if (search.getTags().contains(argument)){
+                aux.add(search);
             }
         }
-        if (!found){
-            System.out.printf("No entries match the criteria.\n");
-        }
+
+        return aux;
     }
 
 }

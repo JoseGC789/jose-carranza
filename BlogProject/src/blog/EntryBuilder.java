@@ -1,8 +1,7 @@
 package blog;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.*;
 
 public final class EntryBuilder {
     //This class instantiates an Entry class after all its components are properly set.
@@ -11,6 +10,7 @@ public final class EntryBuilder {
     private String text;
     private User owner;
     private Set<String> tags = new HashSet<>();
+    private static List<Entry> entryRepository = new ArrayList<>();
 
     public static int getId() {
         return id;
@@ -20,12 +20,9 @@ public final class EntryBuilder {
         return title;
     }
 
-    public void setTitle() {
-        System.out.printf("Entry title: \n");
-        String title = BlogMain.enterInput();
+    public void setTitle(String title) {
         title = title.trim();
-        //clean whitespaces
-        if(title == null || title.isEmpty()) {
+        if(title.isEmpty()) {
             title = "Untitled";
         }
         this.title = title;
@@ -35,12 +32,9 @@ public final class EntryBuilder {
         return text;
     }
 
-    public void setText() {
-        System.out.printf("Entry body: \n");
-        String text = BlogMain.enterInput();
+    public void setText(String text) {
         text = text.trim();
-        //remove whitespaces
-        if(text == null || text.isEmpty()) {
+        if(text.isEmpty()) {
             text = "No text";
         }
         this.text = text;
@@ -58,29 +52,34 @@ public final class EntryBuilder {
         return this.tags;
     }
 
-    public void addTags() {
-        System.out.printf("Add tag: \n");
-        String tag = BlogMain.enterInput();
+    public void addTags(String tag) {
         tag = tag.trim();
-        //clean whitespaces
-        if(!(tag == null || tag.isEmpty())) {
+        if(!(tag.isEmpty())) {
             this.tags.add(tag);
         }
     }
 
-    public void removeTags() {
-        String tag = BlogMain.enterInput();
-        System.out.printf("Remove tag: \n");
+    public void removeTags(String tag) {
+        tag = tag.trim();
         this.tags.remove(tag);
     }
 
     public Entry buildEntry (){
         //build entry
         id++;
-        return new Entry(id, this.title, this.text, new Date(), this.owner, this.tags);
+        Date date = new Date();
+        entryRepository.add(new Entry(id, this.title, this.text, date, this.owner, this.tags));
+        return new Entry(id, this.title, this.text, date, this.owner, this.tags);
+    }
+
+    public List<Entry> getEntryRepository() {
+        return entryRepository;
     }
 
     public void clear(){
+        title = null;
+        text = null;
+        owner = null;
         tags = new HashSet<>();
     }
 
