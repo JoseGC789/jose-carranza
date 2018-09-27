@@ -1,6 +1,7 @@
 package blog;
 
 
+
 import java.util.*;
 
 public final class EntryBuilder {
@@ -12,6 +13,7 @@ public final class EntryBuilder {
     private Set<String> tags = new HashSet<>();
     private static List<Entry> entryRepository = new ArrayList<>();
 
+
     public static int getId() {
         return id;
     }
@@ -20,9 +22,11 @@ public final class EntryBuilder {
         return title;
     }
 
+
     public void setTitle(String title) {
         title = title.trim();
         if(title.isEmpty()) {
+
             title = "Untitled";
         }
         this.title = title;
@@ -35,10 +39,12 @@ public final class EntryBuilder {
     public void setText(String text) {
         text = text.trim();
         if(text.isEmpty()) {
+
             text = "No text";
         }
         this.text = text;
     }
+
 
     public User getOwner() {
         return owner;
@@ -48,19 +54,24 @@ public final class EntryBuilder {
         this.owner = owner;
     }
 
+
     public Set<String> getTags() {
         return this.tags;
     }
 
+
     public void addTags(String tag) {
         tag = tag.trim();
         if(!(tag.isEmpty())) {
+
             this.tags.add(tag);
         }
     }
 
+
     public void removeTags(String tag) {
         tag = tag.trim();
+
         this.tags.remove(tag);
     }
 
@@ -70,6 +81,7 @@ public final class EntryBuilder {
         Entry entry = new Entry(id, this.title, this.text, new Date(), this.owner, this.tags);
         entryRepository.add(entry);
         return entry;
+
     }
 
     public List<Entry> getEntryRepository() {
@@ -80,6 +92,7 @@ public final class EntryBuilder {
         title = null;
         text = null;
         owner = null;
+
         tags = new HashSet<>();
     }
 
