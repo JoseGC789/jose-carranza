@@ -25,8 +25,9 @@ public final class GroupBuilder {
     }
 
     public Group buildGroup (){
-        groupRepository.add(new Group(this.groupName));
-        return new Group(this.groupName);
+        Group group = new Group(this.groupName);
+        groupRepository.add(group);
+        return group;
     }
 
     public void clear(){
