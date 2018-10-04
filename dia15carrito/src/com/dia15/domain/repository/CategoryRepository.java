@@ -9,8 +9,11 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Integer> {
-    Category findByNameAndDescription(String name, String description);
+    Category findByName(String name);
 
     @Query ("SELECT c FROM Category c WHERE c.name like %?1%")
-    List<Category> findByCoincidence(String coincidence);
+    List<Category> findByCoincidence(String target);
+
+    @Query ("SELECT c FROM Category c WHERE c.name like ?1%")
+    List<Category> findByStartingChar(char target);
 }

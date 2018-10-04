@@ -1,11 +1,14 @@
 package com.dia15.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Client implements Serializable {
 
@@ -13,9 +16,12 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private ClientRoles role;
+
     @Column(unique = true, nullable = false)
     private String username;
+
     private String password;
     private String first;
     private String last;
@@ -24,6 +30,7 @@ public class Client implements Serializable {
     //client history fields
     private Date dateJoined;
     private Date dateSeen;
+
     @OneToMany
     @JoinColumn(name = "id_client")
     private List<Reservation> reservations = new ArrayList<>();

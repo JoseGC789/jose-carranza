@@ -15,9 +15,12 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true, nullable = false)
+
+    @Column( nullable = false, updatable = false,unique = true)
     private String name;
+
     private String description;
+
     @ManyToMany(mappedBy = "categories")
     @JsonBackReference
     private List<Product> products = new ArrayList<>();
@@ -63,5 +66,6 @@ public class Category implements Serializable {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
 }
 

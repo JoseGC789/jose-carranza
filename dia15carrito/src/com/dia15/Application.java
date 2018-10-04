@@ -1,7 +1,9 @@
 package com.dia15;
 
 import com.dia15.domain.entity.Category;
+import com.dia15.domain.entity.Client;
 import com.dia15.domain.repository.CategoryRepository;
+import com.dia15.domain.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +19,8 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -24,10 +28,20 @@ public class Application implements CommandLineRunner {
         category.setName("limpieza");
         categoryRepository.save(category);
         category = new Category();
-        category.setName("qimpiasdfasd");
+        category.setName("mpiasdfasd");
         categoryRepository.save(category);
-        List<Category> asd = categoryRepository.findByCoincidence("mpi");
+        category = new Category();
+        category.setName("mpiasdfasd");
+        categoryRepository.save(category);
+        Client client = new Client();
+        client.setUsername("usertest");
+        client.setFirst("firsttest");
+        client.setLast("lastetst");
+        client.setEmail("emailtest");
+        clientRepository.save(client);
+        Client asd2 = clientRepository.findByUsername("usertest");
+        List<Category> asd = categoryRepository.findAll();
         //System.out.printf("%d",asd.size());
-        System.out.printf("\n\n%s\n\n",asd.size()>0 ? asd.get(1).getName():"Not found");
+        System.out.printf("\n\n%s\n\n",asd2 != null ? asd2.getUsername():"Not found");
     }
 }

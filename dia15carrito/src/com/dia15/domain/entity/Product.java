@@ -1,10 +1,13 @@
 package com.dia15.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Product implements Serializable {
 
@@ -12,19 +15,23 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(unique = true, nullable = false)
     private String name;
+
     private int quantity;
     private String Description;
     private String imgRef;
     private long price;
     private ProductState state;
+
     @ManyToMany
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_category", referencedColumnName = "id")
     )
     private List<Category> categories = new ArrayList<>();
+
     @OneToMany
     @JoinColumn(name = "id_product")
     private List<Reservation> reservations = new ArrayList<>();
