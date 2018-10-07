@@ -1,5 +1,6 @@
 package com.globant.bootcamp.dia15.service;
 
+import com.globant.bootcamp.dia15.NotFoundException;
 import com.globant.bootcamp.dia15.UnauthorizedException;
 import com.globant.bootcamp.dia15.component.ClientCredentials;
 import com.globant.bootcamp.dia15.domain.entity.Client;
@@ -15,7 +16,11 @@ public class LoginClientService {
     public Client loginClient(ClientCredentials clientCredentials){
         Client clientFromDB = clients.findByUsername(clientCredentials.getUsername());
         if (clientFromDB == null){
-            throw new UnauthorizedException();
+            throw new NotFoundException();
+        }else{
+            if (!clientFromDB.getPassword().equals(clientCredentials.getPassword())){
+                throw new UnauthorizedException();
+            }
         }
         return clientFromDB;
     }
