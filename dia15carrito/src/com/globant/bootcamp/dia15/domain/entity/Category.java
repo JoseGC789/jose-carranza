@@ -1,4 +1,4 @@
-package com.dia15.domain.entity;
+package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,7 +16,7 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column( nullable = false, updatable = false,unique = true)
+    @Column( nullable = false, unique = true)
     private String name;
 
     private String description;

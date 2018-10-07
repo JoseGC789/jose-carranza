@@ -1,6 +1,7 @@
-package com.dia15.domain.entity;
+package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.globant.bootcamp.dia15.domain.ProductState;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class Product implements Serializable {
     private String name;
 
     private int quantity;
-    private String Description;
+    private String description;
     private String imgRef;
     private long price;
     private ProductState state;
@@ -43,7 +44,7 @@ public class Product implements Serializable {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
-        Description = description;
+        this.description = description;
         this.imgRef = imgRef;
         this.price = price;
         this.state = state;
@@ -76,11 +77,11 @@ public class Product implements Serializable {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getImgRef() {

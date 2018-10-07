@@ -1,4 +1,4 @@
-package com.dia15.domain.entity;
+package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

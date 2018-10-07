@@ -1,15 +1,11 @@
-package com.dia15;
+package com.globant.bootcamp.dia15;
 
-import com.dia15.domain.entity.Category;
-import com.dia15.domain.entity.Client;
-import com.dia15.domain.repository.CategoryRepository;
-import com.dia15.domain.repository.ClientRepository;
+import com.globant.bootcamp.dia15.domain.repository.CategoryRepository;
+import com.globant.bootcamp.dia15.domain.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.List;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -24,6 +20,7 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        /*
         Category category = new Category();
         category.setName("limpieza");
         categoryRepository.save(category);
@@ -42,6 +39,6 @@ public class Application implements CommandLineRunner {
         Client asd2 = clientRepository.findByUsername("usertest");
         List<Category> asd = categoryRepository.findAll();
         //System.out.printf("%d",asd.size());
-        System.out.printf("\n\n%s\n\n",asd2 != null ? asd2.getUsername():"Not found");
+        System.out.printf("\n\n%s\n\n",asd2 != null ? asd2.getUsername():"Not found");*/
     }
 }

@@ -1,11 +1,12 @@
-package com.dia15.domain.entity;
+package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.globant.bootcamp.dia15.domain.ClientRoles;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -19,17 +20,18 @@ public class Client implements Serializable {
 
     private ClientRoles role;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, updatable = false)
     private String username;
 
     private String password;
     private String first;
     private String last;
-    private Date birth;
+    private Calendar birth;
     private String email;
     //client history fields
-    private Date dateJoined;
-    private Date dateSeen;
+    @Column(updatable = false)
+    private Calendar dateJoined;
+    private Calendar LastSeen;
 
     @OneToMany
     @JoinColumn(name = "id_client")
@@ -38,7 +40,7 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    public Client(Integer id, ClientRoles role, String username, String password, String first, String last, Date birth, String email, Date dateJoined, Date dateSeen, List<Reservation> reservations) {
+    public Client(Integer id, ClientRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations) {
         this.id = id;
         this.role = role;
         this.username = username;
@@ -48,7 +50,7 @@ public class Client implements Serializable {
         this.birth = birth;
         this.email = email;
         this.dateJoined = dateJoined;
-        this.dateSeen = dateSeen;
+        LastSeen = lastSeen;
         this.reservations = reservations;
     }
 
@@ -100,11 +102,11 @@ public class Client implements Serializable {
         this.last = last;
     }
 
-    public Date getBirth() {
+    public Calendar getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(Calendar birth) {
         this.birth = birth;
     }
 
@@ -116,20 +118,20 @@ public class Client implements Serializable {
         this.email = email;
     }
 
-    public Date getDateJoined() {
+    public Calendar getDateJoined() {
         return dateJoined;
     }
 
-    public void setDateJoined(Date dateJoined) {
+    public void setDateJoined(Calendar dateJoined) {
         this.dateJoined = dateJoined;
     }
 
-    public Date getDateSeen() {
-        return dateSeen;
+    public Calendar getLastSeen() {
+        return LastSeen;
     }
 
-    public void setDateSeen(Date dateSeen) {
-        this.dateSeen = dateSeen;
+    public void setLastSeen(Calendar lastSeen) {
+        LastSeen = lastSeen;
     }
 
     public List<Reservation> getReservations() {
