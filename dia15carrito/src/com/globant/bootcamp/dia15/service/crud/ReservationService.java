@@ -21,16 +21,12 @@ public class ReservationService {
     }
 
     public Reservation getReservation(Integer id){
-        reservations.findById(id)
+        return reservations.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Reservation doesn't exist"));
-        return reservations.getOne(id);
-
     }
 
     public List<Reservation> getReservation(Person person){
         return reservations.findByPerson(person);
-
-
     }
 
     public Reservation createReservation(Reservation reservation){

@@ -18,11 +18,11 @@ public class Reservation implements Serializable {
     @Column(nullable = false, updatable = false)
     private Calendar dateAdded;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_person",nullable = false, updatable = false)
     private Person person;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_product",nullable = false, updatable = false)
     private Product product;
 

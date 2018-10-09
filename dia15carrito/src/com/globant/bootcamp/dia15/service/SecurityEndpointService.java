@@ -1,15 +1,13 @@
 package com.globant.bootcamp.dia15.service;
 
-import com.globant.bootcamp.dia15.Credential;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.entity.PersonRoles;
-import com.globant.bootcamp.dia15.domain.repository.PersonRepository;
-import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.exceptions.UnauthorizedException;
+import com.globant.bootcamp.dia15.service.crud.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -18,30 +16,29 @@ import java.util.Random;
 public class SecurityEndpointService {
 
     @Autowired
-    private  PersonRepository personRepository;
-    private static Map<String,Credential> tokenRepository = new HashMap<>();
+    private PersonService personService;
+    private static Map<String,Person> tokenRepository = new HashMap<>();
 
     public SecurityEndpointService() {
     }
 
     public String signIn (Person person){
-        Credential credentials = new Credential();
-        credentials.setToken("");
+        String password = person.getPassword();
+        String token;
+        person = personService.getPerson(person.getUsername());
 
-        try {
-            credentials.setPerson(personRepository.findByUsername(person.getUsername()));
-        }catch (EntityNotFoundException e){
-            throw new ResourceNotFoundException("Invalid Username/Password fields");
-        }
-
-        credentials.setToken(generateToken());
-        if (person.getPassword().equals(credentials.getPerson().getPassword())){
-            if (tokenRepository.containsValue(credentials)){
-                throw new UnauthorizedException("Already logged in the system");
+        if (tokenRepository.containsValue(person)){
+            throw new UnauthorizedException("Already logged in the system");
+        }else {
+            if (person.getPassword().equals(password)) {
+                token = generateToken();
+                tokenRepository.put(token, person);
+            } else {
+                throw new UnauthorizedException("Invalid Username/Password fields");
             }
-            tokenRepository.put(credentials.getToken(),credentials);
         }
-        return credentials.getToken();
+        updateLastSeen(person);
+        return token;
     }
 
     private String generateToken() {
@@ -59,20 +56,27 @@ public class SecurityEndpointService {
     }
 
     public Person validateRequest(String token, PersonRoles role){
-        Credential credentials = tokenRepository.get(token);
-        if (credentials != null && credentials.getPerson().getRole().equals(role)){
-            return credentials.getPerson();
+        Person person = tokenRepository.get(token);
+        if (person != null && person.getRole().equals(role)){
+            updateLastSeen(person);
+            return person;
         }else{
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("Cannot validate token");
         }
     }
 
     public Person validateRequest(String token){
-        Credential credentials = tokenRepository.get(token);
-        if (credentials != null){
-            return credentials.getPerson();
+        Person person = tokenRepository.get(token);
+        if (person != null){
+            updateLastSeen(person);
+            return person;
         }else{
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("Cannot validate token");
         }
+    }
+
+    private void updateLastSeen (Person person){
+        person.setLastSeen(new GregorianCalendar());
+        personService.updatePerson(person);
     }
 }

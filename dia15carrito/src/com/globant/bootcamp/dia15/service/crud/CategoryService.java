@@ -20,10 +20,8 @@ public class CategoryService {
     }
 
     public Category getCategory(Integer id){
-        categories.findById(id)
+        return categories.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category doesn't exist"));
-        return categories.getOne(id);
-
     }
 
     public Category createCategory(Category category){

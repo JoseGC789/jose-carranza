@@ -23,10 +23,16 @@ public class PersonService {
     }
 
     public Person getPerson(Integer id){
-        persons.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Person doesn't exist"));
-        return persons.getOne(id);
+        return persons.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist"));
+    }
 
+    public Person getPerson(String username){
+        Person person = persons.findByUsername(username);
+        if (person == null){
+            throw new ResourceNotFoundException("User doesn't exist");
+        }
+        return person;
     }
 
     public Person createPerson(Person person){
@@ -39,13 +45,13 @@ public class PersonService {
 
     public Person updatePerson(Person person){
         persons.findById(person.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Person doesn't exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist"));
         return persons.save(person);
     }
 
     public Person deletePerson(Integer id){
         persons.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Person doesn't exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist"));
         Person personFromDB = persons.getOne(id);
         persons.delete(personFromDB);
         return personFromDB;

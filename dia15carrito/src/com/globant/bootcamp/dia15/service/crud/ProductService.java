@@ -19,10 +19,8 @@ public class ProductService {
     }
 
     public Product getProduct(Integer id){
-        products.findById(id)
+        return products.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product doesn't exist"));
-        return products.getOne(id);
-
     }
 
     public Product createProduct(Product product){
