@@ -1,8 +1,8 @@
 package com.globant.bootcamp.dia15.controller;
 
-import com.globant.bootcamp.dia15.component.ClientCredentials;
-import com.globant.bootcamp.dia15.domain.entity.Client;
-import com.globant.bootcamp.dia15.service.LoginClientService;
+
+import com.globant.bootcamp.dia15.domain.entity.Person;
+import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
-public class LoginClientController {
-
+public class LoginPersonController {
     @Autowired
-    private LoginClientService loginClientService;
+    private SecurityEndpointService securityEndpointService;
 
     @PostMapping
-    public ResponseEntity<Client> loginClient(@RequestBody ClientCredentials credentials){
-        return ResponseEntity.ok().body(loginClientService.loginClient(credentials));
+    public ResponseEntity<String> loginPerson(@RequestBody Person person){
+        return ResponseEntity.ok().body(securityEndpointService.signIn(person));
     }
 }

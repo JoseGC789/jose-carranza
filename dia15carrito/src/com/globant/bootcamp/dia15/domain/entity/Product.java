@@ -1,7 +1,7 @@
 package com.globant.bootcamp.dia15.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.globant.bootcamp.dia15.domain.ProductState;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,24 +17,24 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
-
+    @Column(nullable = false)
     private int quantity;
     private String description;
     private String imgRef;
     private long price;
     private ProductState state;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_category", referencedColumnName = "id")
     )
     private List<Category> categories = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "id_product")
+    @OneToMany(mappedBy="product")
+    @JsonBackReference
     private List<Reservation> reservations = new ArrayList<>();
 
     public Product() {

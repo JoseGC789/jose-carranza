@@ -1,9 +1,6 @@
 package com.globant.bootcamp.dia15.service;
 
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.junit.Assert.*;
+import com.globant.bootcamp.dia15.service.crud.CategoryService;
 
 public class CategoryServiceTest {
     CategoryService service = new CategoryService();

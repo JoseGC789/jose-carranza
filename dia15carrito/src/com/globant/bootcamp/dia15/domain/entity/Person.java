@@ -1,7 +1,7 @@
 package com.globant.bootcamp.dia15.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.globant.bootcamp.dia15.domain.ClientRoles;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,14 +11,14 @@ import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-public class Client implements Serializable {
+public class Person implements Serializable {
 
-    //client personal data fields + identification
+    //person personal data fields + identification
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private ClientRoles role;
+    private PersonRoles role;
 
     @Column(unique = true, nullable = false, updatable = false)
     private String username;
@@ -28,19 +28,20 @@ public class Client implements Serializable {
     private String last;
     private Calendar birth;
     private String email;
-    //client history fields
-    @Column(updatable = false)
+    //person history fields
+    @Column(nullable = false, updatable = false)
     private Calendar dateJoined;
+    @Column(nullable = false)
     private Calendar LastSeen;
 
-    @OneToMany
-    @JoinColumn(name = "id_client")
+    @OneToMany(mappedBy="person")
+    @JsonBackReference
     private List<Reservation> reservations = new ArrayList<>();
 
-    public Client() {
+    public Person() {
     }
 
-    public Client(Integer id, ClientRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations) {
+    public Person(Integer id, PersonRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations) {
         this.id = id;
         this.role = role;
         this.username = username;
@@ -62,11 +63,11 @@ public class Client implements Serializable {
         this.id = id;
     }
 
-    public ClientRoles getRole() {
+    public PersonRoles getRole() {
         return role;
     }
 
-    public void setRole(ClientRoles role) {
+    public void setRole(PersonRoles role) {
         this.role = role;
     }
 

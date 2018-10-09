@@ -1,7 +1,7 @@
-package com.globant.bootcamp.dia15.service;
+package com.globant.bootcamp.dia15.service.crud;
 
 
-import com.globant.bootcamp.dia15.NotFoundException;
+import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Category;
 import com.globant.bootcamp.dia15.domain.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class CategoryService {
 
     public Category getCategory(Integer id){
         categories.findById(id)
-                .orElseThrow(() -> new NotFoundException());
+                .orElseThrow(() -> new ResourceNotFoundException("Category doesn't exist"));
         return categories.getOne(id);
 
     }
@@ -32,13 +32,13 @@ public class CategoryService {
 
     public Category updateCategory(Category category){
         categories.findById(category.getId())
-                .orElseThrow(() -> new NotFoundException());
+                .orElseThrow(() -> new ResourceNotFoundException("Category doesn't exist"));
         return categories.save(category);
     }
 
     public Category deleteCategory(Integer id){
         categories.findById(id)
-                .orElseThrow(() -> new NotFoundException());
+                .orElseThrow(() -> new ResourceNotFoundException("Category doesn't exist"));
         Category categoryFromDB = categories.getOne(id);
         categories.delete(categoryFromDB);
         return categoryFromDB;

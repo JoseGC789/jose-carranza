@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Calendar;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -12,21 +13,27 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false, updatable = false)
+    private int quantity;
+    @Column(nullable = false, updatable = false)
+    private Calendar dateAdded;
 
     @ManyToOne
-    @JoinColumn(name = "id_client")
-    private Client client;
+    @JoinColumn(name = "id_person",nullable = false, updatable = false)
+    private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "id_product")
+    @JoinColumn(name = "id_product",nullable = false, updatable = false)
     private Product product;
 
     public Reservation() {
     }
 
-    public Reservation(Integer id, Client client, Product product) {
+    public Reservation(Integer id, int quantity, Calendar dateAdded, Person person, Product product) {
         this.id = id;
-        this.client = client;
+        this.quantity = quantity;
+        this.dateAdded = dateAdded;
+        this.person = person;
         this.product = product;
     }
 
@@ -38,12 +45,28 @@ public class Reservation implements Serializable {
         this.id = id;
     }
 
-    public Client getClient() {
-        return client;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Calendar getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Calendar dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public Product getProduct() {

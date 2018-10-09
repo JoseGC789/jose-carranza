@@ -1,7 +1,7 @@
 package com.globant.bootcamp.dia15.controller.crud;
 
 import com.globant.bootcamp.dia15.domain.entity.Product;
-import com.globant.bootcamp.dia15.service.ProductService;
+import com.globant.bootcamp.dia15.service.crud.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

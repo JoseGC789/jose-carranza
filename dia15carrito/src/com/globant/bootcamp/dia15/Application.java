@@ -1,7 +1,7 @@
 package com.globant.bootcamp.dia15;
 
 import com.globant.bootcamp.dia15.domain.repository.CategoryRepository;
-import com.globant.bootcamp.dia15.domain.repository.ClientRepository;
+import com.globant.bootcamp.dia15.domain.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +16,7 @@ public class Application implements CommandLineRunner {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private PersonRepository clientRepository;
 
     @Override
     public void run(String... args) throws Exception {
