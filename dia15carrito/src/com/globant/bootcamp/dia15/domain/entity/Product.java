@@ -27,6 +27,13 @@ public class Product implements Serializable {
     private long price;
     private ProductState state;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Person person;
+
+    @OneToMany(mappedBy="product")
+    @JsonBackReference
+    private List<Reservation> reservations = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"),
@@ -34,14 +41,10 @@ public class Product implements Serializable {
     )
     private List<Category> categories = new ArrayList<>();
 
-    @OneToMany(mappedBy="product")
-    @JsonBackReference
-    private List<Reservation> reservations = new ArrayList<>();
-
     public Product() {
     }
 
-    public Product(Integer id, String name, int quantity, String description, String imgRef, long price, ProductState state, List<Category> categories, List<Reservation> reservations) {
+    public Product(Integer id, String name, int quantity, String description, String imgRef, long price, ProductState state, Person person, List<Reservation> reservations, List<Category> categories) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -49,8 +52,9 @@ public class Product implements Serializable {
         this.imgRef = imgRef;
         this.price = price;
         this.state = state;
-        this.categories = categories;
+        this.person = person;
         this.reservations = reservations;
+        this.categories = categories;
     }
 
     public Integer getId() {
@@ -109,12 +113,12 @@ public class Product implements Serializable {
         this.state = state;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public List<Reservation> getReservations() {
@@ -123,6 +127,14 @@ public class Product implements Serializable {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }
 

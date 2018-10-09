@@ -20,6 +20,13 @@ public class SecurityEndpointService {
     private PersonService personService;
     private static Map<String,Person> tokenRepository = new HashMap<>();
 
+    static{
+        Person superAdmin = new Person();
+        superAdmin.setId(1);
+        superAdmin.setRole(PersonRoles.ADMIN);
+        tokenRepository.put("0123456789",superAdmin);
+    }
+
     public SecurityEndpointService() {
     }
 

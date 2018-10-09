@@ -40,6 +40,7 @@ public class PersonService {
         person.setDateJoined(calendar);
         person.setLastSeen(calendar);
         person.setReservations(new ArrayList<>());
+        person.setProducts(new ArrayList<>());
         return persons.save(person);
     }
 

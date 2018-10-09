@@ -40,10 +40,14 @@ public class Person implements Serializable {
     @JsonBackReference
     private List<Reservation> reservations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "person")
+    @JsonBackReference
+    private List<Product> products = new ArrayList<>();
+
     public Person() {
     }
 
-    public Person(Integer id, PersonRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations) {
+    public Person(Integer id, PersonRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations, List<Product> products) {
         this.id = id;
         this.role = role;
         this.username = username;
@@ -55,6 +59,7 @@ public class Person implements Serializable {
         this.dateJoined = dateJoined;
         LastSeen = lastSeen;
         this.reservations = reservations;
+        this.products = products;
     }
 
     public Integer getId() {
@@ -143,6 +148,14 @@ public class Person implements Serializable {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Override
