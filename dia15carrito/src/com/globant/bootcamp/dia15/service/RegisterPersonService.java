@@ -1,6 +1,6 @@
 package com.globant.bootcamp.dia15.service;
 
-import com.globant.bootcamp.dia15.domain.entity.PersonRoles;
+import com.globant.bootcamp.dia15.misc.PersonRoles;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.service.crud.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;

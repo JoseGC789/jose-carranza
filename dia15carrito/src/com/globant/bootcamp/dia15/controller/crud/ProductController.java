@@ -1,6 +1,8 @@
 package com.globant.bootcamp.dia15.controller.crud;
 
+import com.globant.bootcamp.dia15.misc.PersonRoles;
 import com.globant.bootcamp.dia15.domain.entity.Product;
+import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import com.globant.bootcamp.dia15.service.crud.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,30 +16,42 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private SecurityEndpointService securityEndpointService;
+    private PersonRoles requiredRole = PersonRoles.ADMIN;
 
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts(){
+    public ResponseEntity<List<Product>> getProducts(@RequestHeader("Authorization") String token){
+        validateRequest(token);
         return ResponseEntity.ok().body(productService.getProducts());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Integer id){
+    public ResponseEntity<Product> getProduct(@RequestHeader("Authorization") String token, @PathVariable Integer id){
+        validateRequest(token);
         return ResponseEntity.ok().body(productService.getProduct(id));
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product){
+    public ResponseEntity<Product> createProduct(@RequestHeader("Authorization") String token, @RequestBody Product product){
+        validateRequest(token);
         return ResponseEntity.ok().body(productService.createProduct(product));
     }
 
     @PutMapping
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product){
+    public ResponseEntity<Product> updateProduct(@RequestHeader("Authorization") String token, @RequestBody Product product){
+        validateRequest(token);
         return ResponseEntity.ok().body(productService.updateProduct(product));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable Integer id){
+    public ResponseEntity<Product> deleteProduct(@RequestHeader("Authorization") String token, @PathVariable Integer id){
+        validateRequest(token);
         return ResponseEntity.ok().body(productService.deleteProduct(id));
+    }
+
+    private void validateRequest(String token){
+        securityEndpointService.validateRequest(token,requiredRole);
     }
 }

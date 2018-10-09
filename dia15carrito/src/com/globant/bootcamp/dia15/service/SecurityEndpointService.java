@@ -1,7 +1,8 @@
 package com.globant.bootcamp.dia15.service;
 
 import com.globant.bootcamp.dia15.domain.entity.Person;
-import com.globant.bootcamp.dia15.domain.entity.PersonRoles;
+import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.exceptions.UnauthorizedException;
 import com.globant.bootcamp.dia15.service.crud.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,13 @@ public class SecurityEndpointService {
         person = personService.getPerson(person.getUsername());
 
         if (tokenRepository.containsValue(person)){
-            throw new UnauthorizedException("Already logged in the system");
+            throw new UnauthorizedException("Already logged in the system.");
         }else {
             if (person.getPassword().equals(password)) {
                 token = generateToken();
                 tokenRepository.put(token, person);
             } else {
-                throw new UnauthorizedException("Invalid Username/Password fields");
+                throw new UnauthorizedException("Failed to authenticate user; check your data.");
             }
         }
         updateLastSeen(person);
@@ -61,7 +62,7 @@ public class SecurityEndpointService {
             updateLastSeen(person);
             return person;
         }else{
-            throw new UnauthorizedException("Cannot validate token");
+            throw new ForbiddenException("Insufficient clearance.");
         }
     }
 
@@ -71,7 +72,7 @@ public class SecurityEndpointService {
             updateLastSeen(person);
             return person;
         }else{
-            throw new UnauthorizedException("Cannot validate token");
+            throw new ForbiddenException("Controller is off limits.");
         }
     }
 

@@ -2,6 +2,7 @@ package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.globant.bootcamp.dia15.misc.PersonRoles;
 
 import javax.persistence.*;
 import java.io.Serializable;

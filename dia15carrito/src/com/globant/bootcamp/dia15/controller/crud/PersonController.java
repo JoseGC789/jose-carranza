@@ -1,6 +1,8 @@
 package com.globant.bootcamp.dia15.controller.crud;
 
 import com.globant.bootcamp.dia15.domain.entity.Person;
+import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import com.globant.bootcamp.dia15.service.crud.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,30 +16,42 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
+    @Autowired
+    private SecurityEndpointService securityEndpointService;
+    private PersonRoles requiredRole = PersonRoles.ADMIN;
 
 
     @GetMapping
-    public ResponseEntity<List<Person>> getPersons(){
+    public ResponseEntity<List<Person>> getPersons(@RequestHeader("Authorization") String token){
+        validateRequest(token);
         return ResponseEntity.ok().body(personService.getPersons());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Person> getPerson(@PathVariable Integer id){
+    public ResponseEntity<Person> getPerson(@RequestHeader("Authorization") String token, @PathVariable Integer id){
+        validateRequest(token);
         return ResponseEntity.ok().body(personService.getPerson(id));
     }
 
     @PostMapping
-    public ResponseEntity<Person> createPerson(@RequestBody Person client){
+    public ResponseEntity<Person> createPerson(@RequestHeader("Authorization") String token, @RequestBody Person client){
+        validateRequest(token);
         return ResponseEntity.ok().body(personService.createPerson(client));
     }
 
     @PutMapping
-    public ResponseEntity<Person> updatePerson(@RequestBody Person client){
+    public ResponseEntity<Person> updatePerson(@RequestHeader("Authorization") String token, @RequestBody Person client){
+        validateRequest(token);
         return ResponseEntity.ok().body(personService.updatePerson(client));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Person> deletePerson(@PathVariable Integer id){
+    public ResponseEntity<Person> deletePerson(@RequestHeader("Authorization") String token, @PathVariable Integer id){
+        validateRequest(token);
         return ResponseEntity.ok().body(personService.deletePerson(id));
+    }
+
+    private void validateRequest(String token){
+        securityEndpointService.validateRequest(token,requiredRole);
     }
 }
