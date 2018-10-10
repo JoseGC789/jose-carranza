@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,8 @@ public class PersonController {
     private PersonService personService;
     @Autowired
     private SecurityEndpointService securityEndpointService;
-    private PersonRoles requiredRole = PersonRoles.ADMIN;
+    private List<PersonRoles> requiredRoles = Arrays.asList(PersonRoles.ADMIN, PersonRoles.SUPER);
+
 
 
     @GetMapping
@@ -52,6 +54,6 @@ public class PersonController {
     }
 
     private void validateRequest(String token){
-        securityEndpointService.validateRequest(token,requiredRole);
+        securityEndpointService.validateRequest(token,requiredRoles);
     }
 }

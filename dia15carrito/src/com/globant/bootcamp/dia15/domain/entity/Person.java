@@ -24,7 +24,7 @@ public class Person implements Serializable {
 
     @Column(unique = true, nullable = false, updatable = false)
     private String username;
-
+    @Column(nullable = false)
     private String password;
     private String first;
     private String last;
@@ -40,14 +40,14 @@ public class Person implements Serializable {
     @JsonBackReference
     private List<Reservation> reservations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "person")
-    @JsonBackReference
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "publisher")
+    @JsonBackReference("published")
+    private List<Product> published = new ArrayList<>();
 
     public Person() {
     }
 
-    public Person(Integer id, PersonRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations, List<Product> products) {
+    public Person(Integer id, PersonRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations, List<Product> published) {
         this.id = id;
         this.role = role;
         this.username = username;
@@ -59,7 +59,7 @@ public class Person implements Serializable {
         this.dateJoined = dateJoined;
         LastSeen = lastSeen;
         this.reservations = reservations;
-        this.products = products;
+        this.published = published;
     }
 
     public Integer getId() {
@@ -150,12 +150,12 @@ public class Person implements Serializable {
         this.reservations = reservations;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<Product> getPublished() {
+        return published;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setPublished(List<Product> published) {
+        this.published = published;
     }
 
     @Override

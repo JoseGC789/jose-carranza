@@ -8,10 +8,7 @@ import com.globant.bootcamp.dia15.service.crud.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class SecurityEndpointService {
@@ -19,13 +16,6 @@ public class SecurityEndpointService {
     @Autowired
     private PersonService personService;
     private static Map<String,Person> tokenRepository = new HashMap<>();
-
-    static{
-        Person superAdmin = new Person();
-        superAdmin.setId(1);
-        superAdmin.setRole(PersonRoles.ADMIN);
-        tokenRepository.put("0123456789",superAdmin);
-    }
 
     public SecurityEndpointService() {
     }
@@ -45,7 +35,7 @@ public class SecurityEndpointService {
                 throw new UnauthorizedException("Failed to authenticate user; check your data.");
             }
         }
-        updateLastSeen(person);
+        personService.updatePersonLastSeen(person);
         return token;
     }
 
@@ -63,10 +53,20 @@ public class SecurityEndpointService {
 
     }
 
+    public Person validateRequest(String token, List<PersonRoles> roles){
+        Person person = tokenRepository.get(token);
+        if (person != null && roles.contains(person.getRole())){
+            personService.updatePersonLastSeen(person);
+            return person;
+        }else{
+            throw new ForbiddenException("Insufficient clearance.");
+        }
+    }
+
     public Person validateRequest(String token, PersonRoles role){
         Person person = tokenRepository.get(token);
         if (person != null && person.getRole().equals(role)){
-            updateLastSeen(person);
+            personService.updatePersonLastSeen(person);
             return person;
         }else{
             throw new ForbiddenException("Insufficient clearance.");
@@ -76,15 +76,16 @@ public class SecurityEndpointService {
     public Person validateRequest(String token){
         Person person = tokenRepository.get(token);
         if (person != null){
-            updateLastSeen(person);
+            personService.updatePersonLastSeen(person);
             return person;
         }else{
             throw new ForbiddenException("Controller is off limits.");
         }
     }
 
-    private void updateLastSeen (Person person){
-        person.setLastSeen(new GregorianCalendar());
-        personService.updatePerson(person);
+    public static void initializeSUPER(Person superAdmin){
+        if (!tokenRepository.containsValue(superAdmin)) {
+            tokenRepository.put("0123456789", superAdmin);
+        }
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class CategoryController {
     private CategoryService categoryService;
     @Autowired
     private SecurityEndpointService securityEndpointService;
-    private PersonRoles requiredRole = PersonRoles.ADMIN;
+    private List<PersonRoles> requiredRoles = Arrays.asList(PersonRoles.ADMIN, PersonRoles.SUPER);
 
     //get all
     @GetMapping
@@ -52,7 +53,7 @@ public class CategoryController {
     }
 
     private void validateRequest(String token){
-        securityEndpointService.validateRequest(token,requiredRole);
+        securityEndpointService.validateRequest(token, requiredRoles);
     }
 
 }

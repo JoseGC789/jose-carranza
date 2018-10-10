@@ -28,9 +28,9 @@ public class Product implements Serializable {
     private ProductState state;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Person person;
+    private Person publisher;
 
-    @OneToMany(mappedBy="product")
+    @OneToMany(mappedBy = "product")
     @JsonBackReference
     private List<Reservation> reservations = new ArrayList<>();
 
@@ -44,7 +44,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(Integer id, String name, int quantity, String description, String imgRef, long price, ProductState state, Person person, List<Reservation> reservations, List<Category> categories) {
+    public Product(Integer id, String name, int quantity, String description, String imgRef, long price, ProductState state, Person publisher, List<Reservation> reservations, List<Category> categories) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -52,7 +52,7 @@ public class Product implements Serializable {
         this.imgRef = imgRef;
         this.price = price;
         this.state = state;
-        this.person = person;
+        this.publisher = publisher;
         this.reservations = reservations;
         this.categories = categories;
     }
@@ -113,12 +113,12 @@ public class Product implements Serializable {
         this.state = state;
     }
 
-    public Person getPerson() {
-        return person;
+    public Person getPublisher() {
+        return publisher;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPublisher(Person publisher) {
+        this.publisher = publisher;
     }
 
     public List<Reservation> getReservations() {
@@ -137,4 +137,3 @@ public class Product implements Serializable {
         this.categories = categories;
     }
 }
-
