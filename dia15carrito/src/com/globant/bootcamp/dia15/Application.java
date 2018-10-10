@@ -4,11 +4,12 @@ import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.repository.PersonRepository;
 import com.globant.bootcamp.dia15.misc.PersonRoles;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
-import com.globant.bootcamp.dia15.service.crud.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,5 +41,15 @@ public class Application implements CommandLineRunner {
 
         SecurityEndpointService.initializeSUPER(superAdmin);
 
-    }
+    }/*
+    @Bean
+    public CommonsRequestLoggingFilter requestLoggingFilter() {
+        CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+        loggingFilter.setIncludeClientInfo(true);
+        loggingFilter.setIncludeQueryString(true);
+        loggingFilter.setIncludePayload(true);
+        loggingFilter.setIncludeHeaders(true);
+        loggingFilter.setMaxPayloadLength(500);
+        return loggingFilter;
+    }*/
 }
