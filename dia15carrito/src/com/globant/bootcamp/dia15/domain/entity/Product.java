@@ -27,7 +27,7 @@ public class Product implements Serializable {
     private long price;
     private ProductState state;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Person publisher;
 
     @OneToMany(mappedBy = "product")

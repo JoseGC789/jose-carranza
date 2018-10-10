@@ -1,6 +1,7 @@
 package com.globant.bootcamp.dia15.service;
 
 import com.globant.bootcamp.dia15.domain.entity.Person;
+import com.globant.bootcamp.dia15.misc.Constants;
 import com.globant.bootcamp.dia15.misc.PersonRoles;
 import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.exceptions.UnauthorizedException;
@@ -39,11 +40,18 @@ public class SecurityEndpointService {
         return token;
     }
 
+    public Person signOut(String token){
+        if (token.equals(Constants.SECURITY_TOKEN_SUPER_VALUE.getString())){
+            throw new ForbiddenException("Cannot logout SUPER.");
+        }
+        return tokenRepository.remove(token);
+    }
+
     private String generateToken() {
-        String str = "abcdefghijklmnopqrstuvwxyz";
+        String str = Constants.SECURITY_TOKEN_INPUT.getString();
         Random rnd = new Random();
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < 30; i++){
+        for (int i = 0; i < Constants.SECURITY_TOKEN_LENGTH.getNumber(); i++){
             stringBuilder.append(str.charAt(rnd.nextInt(str.length())));
         }
         return stringBuilder.toString();
@@ -85,7 +93,7 @@ public class SecurityEndpointService {
 
     public static void initializeSUPER(Person superAdmin){
         if (!tokenRepository.containsValue(superAdmin)) {
-            tokenRepository.put("0123456789", superAdmin);
+            tokenRepository.put(Constants.SECURITY_TOKEN_SUPER_VALUE.getString(), superAdmin);
         }
     }
 }
