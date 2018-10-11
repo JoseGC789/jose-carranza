@@ -23,6 +23,8 @@ public class PersonService {
     private PersonRepository personRepository;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ReservationService reservationService;
 
     public List<Person> getAll(){
         List<Person> personList = personRepository.findAll();
@@ -78,10 +80,15 @@ public class PersonService {
     public Person deletePerson(Integer id){
         Person personFromDB = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString()));
+
         protectSuperRole(personFromDB.getRole());
         setPublisherList(personFromDB);
+
         if (!personFromDB.getPublishedList().isEmpty()){
             throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_PRODUCTS_PUBLISHED.getString());
+        }
+        if (!reservationService.getReservation(personFromDB).isEmpty()){
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_RESERVATION_PENDING.getString());
         }
         personRepository.delete(personFromDB);
         return personFromDB;
