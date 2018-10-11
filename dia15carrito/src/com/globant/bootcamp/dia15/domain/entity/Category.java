@@ -21,7 +21,7 @@ public class Category implements Serializable {
 
     private String description;
 
-    @ManyToMany(mappedBy = "categories",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Product> products;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

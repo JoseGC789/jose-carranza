@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.globant.bootcamp.dia15.constants.ProductState;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -23,19 +24,20 @@ public class Product implements Serializable {
     private int quantity;
     private String description;
     private String imgRef;
+    @DecimalMin("1.00")
     private long price;
     @Column(nullable = false)
     private ProductState state;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("publisherList")
     private Person publisher;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Reservation> reservations;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("productList")
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"),

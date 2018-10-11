@@ -3,6 +3,7 @@ package com.globant.bootcamp.dia15.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
@@ -15,15 +16,16 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false, updatable = false)
+    @Min(1)
     private int quantity;
     @Column(nullable = false, updatable = false)
     private Calendar dateAdded;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_person",nullable = false, updatable = false)
     private Person person;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_product",nullable = false, updatable = false)
     private Product product;
 

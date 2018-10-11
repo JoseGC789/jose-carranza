@@ -38,11 +38,11 @@ public class Person implements Serializable {
     @Column(nullable = false)
     private Calendar LastSeen;
 
-    @OneToMany(mappedBy="person")
+    @OneToMany(mappedBy="person",fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Reservation> reservations;
 
-    @OneToMany(mappedBy = "publisher")
+    @OneToMany(mappedBy = "publisher",fetch = FetchType.LAZY)
     @JsonBackReference("published")
     private List<Product> published;
 

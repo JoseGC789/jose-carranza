@@ -29,13 +29,13 @@ public class SecurityEndpointService {
         person = personService.getPerson(person.getUsername());
 
         if (tokenRepository.containsValue(person)){
-            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_PERSON_ALREADY_LOGGED_IN.toString());
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_PERSON_ALREADY_LOGGED_IN.getString());
         }else {
             if (person.getPassword().equals(password)) {
                 token = generateToken();
                 tokenRepository.put(token, person);
             } else {
-                throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_CHECK_YOUR_DATA.toString());
+                throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_CHECK_YOUR_DATA.getString());
             }
         }
         personService.updatePersonLastSeen(person);
@@ -44,7 +44,7 @@ public class SecurityEndpointService {
 
     public Person signOut(String token){
         if (token.equals(Values.SECURITY_TOKEN_SUPER_TOKEN.getString())){
-            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_CANNOT_LOGOUT_SUPER.toString());
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_CANNOT_LOGOUT_SUPER.getString());
         }
         return tokenRepository.remove(token);
     }
@@ -69,7 +69,7 @@ public class SecurityEndpointService {
             personService.updatePersonLastSeen(person);
             return person;
         }else{
-            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_INSUFFICIENT_CLEARANCE.toString());
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_INSUFFICIENT_CLEARANCE.getString());
         }
     }
 
@@ -79,7 +79,7 @@ public class SecurityEndpointService {
             personService.updatePersonLastSeen(person);
             return person;
         }else{
-            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_INSUFFICIENT_CLEARANCE.toString());
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_INSUFFICIENT_CLEARANCE.getString());
         }
     }
 
@@ -89,7 +89,7 @@ public class SecurityEndpointService {
             personService.updatePersonLastSeen(person);
             return person;
         }else{
-            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_UNMATCHED_TOKEN.toString());
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_UNMATCHED_TOKEN.getString());
         }
     }
 

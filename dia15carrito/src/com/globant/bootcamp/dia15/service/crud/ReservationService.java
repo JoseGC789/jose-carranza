@@ -23,7 +23,7 @@ public class ReservationService {
 
     public Reservation getReservation(Integer id){
         return reservationRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.getString()));
     }
 
     public List<Reservation> getReservation(Person person){
@@ -37,13 +37,13 @@ public class ReservationService {
 
     public Reservation updateReservation(Reservation reservation){
         reservationRepository.findById(reservation.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.getString()));
         return reservationRepository.save(reservation);
     }
 
     public Reservation deleteReservation(Integer id){
         Reservation reservationFromDB = reservationRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.getString()));
         reservationRepository.delete(reservationFromDB);
         return reservationFromDB;
     }
