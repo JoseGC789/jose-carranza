@@ -30,7 +30,7 @@ public class ProductService {
     }
 
     public List<Product> getAll(Category category){
-        return productRepository.findProductByCategory(category);
+        return productRepository.findByCategories(category);
     }
 
     public Product getProduct(Integer id){
@@ -40,8 +40,9 @@ public class ProductService {
 
     public Product createProduct(Product product){
         product.setReservations(new ArrayList<>());
-        product.setCategories(new ArrayList<>());
-
+        if (product.getCategories() == null){
+            product.setCategories(new ArrayList<>());
+        }
         checkPersonExistence(product.getPublisher());
         return productRepository.save(product);
     }

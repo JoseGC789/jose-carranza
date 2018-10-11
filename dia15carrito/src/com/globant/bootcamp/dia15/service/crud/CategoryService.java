@@ -57,6 +57,6 @@ public class CategoryService {
     }
 
     private void setProductList (Category category){
-        //category.setProductList(productService.getAll(category));
+        category.setProductList(productService.getAll(category));
     }
 }
