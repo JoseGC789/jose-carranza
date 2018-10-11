@@ -17,13 +17,14 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private String name;
     @Column(nullable = false)
     private int quantity;
     private String description;
     private String imgRef;
     private long price;
+    @Column(nullable = false)
     private ProductState state;
 
     @ManyToOne(fetch = FetchType.EAGER)

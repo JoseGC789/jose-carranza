@@ -2,7 +2,7 @@ package com.globant.bootcamp.dia15.service.crud;
 
 
 import com.globant.bootcamp.dia15.constants.ExceptionMessages;
-import com.globant.bootcamp.dia15.domain.entity.Person;
+import com.globant.bootcamp.dia15.exceptions.BadRequestException;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Category;
 import com.globant.bootcamp.dia15.domain.repository.CategoryRepository;
@@ -25,7 +25,6 @@ public class CategoryService {
         for (Category category:categoryList) {
             setProductList(category);
         }
-
         return categoryList;
     }
 
@@ -37,8 +36,9 @@ public class CategoryService {
     }
 
     public Category createCategory(Category category){
+        checkNameUniqueness(category.getName());
         category.setProductList(new ArrayList<>());
-        category.setProducts(new ArrayList<>());
+        checkProductsIsNull(category);
         return categoryRepository.save(category);
     }
 
@@ -58,5 +58,17 @@ public class CategoryService {
 
     private void setProductList (Category category){
         category.setProductList(productService.getAll(category));
+    }
+
+    private void checkProductsIsNull(Category category){
+        if (category.getProducts() == null){
+            category.setProducts(new ArrayList<>());
+        }
+    }
+
+    private void checkNameUniqueness(String name){
+        if (categoryRepository.findByName(name) != null){
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_CATEGORY_NAME_MUST_BE_UNIQUE.getString());
+        }
     }
 }

@@ -39,32 +39,22 @@ public class PersonService {
     public Person getPerson(Integer id){
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString()));
-
+        checkNullity(person);
         setPublisherList(person);
         return person;
     }
 
     public Person getPerson(String username){
         Person person = personRepository.findByUsername(username);
-        if (person == null){
-            throw new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString());
-        }
 
         setPublisherList(person);
         return person;
     }
 
     public Person createPerson(Person person){
+        checkUsernameUniqueness(person.getUsername());
         protectSuperRole(person.getRole());
-
-        person.setReservations(new ArrayList<>());
-        person.setPublished(new ArrayList<>());
-        person.setPublishedList(new ArrayList<>());
-
-        Calendar calendar = new GregorianCalendar();
-        person.setDateJoined(calendar);
-        person.setLastSeen(calendar);
-
+        initializeFields(person);
         return personRepository.save(person);
     }
 
@@ -82,14 +72,7 @@ public class PersonService {
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString()));
 
         protectSuperRole(personFromDB.getRole());
-        setPublisherList(personFromDB);
-
-        if (!personFromDB.getPublishedList().isEmpty()){
-            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_PRODUCTS_PUBLISHED.getString());
-        }
-        if (!reservationService.getReservation(personFromDB).isEmpty()){
-            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_RESERVATION_PENDING.getString());
-        }
+        protectPersonWithAssets(personFromDB);
         personRepository.delete(personFromDB);
         return personFromDB;
     }
@@ -100,6 +83,31 @@ public class PersonService {
         return person;
     }
 
+    private void initializeFields(Person person){
+        person.setReservations(new ArrayList<>());
+        person.setPublished(new ArrayList<>());
+        person.setPublishedList(new ArrayList<>());
+        Calendar calendar = new GregorianCalendar();
+        person.setDateJoined(calendar);
+        person.setLastSeen(calendar);
+    }
+
+    private void checkNullity (Person person){
+        if (person == null){
+            throw new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString());
+        }
+    }
+
+    private void protectPersonWithAssets(Person person){
+        setPublisherList(person);
+        if (!person.getPublishedList().isEmpty()){
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_PRODUCTS_PUBLISHED.getString());
+        }
+        if (!reservationService.getReservation(person).isEmpty()){
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_RESERVATION_PENDING.getString());
+        }
+    }
+
     private void protectSuperRole(PersonRoles role){
         if (role == PersonRoles.SUPER){
             throw new ForbiddenException(ExceptionMessages.FORBIDDEN_MANIPULATION_OF_SUPER.getString());
@@ -108,5 +116,11 @@ public class PersonService {
 
     private void setPublisherList (Person person){
         person.setPublishedList(productService.getAll(person));
+    }
+
+    private void checkUsernameUniqueness(String username){
+        if (personRepository.findByUsername(username) != null){
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_USERNAME_MUST_BE_UNIQUE.getString());
+        }
     }
 }

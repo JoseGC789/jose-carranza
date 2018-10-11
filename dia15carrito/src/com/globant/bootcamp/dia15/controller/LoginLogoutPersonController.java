@@ -27,7 +27,7 @@ public class LoginLogoutPersonController {
         @Autowired
         private SecurityEndpointService securityEndpointService;
 
-        @GetMapping
+        @PostMapping
         public ResponseEntity<Person> logoutPerson(@RequestHeader("Authorization") String token){
             return ResponseEntity.ok().body(securityEndpointService.signOut(token));
         }

@@ -39,10 +39,8 @@ public class ProductService {
     }
 
     public Product createProduct(Product product){
-        product.setReservations(new ArrayList<>());
-        if (product.getCategories() == null){
-            product.setCategories(new ArrayList<>());
-        }
+        checkCategoriesIsNull(product);
+        initializeFields(product);
         checkPersonExistence(product.getPublisher());
         return productRepository.save(product);
     }
@@ -56,11 +54,14 @@ public class ProductService {
     }
 
     public Product deleteProduct(Integer id){
-        productRepository.findById(id)
+        Product productFromDB = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PRODUCT.getString()));
-        Product productFromDB = productRepository.getOne(id);
         productRepository.delete(productFromDB);
         return productFromDB;
+    }
+
+    private void initializeFields (Product product){
+        product.setReservations(new ArrayList<>());
     }
 
     private void checkPersonExistence(Person person){
@@ -69,5 +70,11 @@ public class ProductService {
         }
         personService.getPerson(person.getId());
         person.setPublishedList(new ArrayList<>());
+    }
+
+    private void checkCategoriesIsNull (Product product){
+        if (product.getCategories() == null){
+            product.setCategories(new ArrayList<>());
+        }
     }
 }

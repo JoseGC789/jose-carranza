@@ -5,6 +5,10 @@ public enum ExceptionMessages {
     BAD_REQUEST_PERSON_CHECK_YOUR_DATA("Can not authenticate user. Check your data."),
     BAD_REQUEST_PERSON_HAS_PRODUCTS_PUBLISHED("Person has products published; rectify this before deletion."),
     BAD_REQUEST_PERSON_HAS_RESERVATION_PENDING("Person has reservations pending; rectify this before deletion."),
+    BAD_REQUEST_CATEGORY_NAME_MUST_BE_UNIQUE("There is already a category with that name."),
+    BAD_REQUEST_PERSON_USERNAME_MUST_BE_UNIQUE("There is already a person with that username."),
+
+    UNAUTHORIZED_PLEASE_PRESENT_CREDENTIALS("Credentials required for access. Please login or register."),
 
     FORBIDDEN_MANIPULATION_OF_SUPER("User with 'SUPER' property can not be manipulated."),
     FORBIDDEN_CANNOT_LOGOUT_SUPER("User with 'SUPER' property can not logout."),

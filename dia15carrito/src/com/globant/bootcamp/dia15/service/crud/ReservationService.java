@@ -31,7 +31,7 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Reservation reservation){
-        reservation.setDateAdded(new GregorianCalendar());
+        initializeFields(reservation);
         return reservationRepository.save(reservation);
     }
 
@@ -42,10 +42,13 @@ public class ReservationService {
     }
 
     public Reservation deleteReservation(Integer id){
-        reservationRepository.findById(id)
+        Reservation reservationFromDB = reservationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.toString()));
-        Reservation reservationFromDB = reservationRepository.getOne(id);
         reservationRepository.delete(reservationFromDB);
         return reservationFromDB;
+    }
+
+    private void initializeFields (Reservation reservation){
+        reservation.setDateAdded(new GregorianCalendar());
     }
 }
