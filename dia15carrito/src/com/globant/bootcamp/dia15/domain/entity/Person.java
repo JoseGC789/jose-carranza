@@ -2,16 +2,17 @@ package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.globant.bootcamp.dia15.constants.PersonRoles;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Person implements Serializable {
 
@@ -22,6 +23,7 @@ public class Person implements Serializable {
 
     private PersonRoles role;
 
+    @NaturalId
     @Column(unique = true, nullable = false, updatable = false)
     private String username;
     @Column(nullable = false)
@@ -38,16 +40,21 @@ public class Person implements Serializable {
 
     @OneToMany(mappedBy="person")
     @JsonBackReference
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "publisher")
     @JsonBackReference("published")
-    private List<Product> published = new ArrayList<>();
+    private List<Product> published;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonIgnoreProperties("publisher")
+    @Transient
+    private List<Product> publishedList;
 
     public Person() {
     }
 
-    public Person(Integer id, PersonRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations, List<Product> published) {
+    public Person(Integer id, PersonRoles role, String username, String password, String first, String last, Calendar birth, String email, Calendar dateJoined, Calendar lastSeen, List<Reservation> reservations, List<Product> published, List<Product> publishedList) {
         this.id = id;
         this.role = role;
         this.username = username;
@@ -60,6 +67,7 @@ public class Person implements Serializable {
         LastSeen = lastSeen;
         this.reservations = reservations;
         this.published = published;
+        this.publishedList = publishedList;
     }
 
     public Integer getId() {
@@ -156,6 +164,14 @@ public class Person implements Serializable {
 
     public void setPublished(List<Product> published) {
         this.published = published;
+    }
+
+    public List<Product> getPublishedList() {
+        return publishedList;
+    }
+
+    public void setPublishedList(List<Product> publishedList) {
+        this.publishedList = publishedList;
     }
 
     @Override

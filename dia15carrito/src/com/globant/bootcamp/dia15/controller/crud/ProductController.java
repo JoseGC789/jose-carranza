@@ -1,6 +1,6 @@
 package com.globant.bootcamp.dia15.controller.crud;
 
-import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.globant.bootcamp.dia15.constants.PersonRoles;
 import com.globant.bootcamp.dia15.domain.entity.Product;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import com.globant.bootcamp.dia15.service.crud.ProductService;
@@ -25,7 +25,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Product>> getProducts(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(productService.getProducts());
+        return ResponseEntity.ok().body(productService.getProductRepository());
     }
 
     @GetMapping("/{id}")

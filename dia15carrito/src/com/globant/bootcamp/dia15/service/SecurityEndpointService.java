@@ -1,8 +1,9 @@
 package com.globant.bootcamp.dia15.service;
 
+import com.globant.bootcamp.dia15.constants.ExceptionMessages;
 import com.globant.bootcamp.dia15.domain.entity.Person;
-import com.globant.bootcamp.dia15.misc.Constants;
-import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.globant.bootcamp.dia15.constants.Values;
+import com.globant.bootcamp.dia15.constants.PersonRoles;
 import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.exceptions.UnauthorizedException;
 import com.globant.bootcamp.dia15.service.crud.PersonService;
@@ -27,13 +28,13 @@ public class SecurityEndpointService {
         person = personService.getPerson(person.getUsername());
 
         if (tokenRepository.containsValue(person)){
-            throw new UnauthorizedException("Already logged in the system.");
+            throw new UnauthorizedException(ExceptionMessages.UNAUTHORIZED_PERSON_ALREADY_LOGGED_IN.toString());
         }else {
             if (person.getPassword().equals(password)) {
                 token = generateToken();
                 tokenRepository.put(token, person);
             } else {
-                throw new UnauthorizedException("Failed to authenticate user; check your data.");
+                throw new UnauthorizedException(ExceptionMessages.UNAUTHORIZED_PERSON_CHECK_YOUR_DATA.toString());
             }
         }
         personService.updatePersonLastSeen(person);
@@ -41,17 +42,17 @@ public class SecurityEndpointService {
     }
 
     public Person signOut(String token){
-        if (token.equals(Constants.SECURITY_TOKEN_SUPER_VALUE.getString())){
-            throw new ForbiddenException("Cannot logout SUPER.");
+        if (token.equals(Values.SECURITY_TOKEN_SUPER_VALUE.getString())){
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_CANNOT_LOGOUT_SUPER.toString());
         }
         return tokenRepository.remove(token);
     }
 
     private String generateToken() {
-        String str = Constants.SECURITY_TOKEN_INPUT.getString();
+        String str = Values.SECURITY_TOKEN_INPUT.getString();
         Random rnd = new Random();
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < Constants.SECURITY_TOKEN_LENGTH.getNumber(); i++){
+        for (int i = 0; i < Values.SECURITY_TOKEN_LENGTH.getNumber(); i++){
             stringBuilder.append(str.charAt(rnd.nextInt(str.length())));
         }
         return stringBuilder.toString();
@@ -67,7 +68,7 @@ public class SecurityEndpointService {
             personService.updatePersonLastSeen(person);
             return person;
         }else{
-            throw new ForbiddenException("Insufficient clearance.");
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_INSUFFICIENT_CLEARANCE.toString());
         }
     }
 
@@ -77,7 +78,7 @@ public class SecurityEndpointService {
             personService.updatePersonLastSeen(person);
             return person;
         }else{
-            throw new ForbiddenException("Insufficient clearance.");
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_INSUFFICIENT_CLEARANCE.toString());
         }
     }
 
@@ -87,13 +88,13 @@ public class SecurityEndpointService {
             personService.updatePersonLastSeen(person);
             return person;
         }else{
-            throw new ForbiddenException("Controller is off limits.");
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_UNMATCHED_TOKEN.toString());
         }
     }
 
     public static void initializeSUPER(Person superAdmin){
         if (!tokenRepository.containsValue(superAdmin)) {
-            tokenRepository.put(Constants.SECURITY_TOKEN_SUPER_VALUE.getString(), superAdmin);
+            tokenRepository.put(Values.SECURITY_TOKEN_SUPER_VALUE.getString(), superAdmin);
         }
     }
 }

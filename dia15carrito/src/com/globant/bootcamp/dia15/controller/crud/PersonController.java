@@ -1,7 +1,7 @@
 package com.globant.bootcamp.dia15.controller.crud;
 
 import com.globant.bootcamp.dia15.domain.entity.Person;
-import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.globant.bootcamp.dia15.constants.PersonRoles;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import com.globant.bootcamp.dia15.service.crud.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PersonController {
     @GetMapping
     public ResponseEntity<List<Person>> getPersons(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(personService.getPersons());
+        return ResponseEntity.ok().body(personService.getPersonRepository());
     }
 
     @GetMapping("/{id}")

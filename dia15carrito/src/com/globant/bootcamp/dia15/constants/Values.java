@@ -1,6 +1,6 @@
-package com.globant.bootcamp.dia15.misc;
+package com.globant.bootcamp.dia15.constants;
 
-public enum Constants {
+public enum Values {
     SECURITY_TOKEN_SUPER_VALUE("0123456789"),
     SECURITY_TOKEN_INPUT("abcdefghijklmnopqrstuvwxyz"),
     SECURITY_TOKEN_LENGTH(30);
@@ -8,11 +8,11 @@ public enum Constants {
     private String string;
     private int number;
 
-    Constants(String string){
+    Values(String string){
         this.string = string;
     }
 
-    Constants(int number){
+    Values(int number){
         this.number = number;
     }
 

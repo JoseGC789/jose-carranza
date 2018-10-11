@@ -1,7 +1,7 @@
 package com.globant.bootcamp.dia15.controller.crud;
 
 import com.globant.bootcamp.dia15.domain.entity.Category;
-import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.globant.bootcamp.dia15.constants.PersonRoles;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import com.globant.bootcamp.dia15.service.crud.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<Category>> getCategories(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(categoryService.getCategories());
+        return ResponseEntity.ok().body(categoryService.getCategoryRepository());
     }
     //get one
     @GetMapping("/{id}")

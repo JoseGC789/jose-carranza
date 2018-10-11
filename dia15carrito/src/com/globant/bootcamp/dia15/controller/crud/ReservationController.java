@@ -1,6 +1,6 @@
 package com.globant.bootcamp.dia15.controller.crud;
 
-import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.globant.bootcamp.dia15.constants.PersonRoles;
 import com.globant.bootcamp.dia15.domain.entity.Reservation;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import com.globant.bootcamp.dia15.service.crud.ReservationService;
@@ -25,7 +25,7 @@ public class ReservationController {
     @GetMapping
     public ResponseEntity<List<Reservation>> getReservations(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(reservationService.getReservations());
+        return ResponseEntity.ok().body(reservationService.getReservationRepository());
     }
 
     @GetMapping("/{id}")

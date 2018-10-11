@@ -1,5 +1,6 @@
 package com.globant.bootcamp.dia15.service.crud;
 
+import com.globant.bootcamp.dia15.constants.ExceptionMessages;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Reservation;
@@ -14,37 +15,37 @@ import java.util.List;
 public class ReservationService {
 
     @Autowired
-    private ReservationRepository reservations;
+    private ReservationRepository reservationRepository;
 
-    public List<Reservation> getReservations(){
-        return reservations.findAll();
+    public List<Reservation> getReservationRepository(){
+        return reservationRepository.findAll();
     }
 
     public Reservation getReservation(Integer id){
-        return reservations.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Reservation doesn't exist"));
+        return reservationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.toString()));
     }
 
     public List<Reservation> getReservation(Person person){
-        return reservations.findByPerson(person);
+        return reservationRepository.findByPerson(person);
     }
 
     public Reservation createReservation(Reservation reservation){
         reservation.setDateAdded(new GregorianCalendar());
-        return reservations.save(reservation);
+        return reservationRepository.save(reservation);
     }
 
     public Reservation updateReservation(Reservation reservation){
-        reservations.findById(reservation.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Reservation doesn't exist"));
-        return reservations.save(reservation);
+        reservationRepository.findById(reservation.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.toString()));
+        return reservationRepository.save(reservation);
     }
 
     public Reservation deleteReservation(Integer id){
-        reservations.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Reservation doesn't exist"));
-        Reservation reservationFromDB = reservations.getOne(id);
-        reservations.delete(reservationFromDB);
+        reservationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.toString()));
+        Reservation reservationFromDB = reservationRepository.getOne(id);
+        reservationRepository.delete(reservationFromDB);
         return reservationFromDB;
     }
 }

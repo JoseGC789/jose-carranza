@@ -1,11 +1,12 @@
 package com.globant.bootcamp.dia15.service.crud;
 
 
+import com.globant.bootcamp.dia15.constants.ExceptionMessages;
 import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.repository.PersonRepository;
-import com.globant.bootcamp.dia15.misc.PersonRoles;
+import com.globant.bootcamp.dia15.constants.PersonRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,59 +19,82 @@ import java.util.List;
 public class PersonService {
 
     @Autowired
-    private PersonRepository persons;
+    private PersonRepository personRepository;
+    @Autowired
+    private ProductService productService;
 
-    public List<Person> getPersons(){
-        return persons.findAll();
+    public List<Person> getPersonRepository(){
+        List<Person> personList = personRepository.findAll();
+
+        for (Person person:personList) {
+            setPublisherList(person);
+        }
+
+        return personList;
     }
 
     public Person getPerson(Integer id){
-        return persons.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist"));
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString()));
+
+        setPublisherList(person);
+        return person;
     }
 
     public Person getPerson(String username){
-        Person person = persons.findByUsername(username);
+        Person person = personRepository.findByUsername(username);
         if (person == null){
-            throw new ResourceNotFoundException("User doesn't exist");
+            throw new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString());
         }
+
+        setPublisherList(person);
         return person;
     }
 
     public Person createPerson(Person person){
         protectSuperRole(person.getRole());
+
+        person.setReservations(new ArrayList<>());
+        person.setPublished(new ArrayList<>());
+        person.setPublishedList(new ArrayList<>());
+
         Calendar calendar = new GregorianCalendar();
         person.setDateJoined(calendar);
         person.setLastSeen(calendar);
-        person.setReservations(new ArrayList<>());
-        person.setPublished(new ArrayList<>());
-        return persons.save(person);
+
+        return personRepository.save(person);
     }
 
     public Person updatePerson(Person person){
-        persons.findById(person.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist"));
+        personRepository.findById(person.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString()));
+
         protectSuperRole(person.getRole());
-        return persons.save(person);
+
+        return personRepository.save(person);
+    }
+
+    public Person deletePerson(Integer id){
+        Person personFromDB = personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString()));
+        protectSuperRole(personFromDB.getRole());
+        personRepository.delete(personFromDB);
+        return personFromDB;
     }
 
     public Person updatePersonLastSeen (Person person){
         person.setLastSeen(new GregorianCalendar());
-        persons.save(person);
+        personRepository.save(person);
         return person;
-    }
-
-    public Person deletePerson(Integer id){
-        Person personFromDB = persons.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist"));
-        protectSuperRole(personFromDB.getRole());
-        persons.delete(personFromDB);
-        return personFromDB;
     }
 
     private void protectSuperRole(PersonRoles role){
         if (role == PersonRoles.SUPER){
-            throw new ForbiddenException("Cannot manipulate person with 'SUPER' property");
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_MANIPULATION_SUPER.toString());
         }
+    }
+
+    private void setPublisherList (Person person){
+        person.setPublishedList(productService.getProductByPublisher(person));
     }
 }

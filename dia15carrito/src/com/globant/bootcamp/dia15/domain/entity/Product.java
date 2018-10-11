@@ -2,14 +2,12 @@ package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.globant.bootcamp.dia15.misc.ProductState;
+import com.globant.bootcamp.dia15.constants.ProductState;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Product implements Serializable {
 
@@ -27,19 +25,20 @@ public class Product implements Serializable {
     private long price;
     private ProductState state;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("publisherList")
     private Person publisher;
 
     @OneToMany(mappedBy = "product")
     @JsonBackReference
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<Reservation> reservations;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_category", referencedColumnName = "id")
     )
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categories;
 
     public Product() {
     }
