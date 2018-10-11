@@ -15,7 +15,4 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
 
     @Query ("SELECT c FROM Category c WHERE c.name like ?1%")
     List<Category> findByStartingChar(char target);
-
-    @Query("SELECT c FROM Category c WHERE c.products = ?1")
-    List<Product> findProductByCategory(Category category);
 }

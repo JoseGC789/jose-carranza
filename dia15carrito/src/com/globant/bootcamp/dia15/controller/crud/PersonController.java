@@ -26,7 +26,7 @@ public class PersonController {
     @GetMapping
     public ResponseEntity<List<Person>> getPersons(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(personService.getPersonRepository());
+        return ResponseEntity.ok().body(personService.getAll());
     }
 
     @GetMapping("/{id}")

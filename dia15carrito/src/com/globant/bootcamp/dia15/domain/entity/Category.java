@@ -2,13 +2,14 @@ package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Category implements Serializable {
 
@@ -21,18 +22,23 @@ public class Category implements Serializable {
 
     private String description;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories",fetch = FetchType.EAGER)
     @JsonBackReference
-    private List<Product> products = new ArrayList<>();
+    private List<Product> products;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonIgnoreProperties("categories")
+    @Transient
+    private List<Product> productList;
 
     public Category() {
     }
 
-    public Category(Integer id, String name, String description, List<Product> products) {
+    public Category(Integer id, String name, String description, List<Product> products, List<Product> productList) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.products = products;
+        this.productList = productList;
     }
 
     public Integer getId() {
@@ -67,5 +73,25 @@ public class Category implements Serializable {
         this.products = products;
     }
 
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(id, category.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
 

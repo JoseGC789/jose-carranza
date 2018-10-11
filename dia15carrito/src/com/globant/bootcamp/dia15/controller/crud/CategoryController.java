@@ -25,7 +25,7 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<Category>> getCategories(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(categoryService.getCategoryRepository());
+        return ResponseEntity.ok().body(categoryService.getAll());
     }
     //get one
     @GetMapping("/{id}")

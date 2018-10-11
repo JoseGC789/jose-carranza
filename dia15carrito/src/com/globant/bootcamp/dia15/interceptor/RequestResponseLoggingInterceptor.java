@@ -24,7 +24,7 @@ public class RequestResponseLoggingInterceptor implements HandlerInterceptor {
         long endTime = System.currentTimeMillis();
         log.info("\n Completed "+
                 "\n\t Time taken: "+ (endTime-startTime)+" ms"+
-                "\n\t Time ended: "+ new GregorianCalendar());
+                "\n\t Time ended: "+ new GregorianCalendar().getTime());
 
     }
 

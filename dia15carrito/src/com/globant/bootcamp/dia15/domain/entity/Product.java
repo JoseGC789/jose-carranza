@@ -7,6 +7,7 @@ import com.globant.bootcamp.dia15.constants.ProductState;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Product implements Serializable {
@@ -34,6 +35,7 @@ public class Product implements Serializable {
     private List<Reservation> reservations;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("productList")
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_category", referencedColumnName = "id")
@@ -134,5 +136,18 @@ public class Product implements Serializable {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.globant.bootcamp.dia15.service.crud;
 
 import com.globant.bootcamp.dia15.constants.ExceptionMessages;
+import com.globant.bootcamp.dia15.domain.entity.Category;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.exceptions.BadRequestException;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
@@ -20,8 +21,16 @@ public class ProductService {
     @Autowired
     private PersonService personService;
 
-    public List<Product> getProductRepository(){
+    public List<Product> getAll(){
         return productRepository.findAll();
+    }
+
+    public List<Product> getAll(Person publisher){
+        return productRepository.findProductsByPublisherUsername(publisher);
+    }
+
+    public List<Product> getAll(Category category){
+        return productRepository.findProductByCategory(category);
     }
 
     public Product getProduct(Integer id){
@@ -51,10 +60,6 @@ public class ProductService {
         Product productFromDB = productRepository.getOne(id);
         productRepository.delete(productFromDB);
         return productFromDB;
-    }
-
-    public List<Product> getProductByPublisher (Person publisher){
-        return productRepository.findProductsByPublisherUsername(publisher);
     }
 
     private void checkPersonExistence(Person person){

@@ -32,12 +32,61 @@ public class Application implements CommandLineRunner {
         superAdmin.setLastSeen(calendar);
         superAdmin.setReservations(new ArrayList<>());
         superAdmin.setPublished(new ArrayList<>());
+        superAdmin.setEmail("josegcarranza@gmail.com");
+        superAdmin.setFirst("Jose");
+        superAdmin.setLast("Carranza");
+        superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
 
         if (!personRepository.findById(1).isPresent()){
             personRepository.save(superAdmin);
         }
 
         SecurityEndpointService.initializeSUPER(superAdmin);
+
+        superAdmin = new Person();
+        superAdmin.setUsername("SUPER2");
+        superAdmin.setPassword("SUPER2");
+        superAdmin.setRole(PersonRoles.USER);
+        calendar = new GregorianCalendar(1994,5,5);
+        superAdmin.setDateJoined(calendar);
+        superAdmin.setLastSeen(calendar);
+        superAdmin.setReservations(new ArrayList<>());
+        superAdmin.setPublished(new ArrayList<>());
+        superAdmin.setEmail("josegcarranza@gmail.com");
+        superAdmin.setFirst("Jose");
+        superAdmin.setLast("Carranza");
+        superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
+        personRepository.save(superAdmin);
+
+        superAdmin = new Person();
+        superAdmin.setUsername("SUPER23");
+        superAdmin.setPassword("SUPER2");
+        superAdmin.setRole(PersonRoles.USER);
+        calendar = new GregorianCalendar(1994,5,5);
+        superAdmin.setDateJoined(calendar);
+        superAdmin.setLastSeen(calendar);
+        superAdmin.setReservations(new ArrayList<>());
+        superAdmin.setPublished(new ArrayList<>());
+        superAdmin.setEmail("josegcarranza@gmail.com");
+        superAdmin.setFirst("Jose");
+        superAdmin.setLast("Carranza");
+        superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
+        personRepository.save(superAdmin);
+
+        superAdmin = new Person();
+        superAdmin.setUsername("SUPER42");
+        superAdmin.setPassword("SUPER2");
+        superAdmin.setRole(PersonRoles.USER);
+        calendar = new GregorianCalendar(1994,5,5);
+        superAdmin.setDateJoined(calendar);
+        superAdmin.setLastSeen(calendar);
+        superAdmin.setReservations(new ArrayList<>());
+        superAdmin.setPublished(new ArrayList<>());
+        superAdmin.setEmail("josegcarranza@gmail.com");
+        superAdmin.setFirst("Jose");
+        superAdmin.setLast("Carranza");
+        superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
+        personRepository.save(superAdmin);
 
     }/*
     @Bean

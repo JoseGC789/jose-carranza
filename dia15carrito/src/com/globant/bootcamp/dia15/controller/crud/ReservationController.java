@@ -25,7 +25,7 @@ public class ReservationController {
     @GetMapping
     public ResponseEntity<List<Reservation>> getReservations(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(reservationService.getReservationRepository());
+        return ResponseEntity.ok().body(reservationService.getAll());
     }
 
     @GetMapping("/{id}")

@@ -25,7 +25,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Product>> getProducts(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(productService.getProductRepository());
+        return ResponseEntity.ok().body(productService.getAll());
     }
 
     @GetMapping("/{id}")

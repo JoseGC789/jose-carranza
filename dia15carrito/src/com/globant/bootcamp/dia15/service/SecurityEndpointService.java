@@ -4,6 +4,7 @@ import com.globant.bootcamp.dia15.constants.ExceptionMessages;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.constants.Values;
 import com.globant.bootcamp.dia15.constants.PersonRoles;
+import com.globant.bootcamp.dia15.exceptions.BadRequestException;
 import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.exceptions.UnauthorizedException;
 import com.globant.bootcamp.dia15.service.crud.PersonService;
@@ -28,13 +29,13 @@ public class SecurityEndpointService {
         person = personService.getPerson(person.getUsername());
 
         if (tokenRepository.containsValue(person)){
-            throw new UnauthorizedException(ExceptionMessages.UNAUTHORIZED_PERSON_ALREADY_LOGGED_IN.toString());
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_PERSON_ALREADY_LOGGED_IN.toString());
         }else {
             if (person.getPassword().equals(password)) {
                 token = generateToken();
                 tokenRepository.put(token, person);
             } else {
-                throw new UnauthorizedException(ExceptionMessages.UNAUTHORIZED_PERSON_CHECK_YOUR_DATA.toString());
+                throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_CHECK_YOUR_DATA.toString());
             }
         }
         personService.updatePersonLastSeen(person);
@@ -42,7 +43,7 @@ public class SecurityEndpointService {
     }
 
     public Person signOut(String token){
-        if (token.equals(Values.SECURITY_TOKEN_SUPER_VALUE.getString())){
+        if (token.equals(Values.SECURITY_TOKEN_SUPER_TOKEN.getString())){
             throw new ForbiddenException(ExceptionMessages.FORBIDDEN_CANNOT_LOGOUT_SUPER.toString());
         }
         return tokenRepository.remove(token);
@@ -94,7 +95,7 @@ public class SecurityEndpointService {
 
     public static void initializeSUPER(Person superAdmin){
         if (!tokenRepository.containsValue(superAdmin)) {
-            tokenRepository.put(Values.SECURITY_TOKEN_SUPER_VALUE.getString(), superAdmin);
+            tokenRepository.put(Values.SECURITY_TOKEN_SUPER_TOKEN.getString(), superAdmin);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.globant.bootcamp.dia15.service.crud;
 
 
 import com.globant.bootcamp.dia15.constants.ExceptionMessages;
+import com.globant.bootcamp.dia15.exceptions.BadRequestException;
 import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Person;
@@ -23,7 +24,7 @@ public class PersonService {
     @Autowired
     private ProductService productService;
 
-    public List<Person> getPersonRepository(){
+    public List<Person> getAll(){
         List<Person> personList = personRepository.findAll();
 
         for (Person person:personList) {
@@ -78,6 +79,10 @@ public class PersonService {
         Person personFromDB = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString()));
         protectSuperRole(personFromDB.getRole());
+        setPublisherList(personFromDB);
+        if (!personFromDB.getPublishedList().isEmpty()){
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_PRODUCTS_PUBLISHED.getString());
+        }
         personRepository.delete(personFromDB);
         return personFromDB;
     }
@@ -90,11 +95,11 @@ public class PersonService {
 
     private void protectSuperRole(PersonRoles role){
         if (role == PersonRoles.SUPER){
-            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_MANIPULATION_SUPER.toString());
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_MANIPULATION_OF_SUPER.getString());
         }
     }
 
     private void setPublisherList (Person person){
-        person.setPublishedList(productService.getProductByPublisher(person));
+        person.setPublishedList(productService.getAll(person));
     }
 }

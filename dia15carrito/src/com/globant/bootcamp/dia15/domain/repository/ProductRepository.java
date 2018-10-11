@@ -1,5 +1,6 @@
 package com.globant.bootcamp.dia15.domain.repository;
 
+import com.globant.bootcamp.dia15.domain.entity.Category;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     @Query("SELECT p FROM Product p WHERE p.publisher = ?1")
     List<Product>findProductsByPublisherUsername(Person publisher);
+
+    @Query("SELECT c FROM Category c WHERE c.products = ?1")
+    List<Product> findProductByCategory(Category category);
 }
