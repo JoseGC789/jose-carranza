@@ -46,7 +46,7 @@ public class PersonService {
 
     public Person getPerson(String username){
         Person person = personRepository.findByUsername(username);
-
+        checkNullity(person);
         setPublisherList(person);
         return person;
     }
