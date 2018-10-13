@@ -2,10 +2,12 @@ package com.globant.bootcamp.dia15.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.globant.bootcamp.dia15.constants.ProductState;
+import com.globant.bootcamp.dia15.constant.ProductState;
+import com.globant.bootcamp.dia15.constant.ProductStock;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +23,7 @@ public class Product implements Serializable {
     @Column(nullable = false, updatable = false)
     private String name;
     @Column(nullable = false)
+    @Min(0)
     private int quantity;
     private String description;
     private String imgRef;
@@ -28,8 +31,10 @@ public class Product implements Serializable {
     private long price;
     @Column(nullable = false)
     private ProductState state;
+    @Column(nullable = false)
+    private ProductStock status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("publisherList")
     private Person publisher;
 
@@ -37,7 +42,7 @@ public class Product implements Serializable {
     @JsonBackReference
     private List<Reservation> reservations;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("productList")
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id"),
@@ -48,7 +53,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(Integer id, String name, int quantity, String description, String imgRef, long price, ProductState state, Person publisher, List<Reservation> reservations, List<Category> categories) {
+    public Product(Integer id, String name, @Min(0) int quantity, String description, String imgRef, @DecimalMin("1.00") long price, ProductState state, ProductStock status, Person publisher, List<Reservation> reservations, List<Category> categories) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -56,6 +61,7 @@ public class Product implements Serializable {
         this.imgRef = imgRef;
         this.price = price;
         this.state = state;
+        this.status = status;
         this.publisher = publisher;
         this.reservations = reservations;
         this.categories = categories;
@@ -115,6 +121,14 @@ public class Product implements Serializable {
 
     public void setState(ProductState state) {
         this.state = state;
+    }
+
+    public ProductStock getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProductStock status) {
+        this.status = status;
     }
 
     public Person getPublisher() {

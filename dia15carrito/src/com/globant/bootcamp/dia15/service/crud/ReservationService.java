@@ -1,7 +1,8 @@
 package com.globant.bootcamp.dia15.service.crud;
 
-import com.globant.bootcamp.dia15.constants.ExceptionMessages;
+import com.globant.bootcamp.dia15.constant.ExceptionMessages;
 import com.globant.bootcamp.dia15.domain.entity.Person;
+import com.globant.bootcamp.dia15.domain.entity.Product;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Reservation;
 import com.globant.bootcamp.dia15.domain.repository.ReservationRepository;
@@ -21,13 +22,17 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
+    public List<Reservation> getAll(Product product){
+        return reservationRepository.findByProduct(product);
+    }
+
+    public List<Reservation> getAll(Person person){
+        return reservationRepository.findByPerson(person);
+    }
+
     public Reservation getReservation(Integer id){
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.getString()));
-    }
-
-    public List<Reservation> getReservation(Person person){
-        return reservationRepository.findByPerson(person);
     }
 
     public Reservation createReservation(Reservation reservation){

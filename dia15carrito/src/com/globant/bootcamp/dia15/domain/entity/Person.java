@@ -3,7 +3,7 @@ package com.globant.bootcamp.dia15.domain.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.globant.bootcamp.dia15.constants.PersonRoles;
+import com.globant.bootcamp.dia15.constant.PersonRoles;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;

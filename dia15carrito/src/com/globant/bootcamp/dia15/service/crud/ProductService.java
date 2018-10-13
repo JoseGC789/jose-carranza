@@ -1,6 +1,7 @@
 package com.globant.bootcamp.dia15.service.crud;
 
-import com.globant.bootcamp.dia15.constants.ExceptionMessages;
+import com.globant.bootcamp.dia15.constant.ExceptionMessages;
+import com.globant.bootcamp.dia15.constant.ProductStock;
 import com.globant.bootcamp.dia15.domain.entity.Category;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.exceptions.BadRequestException;
@@ -20,17 +21,23 @@ public class ProductService {
     private ProductRepository productRepository;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private CategoryService categoryService;
 
     public List<Product> getAll(){
         return productRepository.findAll();
     }
 
     public List<Product> getAll(Person publisher){
-        return productRepository.findProductsByPublisherUsername(publisher);
+        return productRepository.findByPublisher(publisher);
     }
 
     public List<Product> getAll(Category category){
         return productRepository.findByCategories(category);
+    }
+
+    public List<Product> getAll(String name){
+        return productRepository.findBySimilarName(name);
     }
 
     public Product getProduct(Integer id){
@@ -41,15 +48,19 @@ public class ProductService {
     public Product createProduct(Product product){
         checkCategoriesIsNull(product);
         initializeFields(product);
-        checkPersonExistence(product.getPublisher());
+        checkPublisherExistence(product.getPublisher());
+        uncategorizeProduct(product);
+        setProductStockState(product);
         return productRepository.save(product);
     }
 
     public Product updateProduct(Product product){
         productRepository.findById(product.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PRODUCT.getString()));
-
-        checkPersonExistence(product.getPublisher());
+        checkCategoriesIsNull(product);
+        checkPublisherExistence(product.getPublisher());
+        uncategorizeProduct(product);
+        setProductStockState(product);
         return productRepository.save(product);
     }
 
@@ -60,11 +71,17 @@ public class ProductService {
         return productFromDB;
     }
 
+    private void uncategorizeProduct(Product product){
+        if (product.getCategories().isEmpty()){
+            product.getCategories().add(categoryService.getCategory(1));
+        }
+    }
+
     private void initializeFields (Product product){
         product.setReservations(new ArrayList<>());
     }
 
-    private void checkPersonExistence(Person person){
+    private void checkPublisherExistence(Person person){
         if (person == null){
             throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PUBLISHER_IS_NULL.getString());
         }
@@ -75,6 +92,15 @@ public class ProductService {
     private void checkCategoriesIsNull (Product product){
         if (product.getCategories() == null){
             product.setCategories(new ArrayList<>());
+        }
+    }
+
+
+    private void setProductStockState (Product product){
+        if (product.getQuantity()>0){
+            product.setStatus(ProductStock.AVAILABLE);
+        }else{
+            product.setStatus(ProductStock.UNAVAILABLE);
         }
     }
 }

@@ -1,7 +1,8 @@
 package com.globant.bootcamp.dia15.service.crud;
 
-import com.globant.bootcamp.dia15.constants.ExceptionMessages;
+import com.globant.bootcamp.dia15.constant.ExceptionMessages;
 import com.globant.bootcamp.dia15.exceptions.BadRequestException;
+import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Category;
 import com.globant.bootcamp.dia15.domain.repository.CategoryRepository;
@@ -44,15 +45,22 @@ public class CategoryService {
     public Category updateCategory(Category category){
         categoryRepository.findById(category.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_CATEGORY.getString()));
+        protectFirstCategory(category.getId());
         return categoryRepository.save(category);
     }
 
     public Category deleteCategory(Integer id){
-        categoryRepository.findById(id)
+        Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_CATEGORY.getString()));
-        Category categoryFromDB = categoryRepository.getOne(id);
-        categoryRepository.delete(categoryFromDB);
-        return categoryFromDB;
+        protectFirstCategory(category.getId());
+        categoryRepository.delete(category);
+        return category;
+    }
+
+    private void protectFirstCategory (Integer id){
+        if (id == 1){
+            throw new ForbiddenException(ExceptionMessages.FORBIDDEN_MANIPULATION_OF_FIRST_CATEGORY.getString());
+        }
     }
 
     private void setProductList (Category category){

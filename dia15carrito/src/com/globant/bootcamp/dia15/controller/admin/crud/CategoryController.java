@@ -1,7 +1,7 @@
-package com.globant.bootcamp.dia15.controller.crud;
+package com.globant.bootcamp.dia15.controller.admin.crud;
 
 import com.globant.bootcamp.dia15.domain.entity.Category;
-import com.globant.bootcamp.dia15.constants.PersonRoles;
+import com.globant.bootcamp.dia15.constant.PersonRoles;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import com.globant.bootcamp.dia15.service.crud.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +55,4 @@ public class CategoryController {
     private void validateRequest(String token){
         securityEndpointService.validateRequest(token, requiredRoles);
     }
-
 }

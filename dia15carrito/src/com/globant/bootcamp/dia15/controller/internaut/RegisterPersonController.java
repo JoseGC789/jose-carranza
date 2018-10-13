@@ -1,7 +1,7 @@
-package com.globant.bootcamp.dia15.controller;
+package com.globant.bootcamp.dia15.controller.internaut;
 
 import com.globant.bootcamp.dia15.domain.entity.Person;
-import com.globant.bootcamp.dia15.service.RegisterPersonService;
+import com.globant.bootcamp.dia15.service.UserRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterPersonController {
 
     @Autowired
-    private RegisterPersonService registerClientService;
+    private UserRegisterService registerClientService;
 
     @PostMapping
     public ResponseEntity<Person> registerClient(@RequestBody Person client){

@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer> {
 
-    Product findByName(String name);
-
-    @Query("SELECT p FROM Product p WHERE p.publisher = ?1")
-    List<Product>findProductsByPublisherUsername(Person publisher);
+    @Query("SELECT p FROM Product p WHERE p.name like %?1% AND p.status = 0")
+    List<Product> findBySimilarName(String name);
 
     List<Product> findByCategories(Category category);
+
+    List<Product> findByPublisher(Person publisher);
 }

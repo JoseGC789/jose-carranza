@@ -1,10 +1,10 @@
-package com.globant.bootcamp.dia15.controller;
+package com.globant.bootcamp.dia15.controller.admin;
 
-import com.globant.bootcamp.dia15.constants.PersonRoles;
+import com.globant.bootcamp.dia15.constant.PersonRoles;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.entity.Reservation;
 import com.globant.bootcamp.dia15.service.InactivityDeletionService;
-import com.globant.bootcamp.dia15.service.InactivityRetrievalService;
+import com.globant.bootcamp.dia15.service.InactivityFilterService;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/inactive")
-public class InactivityCheckAndDeleteController {
+public class InactivityFilterAndDeletionController {
     @Autowired
     private SecurityEndpointService securityEndpointService;
     @Autowired
-    private InactivityRetrievalService inactivityRetrievalService;
+    private InactivityFilterService inactivityFilterService;
     @Autowired
     private InactivityDeletionService inactivityDeletionService;
     private List<PersonRoles> requiredRoles = Arrays.asList(PersonRoles.ADMIN, PersonRoles.SUPER);
@@ -27,25 +27,25 @@ public class InactivityCheckAndDeleteController {
     @GetMapping("/person")
     public ResponseEntity<List<Person>> getInactivePersons(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(inactivityRetrievalService.getAllInactives());
-    }
-
-    @GetMapping("/reservation")
-    public ResponseEntity<List<Reservation>> getUnsoldReservations(@RequestHeader("Authorization") String token){
-        validateRequest(token);
-        return ResponseEntity.ok().body(inactivityRetrievalService.getAllUnsold());
+        return ResponseEntity.ok().body(inactivityFilterService.getAllInactives());
     }
 
     @DeleteMapping("/person")
     public ResponseEntity<List<Person>> deleteInactivePersons(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(inactivityDeletionService.deleteInactivePerson(inactivityRetrievalService.getAllInactives()));
+        return ResponseEntity.ok().body(inactivityDeletionService.deleteInactivePerson(inactivityFilterService.getAllInactives()));
+    }
+
+    @GetMapping("/reservation")
+    public ResponseEntity<List<Reservation>> getUnsoldReservations(@RequestHeader("Authorization") String token){
+        validateRequest(token);
+        return ResponseEntity.ok().body(inactivityFilterService.getAllUnsold());
     }
 
     @DeleteMapping("/reservation")
     public ResponseEntity<List<Reservation>> deleteUnsoldReservations(@RequestHeader("Authorization") String token){
         validateRequest(token);
-        return ResponseEntity.ok().body(inactivityDeletionService.deleteUnsoldReservation(inactivityRetrievalService.getAllUnsold()));
+        return ResponseEntity.ok().body(inactivityDeletionService.deleteUnsoldReservation(inactivityFilterService.getAllUnsold()));
     }
 
     private void validateRequest(String token){

@@ -1,4 +1,4 @@
-package com.globant.bootcamp.dia15.controller;
+package com.globant.bootcamp.dia15.controller.internaut;
 
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;

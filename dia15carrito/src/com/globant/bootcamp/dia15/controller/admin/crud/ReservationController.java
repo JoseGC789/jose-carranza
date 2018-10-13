@@ -1,6 +1,6 @@
-package com.globant.bootcamp.dia15.controller.crud;
+package com.globant.bootcamp.dia15.controller.admin.crud;
 
-import com.globant.bootcamp.dia15.constants.PersonRoles;
+import com.globant.bootcamp.dia15.constant.PersonRoles;
 import com.globant.bootcamp.dia15.domain.entity.Reservation;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import com.globant.bootcamp.dia15.service.crud.ReservationService;

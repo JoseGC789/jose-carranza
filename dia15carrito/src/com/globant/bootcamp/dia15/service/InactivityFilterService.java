@@ -1,7 +1,7 @@
 package com.globant.bootcamp.dia15.service;
 
-import com.globant.bootcamp.dia15.constants.PersonRoles;
-import com.globant.bootcamp.dia15.constants.Values;
+import com.globant.bootcamp.dia15.constant.PersonRoles;
+import com.globant.bootcamp.dia15.constant.Values;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.entity.Reservation;
 import com.globant.bootcamp.dia15.service.crud.PersonService;
@@ -16,7 +16,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
-public  class InactivityRetrievalService {
+public  class InactivityFilterService {
 
     Calendar current;
     @Autowired

@@ -1,12 +1,12 @@
 package com.globant.bootcamp.dia15.service.crud;
 
-import com.globant.bootcamp.dia15.constants.ExceptionMessages;
+import com.globant.bootcamp.dia15.constant.ExceptionMessages;
 import com.globant.bootcamp.dia15.exceptions.BadRequestException;
 import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.repository.PersonRepository;
-import com.globant.bootcamp.dia15.constants.PersonRoles;
+import com.globant.bootcamp.dia15.constant.PersonRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,9 +60,7 @@ public class PersonService {
     public Person updatePerson(Person person){
         personRepository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PERSON.getString()));
-
         protectSuperRole(person.getRole());
-
         return personRepository.save(person);
     }
 
@@ -102,7 +100,7 @@ public class PersonService {
         if (!person.getPublishedList().isEmpty()){
             throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_PRODUCTS_PUBLISHED.getString());
         }
-        if (!reservationService.getReservation(person).isEmpty()){
+        if (!reservationService.getAll(person).isEmpty()){
             throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PERSON_HAS_RESERVATION_PENDING.getString());
         }
     }

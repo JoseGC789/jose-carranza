@@ -1,8 +1,10 @@
 package com.globant.bootcamp.dia15;
 
+import com.globant.bootcamp.dia15.domain.entity.Category;
 import com.globant.bootcamp.dia15.domain.entity.Person;
+import com.globant.bootcamp.dia15.domain.repository.CategoryRepository;
 import com.globant.bootcamp.dia15.domain.repository.PersonRepository;
-import com.globant.bootcamp.dia15.constants.PersonRoles;
+import com.globant.bootcamp.dia15.constant.PersonRoles;
 import com.globant.bootcamp.dia15.service.SecurityEndpointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,9 +22,12 @@ public class Application implements CommandLineRunner {
     }
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public void run(String... args) throws Exception {
+
         Person superAdmin = new Person();
         superAdmin.setUsername("SUPER");
         superAdmin.setPassword("SUPER");
@@ -40,14 +45,18 @@ public class Application implements CommandLineRunner {
         if (!personRepository.findById(1).isPresent()){
             personRepository.save(superAdmin);
         }
-
+        if(!categoryRepository.findById(1).isPresent()){
+            Category category = new Category();
+            category.setName("Uncategorized");
+            category.setDescription("These products have not been categorized.");
+            categoryRepository.save(category);
+        }
         SecurityEndpointService.initializeSUPER(superAdmin);
 
         superAdmin = new Person();
         superAdmin.setUsername("SUPER2");
         superAdmin.setPassword("SUPER2");
         superAdmin.setRole(PersonRoles.USER);
-        calendar = new GregorianCalendar(1994,5,5);
         superAdmin.setDateJoined(calendar);
         superAdmin.setLastSeen(calendar);
         superAdmin.setReservations(new ArrayList<>());
@@ -59,10 +68,9 @@ public class Application implements CommandLineRunner {
         personRepository.save(superAdmin);
 
         superAdmin = new Person();
-        superAdmin.setUsername("SUPER23");
+        superAdmin.setUsername("SUPER3");
         superAdmin.setPassword("SUPER2");
         superAdmin.setRole(PersonRoles.USER);
-        calendar = new GregorianCalendar(1994,5,5);
         superAdmin.setDateJoined(calendar);
         superAdmin.setLastSeen(calendar);
         superAdmin.setReservations(new ArrayList<>());
@@ -74,10 +82,9 @@ public class Application implements CommandLineRunner {
         personRepository.save(superAdmin);
 
         superAdmin = new Person();
-        superAdmin.setUsername("SUPER42");
+        superAdmin.setUsername("SUPER4");
         superAdmin.setPassword("SUPER2");
         superAdmin.setRole(PersonRoles.USER);
-        calendar = new GregorianCalendar(1994,5,5);
         superAdmin.setDateJoined(calendar);
         superAdmin.setLastSeen(calendar);
         superAdmin.setReservations(new ArrayList<>());
@@ -88,15 +95,5 @@ public class Application implements CommandLineRunner {
         superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
         personRepository.save(superAdmin);
 
-    }/*
-    @Bean
-    public CommonsRequestLoggingFilter requestLoggingFilter() {
-        CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
-        loggingFilter.setIncludeClientInfo(true);
-        loggingFilter.setIncludeQueryString(true);
-        loggingFilter.setIncludePayload(true);
-        loggingFilter.setIncludeHeaders(true);
-        loggingFilter.setMaxPayloadLength(500);
-        return loggingFilter;
-    }*/
+    }
 }

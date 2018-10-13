@@ -1,7 +1,6 @@
 package com.globant.bootcamp.dia15.domain.repository;
 
 import com.globant.bootcamp.dia15.domain.entity.Category;
-import com.globant.bootcamp.dia15.domain.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

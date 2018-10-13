@@ -1,13 +1,13 @@
 package com.globant.bootcamp.dia15.service;
 
-import com.globant.bootcamp.dia15.constants.PersonRoles;
+import com.globant.bootcamp.dia15.constant.PersonRoles;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.service.crud.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegisterPersonService {
+public class UserRegisterService {
     @Autowired
     private PersonService personService;
 

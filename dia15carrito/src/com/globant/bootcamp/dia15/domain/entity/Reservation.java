@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Reservation implements Serializable {
 
@@ -21,11 +20,11 @@ public class Reservation implements Serializable {
     @Column(nullable = false, updatable = false)
     private Calendar dateAdded;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_person",nullable = false, updatable = false)
     private Person person;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_product",nullable = false, updatable = false)
     private Product product;
 
