@@ -18,7 +18,7 @@ public class UserReservationController {
     private UserReservationService userReservationService;
     @Autowired
     private SecurityEndpointService securityEndpointService;
-    private PersonRoles requiredRoles = PersonRoles.SUPER;
+    private PersonRoles requiredRoles = PersonRoles.USER;
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getUserReservation(@RequestHeader("Authorization") String token){
