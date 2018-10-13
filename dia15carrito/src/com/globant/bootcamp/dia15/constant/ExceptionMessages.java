@@ -3,6 +3,7 @@ package com.globant.bootcamp.dia15.constant;
 public enum ExceptionMessages {
     BAD_REQUEST_PUBLISHER_IS_NULL("Publisher field can not be null."),
     BAD_REQUEST_PERSON_HAS_PRODUCTS_PUBLISHED("Person has published products; rectify this before deletion."),
+    BAD_REQUEST_PRODUCT_HAS_RESERVATION_PENDING("Product has pending reservations; rectify this before deletion."),
     BAD_REQUEST_PERSON_HAS_RESERVATION_PENDING("Person has pending reservations; rectify this before deletion."),
     BAD_REQUEST_CATEGORY_NAME_MUST_BE_UNIQUE("There is already a category with that name."),
     BAD_REQUEST_PERSON_USERNAME_MUST_BE_UNIQUE("There is already a person with that username."),

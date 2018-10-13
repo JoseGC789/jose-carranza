@@ -23,6 +23,8 @@ public class ProductService {
     private PersonService personService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ReservationService reservationService;
 
     public List<Product> getAll(){
         return productRepository.findAll();
@@ -67,8 +69,15 @@ public class ProductService {
     public Product deleteProduct(Integer id){
         Product productFromDB = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_PRODUCT.getString()));
+        protectProductWithReservationPending(productFromDB);
         productRepository.delete(productFromDB);
         return productFromDB;
+    }
+
+    private void protectProductWithReservationPending (Product product){
+        if (!reservationService.getAll(product).isEmpty()){
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PRODUCT_HAS_RESERVATION_PENDING.getString());
+        }
     }
 
     private void uncategorizeProduct(Product product){
@@ -94,7 +103,6 @@ public class ProductService {
             product.setCategories(new ArrayList<>());
         }
     }
-
 
     private void setProductStockState (Product product){
         if (product.getQuantity()>0){
