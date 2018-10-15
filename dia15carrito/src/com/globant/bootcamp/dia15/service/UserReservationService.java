@@ -4,6 +4,7 @@ import com.globant.bootcamp.dia15.constant.ExceptionMessages;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.entity.Product;
 import com.globant.bootcamp.dia15.domain.entity.Reservation;
+import com.globant.bootcamp.dia15.exceptions.BadRequestException;
 import com.globant.bootcamp.dia15.exceptions.ForbiddenException;
 import com.globant.bootcamp.dia15.service.crud.ProductService;
 import com.globant.bootcamp.dia15.service.crud.ReservationService;
@@ -69,7 +70,7 @@ public class UserReservationService {
 
     private int subtractProductStock(int stock, int amount){
         if (stock - amount < 0){
-            throw new ForbiddenException(ExceptionMessages.BAD_REQUEST_PRODUCT_HAS_INSUFFICIENT_STOCK.getString());
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_PRODUCT_HAS_INSUFFICIENT_STOCK.getString());
         }
         return stock - amount;
     }

@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public  class InactivityFilterService {
 
-    Calendar current;
+    private Calendar current;
     @Autowired
     private PersonService personService;
     @Autowired
@@ -33,7 +33,7 @@ public  class InactivityFilterService {
     }
 
     private List<Person> checkListInactive(List<Person> personList){
-        Calendar current = new GregorianCalendar();
+        current = new GregorianCalendar();
         List<Person> inactivePersonList = new ArrayList<>();
         for (Person person:personList) {
             if (person == null || person.getRole() == PersonRoles.SUPER || person.getRole() == PersonRoles.ADMIN ){
@@ -52,7 +52,7 @@ public  class InactivityFilterService {
     }
 
     private List<Reservation> checkListUnsold(List<Reservation> reservationList){
-        Calendar current = new GregorianCalendar();
+        current = new GregorianCalendar();
         List<Reservation> inactiveReservationList = new ArrayList<>();
         for (Reservation reservation:reservationList) {
             if (reservation == null){

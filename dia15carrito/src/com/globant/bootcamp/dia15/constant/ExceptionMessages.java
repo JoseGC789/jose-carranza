@@ -8,6 +8,7 @@ public enum ExceptionMessages {
     BAD_REQUEST_CATEGORY_NAME_MUST_BE_UNIQUE("There is already a category with that name."),
     BAD_REQUEST_PERSON_USERNAME_MUST_BE_UNIQUE("There is already a person with that username."),
     BAD_REQUEST_PRODUCT_HAS_INSUFFICIENT_STOCK("Product has insufficient stock."),
+    BAD_REQUEST_RESERVATION_CAN_NOT_HAVE_ZERO_QUANTITY("Reservation has to have more than 0 quantity."),
 
     UNAUTHORIZED_AUTHORIZATION_FAILURE("Authorization failed. Check your data."),
     UNAUTHORIZED_CREDENTIALS_REQUIRED("Access requires proper credentials. Please login or register."),

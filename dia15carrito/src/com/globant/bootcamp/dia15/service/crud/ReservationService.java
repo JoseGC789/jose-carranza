@@ -3,6 +3,7 @@ package com.globant.bootcamp.dia15.service.crud;
 import com.globant.bootcamp.dia15.constant.ExceptionMessages;
 import com.globant.bootcamp.dia15.domain.entity.Person;
 import com.globant.bootcamp.dia15.domain.entity.Product;
+import com.globant.bootcamp.dia15.exceptions.BadRequestException;
 import com.globant.bootcamp.dia15.exceptions.ResourceNotFoundException;
 import com.globant.bootcamp.dia15.domain.entity.Reservation;
 import com.globant.bootcamp.dia15.domain.repository.ReservationRepository;
@@ -37,12 +38,14 @@ public class ReservationService {
 
     public Reservation createReservation(Reservation reservation){
         initializeFields(reservation);
+        checkQuantity(reservation.getQuantity());
         return reservationRepository.save(reservation);
     }
 
     public Reservation updateReservation(Reservation reservation){
         reservationRepository.findById(reservation.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.getString()));
+        checkQuantity(reservation.getQuantity());
         return reservationRepository.save(reservation);
     }
 
@@ -51,6 +54,13 @@ public class ReservationService {
                 .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessages.NOT_FOUND_RESERVATION.getString()));
         reservationRepository.delete(reservationFromDB);
         return reservationFromDB;
+    }
+
+    private void checkQuantity (int quantity){
+        if (quantity <=0){
+            throw new BadRequestException(ExceptionMessages.BAD_REQUEST_RESERVATION_CAN_NOT_HAVE_ZERO_QUANTITY.getString());
+        }
+
     }
 
     private void initializeFields (Reservation reservation){
