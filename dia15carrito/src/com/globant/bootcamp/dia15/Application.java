@@ -52,7 +52,7 @@ public class Application implements CommandLineRunner {
             categoryRepository.save(category);
         }
         SecurityEndpointService.initializeSUPER(superAdmin);
-
+/*
         superAdmin = new Person();
         superAdmin.setUsername("SUPER2");
         superAdmin.setPassword("SUPER2");
@@ -94,6 +94,6 @@ public class Application implements CommandLineRunner {
         superAdmin.setLast("Carranza");
         superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
         personRepository.save(superAdmin);
-
+*/
     }
 }
