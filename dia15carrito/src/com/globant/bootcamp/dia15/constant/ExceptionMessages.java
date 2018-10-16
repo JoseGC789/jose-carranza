@@ -15,7 +15,7 @@ public enum ExceptionMessages {
     UNAUTHORIZED_INVALID_TOKEN("Invalid token."),
 
     FORBIDDEN_MANIPULATION_OF_SUPER("User with 'SUPER' property can not be manipulated."),
-    FORBIDDEN_MANIPULATION_OF_FIRST_CATEGORY("Uncategorized category can not be manipulated."),
+    FORBIDDEN_MANIPULATION_OF_FIRST_CATEGORY("'Un-categorized' category can not be manipulated."),
     FORBIDDEN_CANNOT_LOGOUT_SUPER("User with 'SUPER' property can not logout."),
     FORBIDDEN_INSUFFICIENT_CLEARANCE("Insufficient clearance level."),
     FORBIDDEN_ACCESS_ROLE_RESTRICTED_PART1("Access is restricted to "),
@@ -24,10 +24,10 @@ public enum ExceptionMessages {
     FORBIDDEN_PRODUCT_IS_NOT_YOURS("Ownership of this product is not yours."),
     FORBIDDEN_RESERVATION_IS_NOT_YOURS("Ownership of this reservation is not yours."),
 
-    NOT_FOUND_CATEGORY("Category does not exist"),
-    NOT_FOUND_PERSON("Person does not exist"),
-    NOT_FOUND_PRODUCT("Product does not exist"),
-    NOT_FOUND_RESERVATION("Reservation does not exist");
+    NOT_FOUND_CATEGORY("Category entity does not exist"),
+    NOT_FOUND_PERSON("Person entity does not exist"),
+    NOT_FOUND_PRODUCT("Product entity does not exist"),
+    NOT_FOUND_RESERVATION("Reservation entity does not exist");
 
     private String string;
 

@@ -50,7 +50,7 @@ public class SecurityEndpointServiceTest {
 
     @Test(expected = ForbiddenException.class)
     public void signOutShouldProtectSUPERAdminTest(){
-        securityEndpointService.signOut(Values.SECURITY_TOKEN_SUPER_TOKEN.getString());
+        securityEndpointService.signOut(Values.SECURITY_TOKEN_SUPER_USER_TOKEN.getString());
     }
 
     @Test(expected = UnauthorizedException.class)

@@ -29,7 +29,7 @@ public class SecurityEndpointService {
     }
 
     public Person signOut(String token){
-        if (token.equals(Values.SECURITY_TOKEN_SUPER_TOKEN.getString())){
+        if (token.equals(Values.SECURITY_TOKEN_SUPER_USER_TOKEN.getString())){
             throw new ForbiddenException(ExceptionMessages.FORBIDDEN_CANNOT_LOGOUT_SUPER.getString());
         }
         return tokenRepository.remove(token);
@@ -68,7 +68,7 @@ public class SecurityEndpointService {
 
     public static void initializeSUPER(Person superAdmin){
         if (!tokenRepository.containsValue(superAdmin)) {
-            tokenRepository.put(Values.SECURITY_TOKEN_SUPER_TOKEN.getString(), superAdmin);
+            tokenRepository.put(Values.SECURITY_TOKEN_SUPER_USER_TOKEN.getString(), superAdmin);
         }
     }
 
@@ -79,7 +79,7 @@ public class SecurityEndpointService {
     }
 
     private String generateToken() {
-        String str = Values.SECURITY_TOKEN_INPUT.getString();
+        String str = Values.SECURITY_TOKEN_VALUES.getString();
         Random rnd = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < Values.SECURITY_TOKEN_LENGTH.getNumber(); i++){

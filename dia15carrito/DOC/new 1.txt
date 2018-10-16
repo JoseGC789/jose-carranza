@@ -1,0 +1,55 @@
+person
+[
+    {
+        "id": 1,
+        "role": "USER",
+        "username": "testuser1",
+        "password": "123",
+        "first": "firstetst",
+        "last": "lasttest",
+        "birth": null,
+        "email": "emailtest",
+        "dateJoined": "2018-10-08T17:20:57.000+0000",
+        "reservations": [],
+        "lastSeen": "2018-10-08T17:20:57.000+0000"
+    },
+    {
+        "id": 2,
+        "role": "USER",
+        "username": "testuser2",
+        "password": "123",
+        "first": "firstetst",
+        "last": "lasttest",
+        "birth": null,
+        "email": "emailtest",
+        "dateJoined": "2018-10-08T17:21:00.000+0000",
+        "reservations": [],
+        "lastSeen": "2018-10-08T17:21:00.000+0000"
+    },
+    {
+        "id": 3,
+        "role": "USER",
+        "username": "testuser3",
+        "password": "123",
+        "first": "firstetst",
+        "last": "lasttest",
+        "birth": null,
+        "email": "emailtest",
+        "dateJoined": "2018-10-08T17:21:02.000+0000",
+        "reservations": [],
+        "lastSeen": "2018-10-08T17:21:02.000+0000"
+    },
+    {
+        "id": 4,
+        "role": "USER",
+        "username": "testuser4",
+        "password": "123",
+        "first": "firstetst",
+        "last": "lasttest",
+        "birth": null,
+        "email": "emailtest",
+        "dateJoined": "2018-10-08T17:21:05.000+0000",
+        "reservations": [],
+        "lastSeen": "2018-10-08T17:21:05.000+0000"
+    }
+]

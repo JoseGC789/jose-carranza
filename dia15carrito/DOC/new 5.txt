@@ -1,0 +1,23 @@
+{
+        "id": 2,
+        "role": "ADMIN",
+        "username": "admintest",
+        "password": "123",
+        "first": "firstetst",
+        "last": "lasttest",
+        "birth": null,
+        "email": "emailtest",
+        "dateJoined": "2018-10-09T00:10:22.000+0000",
+        "lastSeen": "2018-10-09T00:10:22.000+0000"
+    },
+        "product": {
+        "id": 3,
+        "name": "producttest1",
+        "quantity": 5,
+        "description": "postdescription",
+        "imgRef": null,
+        "price": 50,
+        "state": "NEW",
+        "categories": []
+    }
+}

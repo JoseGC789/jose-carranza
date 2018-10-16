@@ -1,0 +1,62 @@
+product
+[
+    {
+        "id": 1,
+        "name": "producttest1",
+        "quantity": 5,
+        "description": "postdescription",
+        "imgRef": null,
+        "price": 50,
+        "state": "NEW",
+        "categories": [],
+        "reservations": [],
+        "publisher":
+			{
+			"id":1
+			}
+    },
+    {
+        "id": 2,
+        "name": "producttest2",
+        "quantity": 5,
+        "description": "postdescription",
+        "imgRef": null,
+        "price": 50,
+        "state": "NEW",
+        "categories": [],
+        "reservations": []
+    },
+    {
+        "id": 3,
+        "name": "producttest3",
+        "quantity": 5,
+        "description": "postdescription",
+        "imgRef": null,
+        "price": 50,
+        "state": "NEW",
+        "categories": [],
+        "reservations": []
+    },
+    {
+        "id": 4,
+        "name": "producttest4",
+        "quantity": 5,
+        "description": "postdescription",
+        "imgRef": null,
+        "price": 50,
+        "state": "NEW",
+        "categories": [],
+        "reservations": []
+    },
+    {
+        "id": 5,
+        "name": "producttest5",
+        "quantity": 5,
+        "description": "postdescription",
+        "imgRef": null,
+        "price": 50,
+        "state": "NEW",
+        "categories": [],
+        "reservations": []
+    }
+]

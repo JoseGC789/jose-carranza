@@ -1,0 +1,762 @@
+{
+	"info": {
+		"_postman_id": "5bd0912f-3eed-4994-8566-d05bd2d6151a",
+		"name": "carrito.bootcamp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD Requests",
+			"item": [
+				{
+					"name": "GetAllRequest",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"clienttest\",\n    \"password\": \"123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/person",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRequest",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/category/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"producttest3\",\r\n        \"quantity\": 5,\r\n        \"description\": \"postdescription\",\r\n        \"imgRef\": null,\r\n        \"price\": 50,\r\n        \"state\": \"NEW\",\r\n        \"categories\": [\r\n        \t{\r\n        \t\t\"id\":1\r\n        \t}\r\n        \t],\r\n        \"reservations\": [],\r\n        \"publisher\":\r\n\t\t\t{\r\n\t\t\t\t\"id\":1\r\n\t\t\t}\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateRequest",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							},
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": 5,\n        \"name\": \"producttest1\",\n        \"quantity\": 5,\n        \"description\": \"postdescription\",\n        \"imgRef\": null,\n        \"price\": 50,\n        \"state\": \"NEW\",\n        \"publisher\": {\n            \"id\": 1,\n            \"role\": \"SUPER\",\n            \"username\": \"SUPER\",\n            \"password\": \"SUPER\",\n            \"first\": \"Jose\",\n            \"last\": \"Carranza\",\n            \"birth\": \"1994-05-06T15:00:00.000+0000\",\n            \"email\": \"josegcarranza@gmail.com\",\n            \"dateJoined\": \"2018-10-11T20:46:34.447+0000\",\n            \"lastSeen\": \"2018-10-11T20:52:58.276+0000\"\n        },\n        \"categories\": [{\n                        \"id\": 1,\n                        \"name\": \"categorytest\",\n                        \"description\": null\n                    }]\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteRequest",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": 2,\n        \"name\": \"producttest1\",\n        \"quantity\": 5,\n        \"description\": \"postdescription\",\n        \"imgRef\": null,\n        \"price\": 50,\n        \"state\": \"NEW\",\n        \"publisher\": {\n            \"id\": 1,\n            \"role\": \"SUPER\",\n            \"username\": \"SUPER\",\n            \"password\": \"SUPER\",\n            \"first\": \"Jose\",\n            \"last\": \"Carranza\",\n            \"birth\": \"1994-05-06T15:00:00.000+0000\",\n            \"email\": \"josegcarranza@gmail.com\",\n            \"dateJoined\": \"2018-10-11T20:46:34.447+0000\",\n            \"lastSeen\": \"2018-10-11T20:52:58.276+0000\"\n        },\n        \"categories\": []\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/person/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inactive Requests",
+			"item": [
+				{
+					"name": "getInactive",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/inactive/person",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inactive",
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUnsold",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/inactive/reservation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inactive",
+								"reservation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAllInactive",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/inactive/person",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inactive",
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAllUnsold",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/inactive/reservation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inactive",
+								"reservation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Publish Product Requests",
+			"item": [
+				{
+					"name": "PublishProductRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"producttest12\",\r\n        \"quantity\": 1.6,\r\n        \"description\": \"postdescription\",\r\n        \"imgRef\": null,\r\n        \"price\": 50,\r\n        \"state\": \"NEW\",\r\n        \"categories\": [{\"id\":1},{\"id\":1},{\"id\":2}],\r\n        \"reservations\": []\r\n   }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/publish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WithdrawProductRequest",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\":2\r\n   }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/publish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductRequest",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/publish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyProductRequest",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/publish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Reserve Product Requests",
+			"item": [
+				{
+					"name": "MakeReservationRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/reservation/1/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"reservation",
+								"1",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SellReservationRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/reservation/1/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"reservation",
+								"1",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserReservationsRequest",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/reservation/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"reservation",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductReservationsRequest",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/reservation/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"reservation",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteReservationRequest",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/reservation/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"reservation",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Search Requests",
+			"item": [
+				{
+					"name": "NameSearchRequest",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/search/name/tet5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"search",
+								"name",
+								"tet5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserSearchRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/search/user/SUPER",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"search",
+								"user",
+								"SUPER"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authorization Requests",
+			"item": [
+				{
+					"name": "LoginRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser4\",\n    \"password\": \"123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogoutRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0123456789",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"username\": \"testuser5\",\n        \"password\": \"123\",\n        \"role\":\"ADMIN\",\n        \"first\": \"firstetst\",\n        \"last\": \"lasttest\",\n        \"birth\": null,\n        \"email\": \"emailtest\",\n        \"dateJoined\": null,\n        \"dateSeen\": null,\n        \"reservations\": [],\n        \"published\":[]\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

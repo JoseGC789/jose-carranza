@@ -1,6 +1,7 @@
 package com.globant.bootcamp.dia15.service.crud;
 
 import com.globant.bootcamp.dia15.constant.ExceptionMessages;
+import com.globant.bootcamp.dia15.constant.ProductState;
 import com.globant.bootcamp.dia15.constant.ProductStock;
 import com.globant.bootcamp.dia15.domain.entity.Category;
 import com.globant.bootcamp.dia15.domain.entity.Person;
@@ -27,18 +28,22 @@ public class ProductService {
     private ReservationService reservationService;
 
     public List<Product> getAll(){
+        //get all
         return productRepository.findAll();
     }
 
     public List<Product> getAll(Person publisher){
+        //get all by publisher
         return productRepository.findByPublisher(publisher);
     }
 
     public List<Product> getAll(Category category){
+        //get all by category
         return productRepository.findByCategories(category);
     }
 
     public List<Product> getAll(String name){
+        //get all by contained name
         return productRepository.findBySimilarName(name);
     }
 

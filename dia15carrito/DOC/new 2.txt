@@ -1,0 +1,23 @@
+category
+[
+    {
+        "id": 1,
+        "name": "categorytest",
+        "description": null
+    },
+    {
+        "id": 2,
+        "name": "categorytest2",
+        "description": null
+    },
+    {
+        "id": 3,
+        "name": "categorytest3",
+        "description": null
+    },
+    {
+        "id": 4,
+        "name": "categorytest4",
+        "description": null
+    }
+]

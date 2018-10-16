@@ -29,6 +29,7 @@ public class Application implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         Person superAdmin = new Person();
+        superAdmin.setId(1);
         superAdmin.setUsername("SUPER");
         superAdmin.setPassword("SUPER");
         superAdmin.setRole(PersonRoles.SUPER);
@@ -41,18 +42,17 @@ public class Application implements CommandLineRunner {
         superAdmin.setFirst("Jose");
         superAdmin.setLast("Carranza");
         superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
+        personRepository.save(superAdmin);
 
-        if (!personRepository.findById(1).isPresent()){
-            personRepository.save(superAdmin);
-        }
         if(!categoryRepository.findById(1).isPresent()){
             Category category = new Category();
+            category.setId(1);
             category.setName("Uncategorized");
             category.setDescription("These products have not been categorized.");
             categoryRepository.save(category);
         }
         SecurityEndpointService.initializeSUPER(superAdmin);
-/*
+
         superAdmin = new Person();
         superAdmin.setUsername("SUPER2");
         superAdmin.setPassword("SUPER2");
@@ -78,7 +78,7 @@ public class Application implements CommandLineRunner {
         superAdmin.setEmail("josegcarranza@gmail.com");
         superAdmin.setFirst("Jose");
         superAdmin.setLast("Carranza");
-        superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
+        superAdmin.setLastSeen(new GregorianCalendar(1994,4,6,12,0));
         personRepository.save(superAdmin);
 
         superAdmin = new Person();
@@ -94,6 +94,6 @@ public class Application implements CommandLineRunner {
         superAdmin.setLast("Carranza");
         superAdmin.setBirth(new GregorianCalendar(1994,4,6,12,0));
         personRepository.save(superAdmin);
-*/
+
     }
 }
